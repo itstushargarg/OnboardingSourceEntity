@@ -14,22 +14,23 @@ namespace OnboardingTables
 {
     public partial class TableOnboarding : Form
     {
+        private List<String> columnList;
         public TableOnboarding()
         {
+            columnList = new List<String>();
             InitializeComponent();
         }
 
-        private void AddSource()
+    private void AddSource()
         {
             //Adding a folder for new source
             //p.AddItem("Folder", @"C:\Users\tugar\Documents\Visual Studio 2015\Projects\WindowsFormsApplication1\WindowsFormsApplication1\test2");
             //Adding the file to the provided path
         }
 
-        private List<String> CreateColumnList()
+        private void CreateColumnList()
         {
             String columnName = null;
-            List<String> columnList = new List<String>();
             String column = ColumnList.Text;
             int j = 0;
             for (int i = 0; i < column.Length; i++)
@@ -53,7 +54,6 @@ namespace OnboardingTables
                 j += i + 2;
 
             }
-            return columnList;
         }
         public void CreateStgTable(string pathi, Microsoft.Build.Evaluation.Project p)
         {
