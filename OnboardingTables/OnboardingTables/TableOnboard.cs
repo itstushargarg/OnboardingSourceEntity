@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -25,14 +26,34 @@ namespace OnboardingTables
             //Adding the file to the provided path
         }
 
-        private void CreateColumnList()
+        private List<String> CreateColumnList()
         {
-            int i = 0;
-            while (i<ColumnList.Text.Length)
+            String columnName = null;
+            List<String> columnList = new List<String>();
+            String column = ColumnList.Text;
+            int j = 0;
+            for (int i = 0; i < column.Length; i++)
             {
-                //var line = ColumnList.Text.Split(' *');
-                //var lineWords = line.Split(' ');
+                column = ColumnList.Text.Substring(j, ColumnList.Text.Length - j);
+                i = 0;
+                while (column[i] == '[' || column[i] == ' ' || column[i] == '\t' || column[i] == '\n')
+                {
+                    i++;
+                }
+                while (column[i] != ']' && column[i] != ' ')
+                {
+                    columnName += column[i++];
+                }
+                columnList.Add(columnName);
+                columnName = null;
+                while (i < column.Length && column[i] != ',')
+                {
+                    i++;
+                }
+                j += i + 2;
+
             }
+            return columnList;
         }
         public void CreateStgTable(string pathi, Microsoft.Build.Evaluation.Project p)
         {
@@ -91,6 +112,7 @@ namespace OnboardingTables
         }
         private void Submit_Click(object sender, EventArgs e)
         {
+            CreateColumnList();
             string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\stg\MSSales\Table\" + TableName.Text + ".sql";
             if (!File.Exists(path))
             {
