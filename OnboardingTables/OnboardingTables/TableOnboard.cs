@@ -13,17 +13,14 @@ namespace OnboardingTables
 {
     public partial class TableOnboarding : Form
     {
+        public static string SqlProjpath;
+        public static string dbopath;
         public TableOnboarding()
         {
             InitializeComponent();
         }
 
-        private void AddSource()
-        {
-            //Adding a folder for new source
-            //p.AddItem("Folder", @"C:\Users\tugar\Documents\Visual Studio 2015\Projects\WindowsFormsApplication1\WindowsFormsApplication1\test2");
-            //Adding the file to the provided path
-        }
+     
 
         private void CreateColumnList()
         {
@@ -114,7 +111,23 @@ namespace OnboardingTables
             {
                 ProjectPath.Text = BrowseProjectPath.FileName;
             }
-            SourceName.Items.Add("Haha");
+            String dboFilePath = ProjectPath.Text.Replace("DIDataManagement.sqlproj", "dbo\\");
+            SqlProjpath = ProjectPath.Text;
+            dbopath = dboFilePath;
+            DirectoryInfo d = new DirectoryInfo(@dboFilePath);//Assuming Test is your Folder
+            DirectoryInfo[] Files = d.GetDirectories(); //Getting Text files
+            foreach (DirectoryInfo file in Files)
+            {
+               
+                SourceName.Items.Add(file);
+            }
+            
+        }
+
+        private void AddSource_Click(object sender, EventArgs e)
+        {
+            AddingNewSource AddingNewSource = new AddingNewSource();
+            AddingNewSource.Show();
         }
     }
 }

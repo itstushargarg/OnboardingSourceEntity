@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddingNewSource.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddingNewSource.Designer.cs">
+      <DependentUpon>AddingNewSource.cs</DependentUpon>
+    </Compile>
     <Compile Include="TableOnboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -55,6 +61,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddingNewSource.resx">
+      <DependentUpon>AddingNewSource.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TableOnboard.resx">
       <DependentUpon>TableOnboard.cs</DependentUpon>
     </EmbeddedResource>
