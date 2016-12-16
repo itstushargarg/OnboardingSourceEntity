@@ -15,8 +15,10 @@ namespace OnboardingTables
     {
         public static string SqlProjpath;
         public static string dbopath;
+        public static Microsoft.Build.Evaluation.Project projectPath;
         public TableOnboarding()
         {
+            
             InitializeComponent();
         }
 
@@ -91,11 +93,10 @@ namespace OnboardingTables
             string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\stg\MSSales\Table\" + TableName.Text + ".sql";
             if (!File.Exists(path))
             {
-                var p = new Microsoft.Build.Evaluation.Project(@"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\DIDataManagement.sqlproj");
-                CreateStgTable(path, p);
-                CreateStgView(path, p);
-                CreateDboTable(path, p);
-                CreateDboView(path, p);
+                CreateStgTable(path, projectPath);
+                CreateStgView(path, projectPath);
+                CreateDboTable(path, projectPath);
+                CreateDboView(path, projectPath);
             }
             else if (File.Exists(path))
             {
@@ -111,9 +112,11 @@ namespace OnboardingTables
             {
                 ProjectPath.Text = BrowseProjectPath.FileName;
             }
+           
             String dboFilePath = ProjectPath.Text.Replace("DIDataManagement.sqlproj", "dbo\\");
             SqlProjpath = ProjectPath.Text;
             dbopath = dboFilePath;
+            projectPath = new Microsoft.Build.Evaluation.Project(SqlProjpath);
             DirectoryInfo d = new DirectoryInfo(@dboFilePath);//Assuming Test is your Folder
             DirectoryInfo[] Files = d.GetDirectories(); //Getting Text files
             foreach (DirectoryInfo file in Files)

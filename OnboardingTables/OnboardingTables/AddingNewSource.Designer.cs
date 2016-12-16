@@ -44,15 +44,14 @@
             // 
             // NewSourceName
             // 
-            this.NewSourceName.Location = new System.Drawing.Point(87, 37);
+            this.NewSourceName.Location = new System.Drawing.Point(90, 37);
             this.NewSourceName.Name = "NewSourceName";
             this.NewSourceName.Size = new System.Drawing.Size(100, 20);
             this.NewSourceName.TabIndex = 1;
-            this.NewSourceName.TextChanged += new System.EventHandler(this.NewSourceName_TextChanged);
             // 
             // Submit
             // 
-            this.Submit.Location = new System.Drawing.Point(59, 119);
+            this.Submit.Location = new System.Drawing.Point(62, 83);
             this.Submit.Name = "Submit";
             this.Submit.Size = new System.Drawing.Size(75, 23);
             this.Submit.TabIndex = 2;
@@ -64,7 +63,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(247, 159);
+            this.ClientSize = new System.Drawing.Size(208, 130);
             this.Controls.Add(this.Submit);
             this.Controls.Add(this.NewSourceName);
             this.Controls.Add(this.label1);
