@@ -160,20 +160,25 @@ namespace OnboardingTables
             dbopath = ProjectPath.Text.Replace("DIDataManagement.sqlproj", "dbo\\");
             stgpath = ProjectPath.Text.Replace("DIDataManagement.sqlproj", "stg\\");
             SqlProjpath = ProjectPath.Text;
-            projectPath = new Microsoft.Build.Evaluation.Project(SqlProjpath);
-            DirectoryInfo d = new DirectoryInfo(@dbopath);//Assuming Test is your Folder
+            ListofSources(dbopath);
+        }
+        public void ListofSources(String dboFilePath)
+        {
+
+            SourceName.Items.Clear();          
+            DirectoryInfo d = new DirectoryInfo(@dboFilePath);//Assuming Test is your Folder
             DirectoryInfo[] Files = d.GetDirectories(); //Getting Text files
             foreach (DirectoryInfo file in Files)
             {
-               
+
                 SourceName.Items.Add(file);
             }
-            
         }
 
         private void AddSource_Click(object sender, EventArgs e)
         {
             AddingNewSource AddingNewSource = new AddingNewSource();
+            AddingNewSource.tob = this;
             AddingNewSource.Show();
         }
 
