@@ -148,7 +148,7 @@
             // AddSource
             // 
             this.AddSource.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
-            this.AddSource.Location = new System.Drawing.Point(322, 60);
+            this.AddSource.Location = new System.Drawing.Point(429, 62);
             this.AddSource.Name = "AddSource";
             this.AddSource.Size = new System.Drawing.Size(75, 23);
             this.AddSource.TabIndex = 14;
@@ -237,12 +237,13 @@
             // AddScript
             // 
             this.AddScript.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
-            this.AddScript.Location = new System.Drawing.Point(322, 94);
+            this.AddScript.Location = new System.Drawing.Point(429, 94);
             this.AddScript.Name = "AddScript";
             this.AddScript.Size = new System.Drawing.Size(75, 23);
             this.AddScript.TabIndex = 25;
             this.AddScript.Text = "Add Script";
             this.AddScript.UseVisualStyleBackColor = true;
+            this.AddScript.Click += new System.EventHandler(this.AddScript_Click);
             // 
             // ScriptName
             // 
@@ -250,7 +251,7 @@
             this.ScriptName.Location = new System.Drawing.Point(132, 96);
             this.ScriptName.Margin = new System.Windows.Forms.Padding(2);
             this.ScriptName.Name = "ScriptName";
-            this.ScriptName.Size = new System.Drawing.Size(92, 21);
+            this.ScriptName.Size = new System.Drawing.Size(289, 21);
             this.ScriptName.TabIndex = 24;
             // 
             // ChefScriptLabel

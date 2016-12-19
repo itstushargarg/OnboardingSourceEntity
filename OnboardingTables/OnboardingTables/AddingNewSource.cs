@@ -20,7 +20,7 @@ namespace OnboardingTables
         {
             InitializeComponent();
         }
-        
+
         private void Submit_Click(object sender, EventArgs e)
         {
             SourceName = this.NewSourceName.Text;
@@ -31,7 +31,7 @@ namespace OnboardingTables
             String ViewPath = "\\dbo\\" + SourceName + "\\View";
             String ProcedurePath = "\\dbo\\" + SourceName + "\\Procedure";
             String FunctionsPath = "\\dbo\\" + SourceName + "\\Functions";
-            var p = new Microsoft.Build.Evaluation.Project(SourcePath);
+            var p = TableOnboarding.projectPath;
             System.IO.Directory.CreateDirectory(NewSourcePath);
             p.AddItem("Folder", "dbo\\" + SourceName);
             p.Save();

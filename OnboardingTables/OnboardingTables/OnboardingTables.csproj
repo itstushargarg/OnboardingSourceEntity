@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddingNewChefScript.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddingNewChefScript.Designer.cs">
+      <DependentUpon>AddingNewChefScript.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddingNewSource.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +67,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddingNewChefScript.resx">
+      <DependentUpon>AddingNewChefScript.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AddingNewSource.resx">
       <DependentUpon>AddingNewSource.cs</DependentUpon>
     </EmbeddedResource>
