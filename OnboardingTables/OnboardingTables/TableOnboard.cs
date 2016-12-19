@@ -14,9 +14,11 @@ namespace OnboardingTables
 {
     public partial class TableOnboarding : Form
     {
-        public DataRowCollection schemaColumns;
+        public DataRowCollection sourceTableColumns;
+        public DataRowCollection targetTableColumns;
         public static string SqlProjpath;
         public static string dbopath;
+        public static string stgpath;
         public static Microsoft.Build.Evaluation.Project projectPath;
         public TableOnboarding()
         {
@@ -28,12 +30,12 @@ namespace OnboardingTables
             ColumnList.Items.Clear();
             try
             {
-                foreach (DataRow rowColumn in schemaColumns)
+                foreach (DataRow rowColumn in sourceTableColumns)
                 {
                     //Gets the url name and path when the status is enabled. The status of Enabled / Disabled is setup in the users option page
-                    string URLName = (rowColumn[3].ToString());
+                    string columnName = (rowColumn[3].ToString());
                     //bool enabled = true;
-                    ColumnList.Items.Add(URLName, true);
+                    ColumnList.Items.Add(columnName, true);
                 }
             }
             catch (Exception ex)
@@ -52,9 +54,9 @@ namespace OnboardingTables
             {
                 string[] restrictions = new string[4] { null, SourceSchemaName.Text, SourceTableName.Text, null };
                 connection.Open();
-                schemaColumns = connection.GetSchema("Columns", restrictions).Rows;
+                sourceTableColumns = connection.GetSchema("Columns", restrictions).Rows;
 
-                foreach (System.Data.DataRow rowColumn in schemaColumns)
+                foreach (System.Data.DataRow rowColumn in sourceTableColumns)
                 {
                     var ColumnName = (rowColumn[3].ToString());
                 }
@@ -62,15 +64,30 @@ namespace OnboardingTables
             }
             AddCheckList();
         }
-        public void CreateStgTable(string pathi, Microsoft.Build.Evaluation.Project p)
+        public void CreateStgTable()
         {
-            string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\stg\MSSales\Table\" + TableName.Text + ".sql";
-            p.AddItem("Build", path);
-            p.Save();
-            //File.Create(path).Dispose();
+            string path = String.Format("{0}{1}\\Table\\{2}.sql", stgpath, SourceName.Text,TableName.Text);
+            projectPath.AddItem("Build", path);
+            projectPath.Save();
             File.Create(path).Dispose();
+            var script = String.Format("CREATE Table [stg].[{0}]\n\t", TableName.Text);
+
+            foreach (DataRow rowColumn in sourceTableColumns)
+            {
+                //Gets the url name and path when the status is enabled. The status of Enabled / Disabled is setup in the users option page
+                string URLName = (rowColumn[3].ToString());
+                //bool enabled = true;
+                ColumnList.Items.Add(URLName, true);
+            }
+
+
+
+
+
+
             using (TextWriter tw = new StreamWriter(path))
             {
+
                 tw.WriteLine("CREATE Table [stg].[" + TableName.Text +"]\nAS\nSELECT [AccountGroupingID]\n      ,[AccountGroupingName]\n      ,[FiscalYear]\n      ,[ICDIUpdatedBy]\n      ,[ICDIETLRunID]\n      ,[ICDIIsLocked]\n      ,[ICDILockedTillDate]\n      ,[HashPK]\n      ,[HashNonPK]\n      ,SysStartTime\n      ,SysEndTime\n  FROM [dbo].[AccountGrouping] WITH(NOLOCK)");
                 tw.Close();
             }
@@ -78,10 +95,9 @@ namespace OnboardingTables
 
         public void CreateStgView(string pathi, Microsoft.Build.Evaluation.Project p)
         {
-            string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\stg\MSSales\View\vw" + TableName.Text + ".sql";
-            p.AddItem("Build", path);
-            p.Save();
-            //File.Create(path).Dispose();
+            string path = String.Format("{0}{1}\\View\\{2}.sql", stgpath, SourceName.Text,TableName.Text);
+            projectPath.AddItem("Build", path);
+            projectPath.Save();
             File.Create(path).Dispose();
             using (TextWriter tw = new StreamWriter(path))
             {
@@ -92,10 +108,9 @@ namespace OnboardingTables
 
         public void CreateDboTable(string pathi, Microsoft.Build.Evaluation.Project p)
         {
-            string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\dbo\MSSales\Table\" + TableName.Text + ".sql";
-            p.AddItem("Build", path);
-            p.Save();
-            //File.Create(path).Dispose();
+            string path = String.Format("{0}{1}\\Table\\{2}.sql", dbopath, SourceName.Text,TableName.Text);
+            projectPath.AddItem("Build", path);
+            projectPath.Save();
             File.Create(path).Dispose();
             using (TextWriter tw = new StreamWriter(path))
             {
@@ -106,10 +121,9 @@ namespace OnboardingTables
 
         public void CreateDboView(string pathi, Microsoft.Build.Evaluation.Project p)
         {
-            string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\dbo\MSSales\View\vw" + TableName.Text + ".sql";
-            p.AddItem("Build", path);
-            p.Save();
-            //File.Create(path).Dispose();
+            string path = String.Format("{0}{1}\\View\\{2}.sql", dbopath, SourceName.Text,TableName.Text);
+            projectPath.AddItem("Build", path);
+            projectPath.Save();
             File.Create(path).Dispose();
             using (TextWriter tw = new StreamWriter(path))
             {
@@ -119,20 +133,21 @@ namespace OnboardingTables
         }
         private void Submit_Click(object sender, EventArgs e)
         {
-            //string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\stg\MSSales\Table\" + TableName.Text + ".sql";
-            //if (!File.Exists(path))
-            //{
-            //    CreateStgTable(path, projectPath);
-            //    CreateStgView(path, projectPath);
-            //    CreateDboTable(path, projectPath);
-            //    CreateDboView(path, projectPath);
-            //}
-            //else if (File.Exists(path))
-            //{
-            //    //Error Handling
-            //}
-            ////string text = System.IO.File.ReadAllText(@"C:\Users\tugar\Desktop\ReadMe.txt");
-            ////System.Console.WriteLine("Contents of WriteText.txt = {0}", text);
+
+            string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\stg\MSSales\Table\" + TableName.Text + ".sql";
+            if (!File.Exists(path))
+            {
+                CreateStgTable();
+                //CreateStgView(path, projectPath);
+                //CreateDboTable(path, projectPath);
+                //CreateDboView(path, projectPath);
+            }
+            else if (File.Exists(path))
+            {
+                //Error Handling
+            }
+            //string text = System.IO.File.ReadAllText(@"C:\Users\tugar\Desktop\ReadMe.txt");
+            //System.Console.WriteLine("Contents of WriteText.txt = {0}", text);
         }
 
         private void SelectProject_Click(object sender, EventArgs e)
@@ -141,12 +156,12 @@ namespace OnboardingTables
             {
                 ProjectPath.Text = BrowseProjectPath.FileName;
             }
-           
-            String dboFilePath = ProjectPath.Text.Replace("DIDataManagement.sqlproj", "dbo\\");
+
+            dbopath = ProjectPath.Text.Replace("DIDataManagement.sqlproj", "dbo\\");
+            stgpath = ProjectPath.Text.Replace("DIDataManagement.sqlproj", "stg\\");
             SqlProjpath = ProjectPath.Text;
-            dbopath = dboFilePath;
             projectPath = new Microsoft.Build.Evaluation.Project(SqlProjpath);
-            DirectoryInfo d = new DirectoryInfo(@dboFilePath);//Assuming Test is your Folder
+            DirectoryInfo d = new DirectoryInfo(@dbopath);//Assuming Test is your Folder
             DirectoryInfo[] Files = d.GetDirectories(); //Getting Text files
             foreach (DirectoryInfo file in Files)
             {
