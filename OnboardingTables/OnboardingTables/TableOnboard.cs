@@ -26,12 +26,7 @@ namespace OnboardingTables
 
         private void CreateColumnList()
         {
-            int i = 0;
-            while (i<ColumnList.Text.Length)
-            {
-                //var line = ColumnList.Text.Split(' *');
-                //var lineWords = line.Split(' ');
-            }
+           //TB Written
         }
         public void CreateStgTable(string pathi, Microsoft.Build.Evaluation.Project p)
         {
