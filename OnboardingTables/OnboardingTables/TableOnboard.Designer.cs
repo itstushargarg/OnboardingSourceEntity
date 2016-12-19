@@ -75,6 +75,7 @@
             this.TableName.Name = "TableName";
             this.TableName.Size = new System.Drawing.Size(93, 20);
             this.TableName.TabIndex = 2;
+            this.TableName.Text = "AA_Area";
             // 
             // TargetTableNameLabel
             // 
@@ -190,6 +191,7 @@
             this.ServerName.Name = "ServerName";
             this.ServerName.Size = new System.Drawing.Size(135, 20);
             this.ServerName.TabIndex = 19;
+            this.ServerName.Text = "SKYKOMISH";
             // 
             // DatabaseNameLabel
             // 
@@ -208,6 +210,7 @@
             this.DatabaseName.Name = "DatabaseName";
             this.DatabaseName.Size = new System.Drawing.Size(93, 20);
             this.DatabaseName.TabIndex = 17;
+            this.DatabaseName.Text = "MSSales";
             // 
             // SourceTableName
             // 
@@ -216,6 +219,7 @@
             this.SourceTableName.Name = "SourceTableName";
             this.SourceTableName.Size = new System.Drawing.Size(80, 20);
             this.SourceTableName.TabIndex = 21;
+            this.SourceTableName.Text = "Area";
             // 
             // GetTableDetails
             // 
@@ -323,7 +327,7 @@
             this.Controls.Add(this.Submit);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "TableOnboarding";
-            this.Text = " ";
+            this.Text = " Table Onboarding";
             this.ResumeLayout(false);
             this.PerformLayout();
 

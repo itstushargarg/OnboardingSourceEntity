@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -13,20 +14,29 @@ namespace OnboardingTables
 {
     public partial class TableOnboarding : Form
     {
+        public DataRowCollection schemaColumns;
         public static string SqlProjpath;
         public static string dbopath;
         public static Microsoft.Build.Evaluation.Project projectPath;
         public TableOnboarding()
         {
-            
             InitializeComponent();
         }
 
-     
-
         private void CreateColumnList()
         {
-           //TB Written
+            var connectionString = String.Format("Data Source={0};Initial Catalog={1};Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True", ServerName.Text, DatabaseName.Text);
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string[] restrictions = new string[4] { null, SourceSchemaName.Text, SourceTableName.Text, null };
+                connection.Open();
+                schemaColumns = connection.GetSchema("Columns", restrictions).Rows;
+
+                foreach (System.Data.DataRow rowColumn in schemaColumns)
+                {
+                    var ColumnName = (rowColumn[3].ToString());
+                }
+            }
         }
         public void CreateStgTable(string pathi, Microsoft.Build.Evaluation.Project p)
         {
@@ -85,6 +95,7 @@ namespace OnboardingTables
         }
         private void Submit_Click(object sender, EventArgs e)
         {
+            CreateColumnList();
             string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\stg\MSSales\Table\" + TableName.Text + ".sql";
             if (!File.Exists(path))
             {
