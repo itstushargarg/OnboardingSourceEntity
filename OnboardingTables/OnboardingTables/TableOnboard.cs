@@ -23,6 +23,27 @@ namespace OnboardingTables
             InitializeComponent();
         }
 
+        private void AddCheckList()
+        {
+            try
+            {
+                foreach (DataRow rowColumn in schemaColumns)
+                {
+                    //Gets the url name and path when the status is enabled. The status of Enabled / Disabled is setup in the users option page
+                    string URLName = (rowColumn[3].ToString());
+                    //bool enabled = true;
+                    ColumnList.Items.Add(URLName, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                //Error message the user will see
+                //string FriendlyError = "There has been populating checkboxes with the urls - A notification has been sent to development";
+                //ShowMessageBox.MsgBox(FriendlyError, "There has been an Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
         private void CreateColumnList()
         {
             var connectionString = String.Format("Data Source={0};Initial Catalog={1};Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True", ServerName.Text, DatabaseName.Text);
@@ -36,6 +57,7 @@ namespace OnboardingTables
                 {
                     var ColumnName = (rowColumn[3].ToString());
                 }
+                AddCheckList();
             }
         }
         public void CreateStgTable(string pathi, Microsoft.Build.Evaluation.Project p)
@@ -96,20 +118,20 @@ namespace OnboardingTables
         private void Submit_Click(object sender, EventArgs e)
         {
             CreateColumnList();
-            string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\stg\MSSales\Table\" + TableName.Text + ".sql";
-            if (!File.Exists(path))
-            {
-                CreateStgTable(path, projectPath);
-                CreateStgView(path, projectPath);
-                CreateDboTable(path, projectPath);
-                CreateDboView(path, projectPath);
-            }
-            else if (File.Exists(path))
-            {
-                //Error Handling
-            }
-            //string text = System.IO.File.ReadAllText(@"C:\Users\tugar\Desktop\ReadMe.txt");
-            //System.Console.WriteLine("Contents of WriteText.txt = {0}", text);
+            //string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\stg\MSSales\Table\" + TableName.Text + ".sql";
+            //if (!File.Exists(path))
+            //{
+            //    CreateStgTable(path, projectPath);
+            //    CreateStgView(path, projectPath);
+            //    CreateDboTable(path, projectPath);
+            //    CreateDboView(path, projectPath);
+            //}
+            //else if (File.Exists(path))
+            //{
+            //    //Error Handling
+            //}
+            ////string text = System.IO.File.ReadAllText(@"C:\Users\tugar\Desktop\ReadMe.txt");
+            ////System.Console.WriteLine("Contents of WriteText.txt = {0}", text);
         }
 
         private void SelectProject_Click(object sender, EventArgs e)

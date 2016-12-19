@@ -55,6 +55,8 @@
             this.ProcessID = new System.Windows.Forms.TextBox();
             this.CatalogIDLog = new System.Windows.Forms.Label();
             this.CatalogID = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.ColumnList = new System.Windows.Forms.CheckedListBox();
             this.SuspendLayout();
             // 
             // Submit
@@ -296,11 +298,30 @@
             this.CatalogID.Size = new System.Drawing.Size(93, 20);
             this.CatalogID.TabIndex = 26;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 227);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(50, 13);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Columns:";
+            // 
+            // ColumnList
+            // 
+            this.ColumnList.FormattingEnabled = true;
+            this.ColumnList.Location = new System.Drawing.Point(132, 239);
+            this.ColumnList.Name = "ColumnList";
+            this.ColumnList.Size = new System.Drawing.Size(135, 154);
+            this.ColumnList.TabIndex = 31;
+            // 
             // TableOnboarding
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(826, 473);
+            this.Controls.Add(this.ColumnList);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.ProcessIDLabel);
             this.Controls.Add(this.ProcessID);
             this.Controls.Add(this.CatalogIDLog);
@@ -361,6 +382,8 @@
         private System.Windows.Forms.TextBox ProcessID;
         private System.Windows.Forms.Label CatalogIDLog;
         private System.Windows.Forms.TextBox CatalogID;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckedListBox ColumnList;
     }
 }
 
