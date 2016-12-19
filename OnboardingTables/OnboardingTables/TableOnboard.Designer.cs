@@ -61,7 +61,7 @@
             // 
             // Submit
             // 
-            this.Submit.Location = new System.Drawing.Point(286, 343);
+            this.Submit.Location = new System.Drawing.Point(333, 395);
             this.Submit.Margin = new System.Windows.Forms.Padding(2);
             this.Submit.Name = "Submit";
             this.Submit.Size = new System.Drawing.Size(88, 26);
@@ -301,7 +301,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 227);
+            this.label1.Location = new System.Drawing.Point(13, 223);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(50, 13);
             this.label1.TabIndex = 30;
@@ -310,7 +310,7 @@
             // ColumnList
             // 
             this.ColumnList.FormattingEnabled = true;
-            this.ColumnList.Location = new System.Drawing.Point(132, 239);
+            this.ColumnList.Location = new System.Drawing.Point(132, 223);
             this.ColumnList.Name = "ColumnList";
             this.ColumnList.Size = new System.Drawing.Size(135, 154);
             this.ColumnList.TabIndex = 31;
