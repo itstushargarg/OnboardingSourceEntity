@@ -14,6 +14,7 @@ namespace OnboardingTables
 {
     public partial class AddingNewSource : Form
     {
+        public TableOnboarding tob;
         public static string SourceName;
         public AddingNewSource()
         {
@@ -22,7 +23,7 @@ namespace OnboardingTables
         
         private void Submit_Click(object sender, EventArgs e)
         {
-            String SourceName = this.NewSourceName.Text;
+            SourceName = this.NewSourceName.Text;
             String SourcePath = TableOnboarding.SqlProjpath;
             String dboPath = TableOnboarding.dbopath;
             String NewSourcePath = dboPath + SourceName + "\\";
@@ -30,7 +31,7 @@ namespace OnboardingTables
             String ViewPath = "\\dbo\\" + SourceName + "\\View";
             String ProcedurePath = "\\dbo\\" + SourceName + "\\Procedure";
             String FunctionsPath = "\\dbo\\" + SourceName + "\\Functions";
-            var p = TableOnboarding.projectPath;
+            var p = new Microsoft.Build.Evaluation.Project(SourcePath);
             System.IO.Directory.CreateDirectory(NewSourcePath);
             p.AddItem("Folder", "dbo\\" + SourceName);
             p.Save();
@@ -46,8 +47,9 @@ namespace OnboardingTables
             System.IO.Directory.CreateDirectory(NewSourcePath + "Function");
             p.AddItem("Folder", FunctionsPath);
             p.Save();
+            tob.ListofSources(dboPath);
             this.Close();
-            MessageBox.Show("The Source " +SourceName + " Successfully added");
+            MessageBox.Show("The Source " + SourceName + " Successfully added");
         }
     }
 }

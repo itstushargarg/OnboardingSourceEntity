@@ -47,7 +47,7 @@
             // Submit
             // 
             this.Submit.Location = new System.Drawing.Point(257, 343);
-            this.Submit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Submit.Margin = new System.Windows.Forms.Padding(2);
             this.Submit.Name = "Submit";
             this.Submit.Size = new System.Drawing.Size(88, 26);
             this.Submit.TabIndex = 1;
@@ -58,7 +58,7 @@
             // TableName
             // 
             this.TableName.Location = new System.Drawing.Point(103, 97);
-            this.TableName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TableName.Margin = new System.Windows.Forms.Padding(2);
             this.TableName.Name = "TableName";
             this.TableName.Size = new System.Drawing.Size(390, 20);
             this.TableName.TabIndex = 2;
@@ -76,7 +76,7 @@
             // ColumnList
             // 
             this.ColumnList.Location = new System.Drawing.Point(103, 161);
-            this.ColumnList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ColumnList.Margin = new System.Windows.Forms.Padding(2);
             this.ColumnList.Name = "ColumnList";
             this.ColumnList.Size = new System.Drawing.Size(390, 169);
             this.ColumnList.TabIndex = 5;
@@ -95,7 +95,7 @@
             // SelectProject
             // 
             this.SelectProject.Location = new System.Drawing.Point(523, 23);
-            this.SelectProject.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.SelectProject.Margin = new System.Windows.Forms.Padding(2);
             this.SelectProject.Name = "SelectProject";
             this.SelectProject.Size = new System.Drawing.Size(99, 26);
             this.SelectProject.TabIndex = 7;
@@ -110,7 +110,7 @@
             // ProjectPath
             // 
             this.ProjectPath.Location = new System.Drawing.Point(103, 27);
-            this.ProjectPath.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ProjectPath.Margin = new System.Windows.Forms.Padding(2);
             this.ProjectPath.Name = "ProjectPath";
             this.ProjectPath.Size = new System.Drawing.Size(390, 20);
             this.ProjectPath.TabIndex = 8;
@@ -143,7 +143,7 @@
             // 
             this.SourceName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SourceName.Location = new System.Drawing.Point(103, 62);
-            this.SourceName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.SourceName.Margin = new System.Windows.Forms.Padding(2);
             this.SourceName.Name = "SourceName";
             this.SourceName.Size = new System.Drawing.Size(92, 21);
             this.SourceName.TabIndex = 13;
@@ -175,7 +175,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.TableName);
             this.Controls.Add(this.Submit);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "TableOnboarding";
             this.Text = " ";
             this.ResumeLayout(false);
@@ -196,8 +196,8 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox SourceName;
         private System.Windows.Forms.Button AddSource;
+        public System.Windows.Forms.ComboBox SourceName;
     }
 }
 

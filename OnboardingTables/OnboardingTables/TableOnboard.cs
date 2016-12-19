@@ -112,24 +112,28 @@ namespace OnboardingTables
             {
                 ProjectPath.Text = BrowseProjectPath.FileName;
             }
-           
             String dboFilePath = ProjectPath.Text.Replace("DIDataManagement.sqlproj", "dbo\\");
             SqlProjpath = ProjectPath.Text;
             dbopath = dboFilePath;
-            projectPath = new Microsoft.Build.Evaluation.Project(SqlProjpath);
+            ListofSources(dbopath);
+        }
+        public void ListofSources(String dboFilePath)
+        {
+
+            SourceName.Items.Clear();          
             DirectoryInfo d = new DirectoryInfo(@dboFilePath);//Assuming Test is your Folder
             DirectoryInfo[] Files = d.GetDirectories(); //Getting Text files
             foreach (DirectoryInfo file in Files)
             {
-               
+
                 SourceName.Items.Add(file);
             }
-            
         }
 
         private void AddSource_Click(object sender, EventArgs e)
         {
             AddingNewSource AddingNewSource = new AddingNewSource();
+            AddingNewSource.tob = this;
             AddingNewSource.Show();
         }
     }
