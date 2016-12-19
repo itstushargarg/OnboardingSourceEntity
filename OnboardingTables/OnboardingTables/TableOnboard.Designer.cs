@@ -31,23 +31,32 @@
             this.components = new System.ComponentModel.Container();
             this.Submit = new System.Windows.Forms.Button();
             this.TableName = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.ColumnList = new System.Windows.Forms.RichTextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.TargetTableNameLabel = new System.Windows.Forms.Label();
             this.SelectProject = new System.Windows.Forms.Button();
             this.BrowseProjectPath = new System.Windows.Forms.OpenFileDialog();
             this.ProjectPath = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.ProjectPathLabel = new System.Windows.Forms.Label();
+            this.SourceNameLabel = new System.Windows.Forms.Label();
             this.SourceName = new System.Windows.Forms.ComboBox();
             this.AddSource = new System.Windows.Forms.Button();
+            this.SourceTableNameLabel = new System.Windows.Forms.Label();
+            this.SourceSchemaName = new System.Windows.Forms.TextBox();
+            this.ServerNameLabel = new System.Windows.Forms.Label();
+            this.ServerName = new System.Windows.Forms.TextBox();
+            this.DatabaseNameLabel = new System.Windows.Forms.Label();
+            this.DatabaseName = new System.Windows.Forms.TextBox();
+            this.SourceTableName = new System.Windows.Forms.TextBox();
+            this.GetTableDetails = new System.Windows.Forms.Button();
+            this.AddScript = new System.Windows.Forms.Button();
+            this.ScriptName = new System.Windows.Forms.ComboBox();
+            this.ChefScriptLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // Submit
             // 
-            this.Submit.Location = new System.Drawing.Point(257, 343);
-            this.Submit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Submit.Location = new System.Drawing.Point(286, 343);
+            this.Submit.Margin = new System.Windows.Forms.Padding(2);
             this.Submit.Name = "Submit";
             this.Submit.Size = new System.Drawing.Size(88, 26);
             this.Submit.TabIndex = 1;
@@ -57,45 +66,26 @@
             // 
             // TableName
             // 
-            this.TableName.Location = new System.Drawing.Point(103, 97);
-            this.TableName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TableName.Location = new System.Drawing.Point(429, 155);
+            this.TableName.Margin = new System.Windows.Forms.Padding(2);
             this.TableName.Name = "TableName";
-            this.TableName.Size = new System.Drawing.Size(390, 20);
+            this.TableName.Size = new System.Drawing.Size(93, 20);
             this.TableName.TabIndex = 2;
             // 
-            // label1
+            // TargetTableNameLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 97);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(68, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Table Name:";
-            // 
-            // ColumnList
-            // 
-            this.ColumnList.Location = new System.Drawing.Point(103, 161);
-            this.ColumnList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.ColumnList.Name = "ColumnList";
-            this.ColumnList.Size = new System.Drawing.Size(390, 169);
-            this.ColumnList.TabIndex = 5;
-            this.ColumnList.Text = "";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 161);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Columns:";
+            this.TargetTableNameLabel.AutoSize = true;
+            this.TargetTableNameLabel.Location = new System.Drawing.Point(319, 158);
+            this.TargetTableNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.TargetTableNameLabel.Name = "TargetTableNameLabel";
+            this.TargetTableNameLabel.Size = new System.Drawing.Size(102, 13);
+            this.TargetTableNameLabel.TabIndex = 4;
+            this.TargetTableNameLabel.Text = "Target Table Name:";
             // 
             // SelectProject
             // 
-            this.SelectProject.Location = new System.Drawing.Point(523, 23);
-            this.SelectProject.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.SelectProject.Location = new System.Drawing.Point(552, 23);
+            this.SelectProject.Margin = new System.Windows.Forms.Padding(2);
             this.SelectProject.Name = "SelectProject";
             this.SelectProject.Size = new System.Drawing.Size(99, 26);
             this.SelectProject.TabIndex = 7;
@@ -109,8 +99,8 @@
             // 
             // ProjectPath
             // 
-            this.ProjectPath.Location = new System.Drawing.Point(103, 27);
-            this.ProjectPath.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ProjectPath.Location = new System.Drawing.Point(132, 27);
+            this.ProjectPath.Margin = new System.Windows.Forms.Padding(2);
             this.ProjectPath.Name = "ProjectPath";
             this.ProjectPath.Size = new System.Drawing.Size(390, 20);
             this.ProjectPath.TabIndex = 8;
@@ -119,31 +109,31 @@
             // 
             this.toolTip1.ForeColor = System.Drawing.Color.DarkTurquoise;
             // 
-            // label3
+            // ProjectPathLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 27);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Project Path:";
+            this.ProjectPathLabel.AutoSize = true;
+            this.ProjectPathLabel.Location = new System.Drawing.Point(13, 27);
+            this.ProjectPathLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ProjectPathLabel.Name = "ProjectPathLabel";
+            this.ProjectPathLabel.Size = new System.Drawing.Size(68, 13);
+            this.ProjectPathLabel.TabIndex = 9;
+            this.ProjectPathLabel.Text = "Project Path:";
             // 
-            // label4
+            // SourceNameLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 62);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(75, 13);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Source Name:";
+            this.SourceNameLabel.AutoSize = true;
+            this.SourceNameLabel.Location = new System.Drawing.Point(13, 62);
+            this.SourceNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.SourceNameLabel.Name = "SourceNameLabel";
+            this.SourceNameLabel.Size = new System.Drawing.Size(75, 13);
+            this.SourceNameLabel.TabIndex = 12;
+            this.SourceNameLabel.Text = "Source Name:";
             // 
             // SourceName
             // 
             this.SourceName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SourceName.Location = new System.Drawing.Point(103, 62);
-            this.SourceName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.SourceName.Location = new System.Drawing.Point(132, 62);
+            this.SourceName.Margin = new System.Windows.Forms.Padding(2);
             this.SourceName.Name = "SourceName";
             this.SourceName.Size = new System.Drawing.Size(92, 21);
             this.SourceName.TabIndex = 13;
@@ -151,7 +141,7 @@
             // AddSource
             // 
             this.AddSource.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
-            this.AddSource.Location = new System.Drawing.Point(300, 59);
+            this.AddSource.Location = new System.Drawing.Point(322, 60);
             this.AddSource.Name = "AddSource";
             this.AddSource.Size = new System.Drawing.Size(75, 23);
             this.AddSource.TabIndex = 14;
@@ -159,23 +149,135 @@
             this.AddSource.UseVisualStyleBackColor = true;
             this.AddSource.Click += new System.EventHandler(this.AddSource_Click);
             // 
+            // SourceTableNameLabel
+            // 
+            this.SourceTableNameLabel.AutoSize = true;
+            this.SourceTableNameLabel.Location = new System.Drawing.Point(13, 158);
+            this.SourceTableNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.SourceTableNameLabel.Name = "SourceTableNameLabel";
+            this.SourceTableNameLabel.Size = new System.Drawing.Size(105, 13);
+            this.SourceTableNameLabel.TabIndex = 16;
+            this.SourceTableNameLabel.Text = "Source Table Name:";
+            // 
+            // SourceSchemaName
+            // 
+            this.SourceSchemaName.Location = new System.Drawing.Point(132, 155);
+            this.SourceSchemaName.Margin = new System.Windows.Forms.Padding(2);
+            this.SourceSchemaName.Name = "SourceSchemaName";
+            this.SourceSchemaName.Size = new System.Drawing.Size(51, 20);
+            this.SourceSchemaName.TabIndex = 15;
+            this.SourceSchemaName.Text = "dbo";
+            this.SourceSchemaName.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // ServerNameLabel
+            // 
+            this.ServerNameLabel.AutoSize = true;
+            this.ServerNameLabel.Location = new System.Drawing.Point(13, 128);
+            this.ServerNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ServerNameLabel.Name = "ServerNameLabel";
+            this.ServerNameLabel.Size = new System.Drawing.Size(72, 13);
+            this.ServerNameLabel.TabIndex = 20;
+            this.ServerNameLabel.Text = "Server Name:";
+            // 
+            // ServerName
+            // 
+            this.ServerName.Location = new System.Drawing.Point(132, 128);
+            this.ServerName.Margin = new System.Windows.Forms.Padding(2);
+            this.ServerName.Name = "ServerName";
+            this.ServerName.Size = new System.Drawing.Size(135, 20);
+            this.ServerName.TabIndex = 19;
+            // 
+            // DatabaseNameLabel
+            // 
+            this.DatabaseNameLabel.AutoSize = true;
+            this.DatabaseNameLabel.Location = new System.Drawing.Point(319, 128);
+            this.DatabaseNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.DatabaseNameLabel.Name = "DatabaseNameLabel";
+            this.DatabaseNameLabel.Size = new System.Drawing.Size(87, 13);
+            this.DatabaseNameLabel.TabIndex = 18;
+            this.DatabaseNameLabel.Text = "Database Name:";
+            // 
+            // DatabaseName
+            // 
+            this.DatabaseName.Location = new System.Drawing.Point(429, 125);
+            this.DatabaseName.Margin = new System.Windows.Forms.Padding(2);
+            this.DatabaseName.Name = "DatabaseName";
+            this.DatabaseName.Size = new System.Drawing.Size(93, 20);
+            this.DatabaseName.TabIndex = 17;
+            // 
+            // SourceTableName
+            // 
+            this.SourceTableName.Location = new System.Drawing.Point(187, 155);
+            this.SourceTableName.Margin = new System.Windows.Forms.Padding(2);
+            this.SourceTableName.Name = "SourceTableName";
+            this.SourceTableName.Size = new System.Drawing.Size(80, 20);
+            this.SourceTableName.TabIndex = 21;
+            // 
+            // GetTableDetails
+            // 
+            this.GetTableDetails.Location = new System.Drawing.Point(552, 151);
+            this.GetTableDetails.Margin = new System.Windows.Forms.Padding(2);
+            this.GetTableDetails.Name = "GetTableDetails";
+            this.GetTableDetails.Size = new System.Drawing.Size(99, 26);
+            this.GetTableDetails.TabIndex = 22;
+            this.GetTableDetails.Text = "Get Table Details";
+            this.GetTableDetails.UseVisualStyleBackColor = true;
+            // 
+            // AddScript
+            // 
+            this.AddScript.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
+            this.AddScript.Location = new System.Drawing.Point(322, 94);
+            this.AddScript.Name = "AddScript";
+            this.AddScript.Size = new System.Drawing.Size(75, 23);
+            this.AddScript.TabIndex = 25;
+            this.AddScript.Text = "Add Script";
+            this.AddScript.UseVisualStyleBackColor = true;
+            // 
+            // ScriptName
+            // 
+            this.ScriptName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ScriptName.Location = new System.Drawing.Point(132, 96);
+            this.ScriptName.Margin = new System.Windows.Forms.Padding(2);
+            this.ScriptName.Name = "ScriptName";
+            this.ScriptName.Size = new System.Drawing.Size(92, 21);
+            this.ScriptName.TabIndex = 24;
+            // 
+            // ChefScriptLabel
+            // 
+            this.ChefScriptLabel.AutoSize = true;
+            this.ChefScriptLabel.Location = new System.Drawing.Point(13, 96);
+            this.ChefScriptLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ChefScriptLabel.Name = "ChefScriptLabel";
+            this.ChefScriptLabel.Size = new System.Drawing.Size(62, 13);
+            this.ChefScriptLabel.TabIndex = 23;
+            this.ChefScriptLabel.Text = "Chef Script:";
+            // 
             // TableOnboarding
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(826, 473);
+            this.Controls.Add(this.AddScript);
+            this.Controls.Add(this.ScriptName);
+            this.Controls.Add(this.ChefScriptLabel);
+            this.Controls.Add(this.GetTableDetails);
+            this.Controls.Add(this.SourceTableName);
+            this.Controls.Add(this.ServerNameLabel);
+            this.Controls.Add(this.ServerName);
+            this.Controls.Add(this.DatabaseNameLabel);
+            this.Controls.Add(this.DatabaseName);
+            this.Controls.Add(this.SourceTableNameLabel);
+            this.Controls.Add(this.SourceSchemaName);
             this.Controls.Add(this.AddSource);
             this.Controls.Add(this.SourceName);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.SourceNameLabel);
+            this.Controls.Add(this.ProjectPathLabel);
             this.Controls.Add(this.ProjectPath);
             this.Controls.Add(this.SelectProject);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.ColumnList);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.TargetTableNameLabel);
             this.Controls.Add(this.TableName);
             this.Controls.Add(this.Submit);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "TableOnboarding";
             this.Text = " ";
             this.ResumeLayout(false);
@@ -187,17 +289,26 @@
 
         private System.Windows.Forms.Button Submit;
         private System.Windows.Forms.TextBox TableName;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RichTextBox ColumnList;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label TargetTableNameLabel;
         private System.Windows.Forms.Button SelectProject;
         private System.Windows.Forms.OpenFileDialog BrowseProjectPath;
         private System.Windows.Forms.TextBox ProjectPath;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label ProjectPathLabel;
+        private System.Windows.Forms.Label SourceNameLabel;
         private System.Windows.Forms.ComboBox SourceName;
         private System.Windows.Forms.Button AddSource;
+        private System.Windows.Forms.Label SourceTableNameLabel;
+        private System.Windows.Forms.TextBox SourceSchemaName;
+        private System.Windows.Forms.Label ServerNameLabel;
+        private System.Windows.Forms.TextBox ServerName;
+        private System.Windows.Forms.Label DatabaseNameLabel;
+        private System.Windows.Forms.TextBox DatabaseName;
+        private System.Windows.Forms.TextBox SourceTableName;
+        private System.Windows.Forms.Button GetTableDetails;
+        private System.Windows.Forms.Button AddScript;
+        private System.Windows.Forms.ComboBox ScriptName;
+        private System.Windows.Forms.Label ChefScriptLabel;
     }
 }
 
