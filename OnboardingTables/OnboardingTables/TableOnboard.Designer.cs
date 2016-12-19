@@ -232,6 +232,7 @@
             this.GetTableDetails.TabIndex = 22;
             this.GetTableDetails.Text = "Get Table Details";
             this.GetTableDetails.UseVisualStyleBackColor = true;
+            this.GetTableDetails.Click += new System.EventHandler(this.GetTableDetails_Click);
             // 
             // AddScript
             // 

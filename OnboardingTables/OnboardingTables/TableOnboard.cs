@@ -25,6 +25,7 @@ namespace OnboardingTables
 
         private void AddCheckList()
         {
+            ColumnList.Items.Clear();
             try
             {
                 foreach (DataRow rowColumn in schemaColumns)
@@ -57,8 +58,9 @@ namespace OnboardingTables
                 {
                     var ColumnName = (rowColumn[3].ToString());
                 }
-                AddCheckList();
+                connection.Close();
             }
+            AddCheckList();
         }
         public void CreateStgTable(string pathi, Microsoft.Build.Evaluation.Project p)
         {
@@ -117,7 +119,6 @@ namespace OnboardingTables
         }
         private void Submit_Click(object sender, EventArgs e)
         {
-            CreateColumnList();
             //string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\stg\MSSales\Table\" + TableName.Text + ".sql";
             //if (!File.Exists(path))
             //{
@@ -159,6 +160,11 @@ namespace OnboardingTables
         {
             AddingNewSource AddingNewSource = new AddingNewSource();
             AddingNewSource.Show();
+        }
+
+        private void GetTableDetails_Click(object sender, EventArgs e)
+        {
+            CreateColumnList();
         }
     }
 }
