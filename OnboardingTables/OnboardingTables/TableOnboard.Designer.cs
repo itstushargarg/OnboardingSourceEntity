@@ -51,6 +51,10 @@
             this.AddScript = new System.Windows.Forms.Button();
             this.ScriptName = new System.Windows.Forms.ComboBox();
             this.ChefScriptLabel = new System.Windows.Forms.Label();
+            this.ProcessIDLabel = new System.Windows.Forms.Label();
+            this.ProcessID = new System.Windows.Forms.TextBox();
+            this.CatalogIDLog = new System.Windows.Forms.Label();
+            this.CatalogID = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // Submit
@@ -252,11 +256,51 @@
             this.ChefScriptLabel.TabIndex = 23;
             this.ChefScriptLabel.Text = "Chef Script:";
             // 
+            // ProcessIDLabel
+            // 
+            this.ProcessIDLabel.AutoSize = true;
+            this.ProcessIDLabel.Location = new System.Drawing.Point(319, 189);
+            this.ProcessIDLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ProcessIDLabel.Name = "ProcessIDLabel";
+            this.ProcessIDLabel.Size = new System.Drawing.Size(62, 13);
+            this.ProcessIDLabel.TabIndex = 29;
+            this.ProcessIDLabel.Text = "Process ID:";
+            // 
+            // ProcessID
+            // 
+            this.ProcessID.Location = new System.Drawing.Point(132, 189);
+            this.ProcessID.Margin = new System.Windows.Forms.Padding(2);
+            this.ProcessID.Name = "ProcessID";
+            this.ProcessID.Size = new System.Drawing.Size(135, 20);
+            this.ProcessID.TabIndex = 28;
+            // 
+            // CatalogIDLog
+            // 
+            this.CatalogIDLog.AutoSize = true;
+            this.CatalogIDLog.Location = new System.Drawing.Point(13, 189);
+            this.CatalogIDLog.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.CatalogIDLog.Name = "CatalogIDLog";
+            this.CatalogIDLog.Size = new System.Drawing.Size(60, 13);
+            this.CatalogIDLog.TabIndex = 27;
+            this.CatalogIDLog.Text = "Catalog ID:";
+            // 
+            // CatalogID
+            // 
+            this.CatalogID.Location = new System.Drawing.Point(429, 186);
+            this.CatalogID.Margin = new System.Windows.Forms.Padding(2);
+            this.CatalogID.Name = "CatalogID";
+            this.CatalogID.Size = new System.Drawing.Size(93, 20);
+            this.CatalogID.TabIndex = 26;
+            // 
             // TableOnboarding
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(826, 473);
+            this.Controls.Add(this.ProcessIDLabel);
+            this.Controls.Add(this.ProcessID);
+            this.Controls.Add(this.CatalogIDLog);
+            this.Controls.Add(this.CatalogID);
             this.Controls.Add(this.AddScript);
             this.Controls.Add(this.ScriptName);
             this.Controls.Add(this.ChefScriptLabel);
@@ -309,6 +353,10 @@
         private System.Windows.Forms.Button AddScript;
         private System.Windows.Forms.ComboBox ScriptName;
         private System.Windows.Forms.Label ChefScriptLabel;
+        private System.Windows.Forms.Label ProcessIDLabel;
+        private System.Windows.Forms.TextBox ProcessID;
+        private System.Windows.Forms.Label CatalogIDLog;
+        private System.Windows.Forms.TextBox CatalogID;
     }
 }
 
