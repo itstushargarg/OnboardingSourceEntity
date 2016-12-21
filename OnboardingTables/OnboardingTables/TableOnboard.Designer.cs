@@ -57,11 +57,14 @@
             this.CatalogID = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ColumnList = new System.Windows.Forms.CheckedListBox();
+            this.PrimaryKeyColumns = new System.Windows.Forms.CheckedListBox();
+            this.PrimaryKeyLabel = new System.Windows.Forms.Label();
+            this.SelectPrimaryKey = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Submit
             // 
-            this.Submit.Location = new System.Drawing.Point(333, 395);
+            this.Submit.Location = new System.Drawing.Point(318, 389);
             this.Submit.Margin = new System.Windows.Forms.Padding(2);
             this.Submit.Name = "Submit";
             this.Submit.Size = new System.Drawing.Size(88, 26);
@@ -72,7 +75,7 @@
             // 
             // TableName
             // 
-            this.TableName.Location = new System.Drawing.Point(429, 155);
+            this.TableName.Location = new System.Drawing.Point(431, 155);
             this.TableName.Margin = new System.Windows.Forms.Padding(2);
             this.TableName.Name = "TableName";
             this.TableName.Size = new System.Drawing.Size(93, 20);
@@ -148,7 +151,7 @@
             // AddSource
             // 
             this.AddSource.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
-            this.AddSource.Location = new System.Drawing.Point(429, 62);
+            this.AddSource.Location = new System.Drawing.Point(431, 62);
             this.AddSource.Name = "AddSource";
             this.AddSource.Size = new System.Drawing.Size(75, 23);
             this.AddSource.TabIndex = 14;
@@ -191,7 +194,7 @@
             this.ServerName.Location = new System.Drawing.Point(132, 128);
             this.ServerName.Margin = new System.Windows.Forms.Padding(2);
             this.ServerName.Name = "ServerName";
-            this.ServerName.Size = new System.Drawing.Size(135, 20);
+            this.ServerName.Size = new System.Drawing.Size(158, 20);
             this.ServerName.TabIndex = 19;
             this.ServerName.Text = "SKYKOMISH";
             // 
@@ -207,7 +210,7 @@
             // 
             // DatabaseName
             // 
-            this.DatabaseName.Location = new System.Drawing.Point(429, 125);
+            this.DatabaseName.Location = new System.Drawing.Point(431, 125);
             this.DatabaseName.Margin = new System.Windows.Forms.Padding(2);
             this.DatabaseName.Name = "DatabaseName";
             this.DatabaseName.Size = new System.Drawing.Size(93, 20);
@@ -219,7 +222,7 @@
             this.SourceTableName.Location = new System.Drawing.Point(187, 155);
             this.SourceTableName.Margin = new System.Windows.Forms.Padding(2);
             this.SourceTableName.Name = "SourceTableName";
-            this.SourceTableName.Size = new System.Drawing.Size(80, 20);
+            this.SourceTableName.Size = new System.Drawing.Size(103, 20);
             this.SourceTableName.TabIndex = 21;
             this.SourceTableName.Text = "Area";
             // 
@@ -237,7 +240,7 @@
             // AddScript
             // 
             this.AddScript.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
-            this.AddScript.Location = new System.Drawing.Point(429, 94);
+            this.AddScript.Location = new System.Drawing.Point(431, 94);
             this.AddScript.Name = "AddScript";
             this.AddScript.Size = new System.Drawing.Size(75, 23);
             this.AddScript.TabIndex = 25;
@@ -279,7 +282,7 @@
             this.ProcessID.Location = new System.Drawing.Point(132, 189);
             this.ProcessID.Margin = new System.Windows.Forms.Padding(2);
             this.ProcessID.Name = "ProcessID";
-            this.ProcessID.Size = new System.Drawing.Size(135, 20);
+            this.ProcessID.Size = new System.Drawing.Size(158, 20);
             this.ProcessID.TabIndex = 28;
             // 
             // CatalogIDLog
@@ -294,7 +297,7 @@
             // 
             // CatalogID
             // 
-            this.CatalogID.Location = new System.Drawing.Point(429, 186);
+            this.CatalogID.Location = new System.Drawing.Point(431, 186);
             this.CatalogID.Margin = new System.Windows.Forms.Padding(2);
             this.CatalogID.Name = "CatalogID";
             this.CatalogID.Size = new System.Drawing.Size(93, 20);
@@ -314,14 +317,45 @@
             this.ColumnList.FormattingEnabled = true;
             this.ColumnList.Location = new System.Drawing.Point(132, 223);
             this.ColumnList.Name = "ColumnList";
-            this.ColumnList.Size = new System.Drawing.Size(135, 154);
+            this.ColumnList.Size = new System.Drawing.Size(158, 154);
             this.ColumnList.TabIndex = 31;
+            // 
+            // PrimaryKeyColumns
+            // 
+            this.PrimaryKeyColumns.FormattingEnabled = true;
+            this.PrimaryKeyColumns.Location = new System.Drawing.Point(431, 223);
+            this.PrimaryKeyColumns.Name = "PrimaryKeyColumns";
+            this.PrimaryKeyColumns.Size = new System.Drawing.Size(158, 154);
+            this.PrimaryKeyColumns.TabIndex = 33;
+            // 
+            // PrimaryKeyLabel
+            // 
+            this.PrimaryKeyLabel.AutoSize = true;
+            this.PrimaryKeyLabel.Location = new System.Drawing.Point(319, 223);
+            this.PrimaryKeyLabel.Name = "PrimaryKeyLabel";
+            this.PrimaryKeyLabel.Size = new System.Drawing.Size(65, 13);
+            this.PrimaryKeyLabel.TabIndex = 32;
+            this.PrimaryKeyLabel.Text = "Primary Key:";
+            // 
+            // SelectPrimaryKey
+            // 
+            this.SelectPrimaryKey.Location = new System.Drawing.Point(318, 288);
+            this.SelectPrimaryKey.Margin = new System.Windows.Forms.Padding(2);
+            this.SelectPrimaryKey.Name = "SelectPrimaryKey";
+            this.SelectPrimaryKey.Size = new System.Drawing.Size(88, 26);
+            this.SelectPrimaryKey.TabIndex = 34;
+            this.SelectPrimaryKey.Text = "Select PK";
+            this.SelectPrimaryKey.UseVisualStyleBackColor = true;
+            this.SelectPrimaryKey.Click += new System.EventHandler(this.SelectPrimaryKey_Click);
             // 
             // TableOnboarding
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(826, 473);
+            this.Controls.Add(this.SelectPrimaryKey);
+            this.Controls.Add(this.PrimaryKeyColumns);
+            this.Controls.Add(this.PrimaryKeyLabel);
             this.Controls.Add(this.ColumnList);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ProcessIDLabel);
@@ -386,6 +420,9 @@
         private System.Windows.Forms.TextBox CatalogID;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckedListBox ColumnList;
+        private System.Windows.Forms.CheckedListBox PrimaryKeyColumns;
+        private System.Windows.Forms.Label PrimaryKeyLabel;
+        private System.Windows.Forms.Button SelectPrimaryKey;
     }
 }
 

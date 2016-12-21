@@ -16,6 +16,7 @@ namespace OnboardingTables
     {
         public DataRowCollection sourceTableColumns;
         public DataRowCollection targetTableColumns;
+        public CheckedListBox.CheckedItemCollection TargetTableColumns;
         public static string SqlProjpath;
         public static string dbopath;
         public static string stgpath;
@@ -67,19 +68,31 @@ namespace OnboardingTables
         public void CreateStgTable()
         {
             string path = String.Format("{0}{1}\\Table\\{2}.sql", stgpath, SourceName.Text,TableName.Text);
-            projectPath.AddItem("Build", path);
-            projectPath.Save();
-            File.Create(path).Dispose();
-            var script = String.Format("CREATE Table [stg].[{0}]\n\t", TableName.Text);
-
+            //projectPath.AddItem("Build", path);
+            //projectPath.Save();
+            //File.Create(path).Dispose();
+            var script = String.Format("CREATE Table [stg].[{0}]", TableName.Text);
+            
+            //Building the Column List for the table
+            int i = 0;
+            string isNull = null;
+            string dataType = null;
             foreach (DataRow rowColumn in sourceTableColumns)
             {
-                //Gets the url name and path when the status is enabled. The status of Enabled / Disabled is setup in the users option page
-                string URLName = (rowColumn[3].ToString());
+                if(rowColumn[3].ToString() == ColumnList.CheckedItems[i].ToString())
+                {
+                    if(rowColumn[6].ToString() == "NO") isNull = "NOT NULL";
+                    else isNull = "NULL";
+                    var x = rowColumn[8].ToString();
+                    if (rowColumn[8].ToString() != "") dataType = String.Format("[{0}]({1})", rowColumn[7].ToString().ToUpper(), rowColumn[8].ToString());
+                    else dataType = rowColumn[7].ToString().ToUpper();
+                    script += String.Format("\n\t[{0}]\t\t\t{1}\t\t{2},", rowColumn[3].ToString(), dataType, isNull);
+                    string URLName = (rowColumn[3].ToString());
+                    i++;
+                }
                 //bool enabled = true;
-                ColumnList.Items.Add(URLName, true);
             }
-
+            script = script.Remove(script.Length - 1, 1);
 
 
 
@@ -88,7 +101,7 @@ namespace OnboardingTables
             using (TextWriter tw = new StreamWriter(path))
             {
 
-                tw.WriteLine("CREATE Table [stg].[" + TableName.Text +"]\nAS\nSELECT [AccountGroupingID]\n      ,[AccountGroupingName]\n      ,[FiscalYear]\n      ,[ICDIUpdatedBy]\n      ,[ICDIETLRunID]\n      ,[ICDIIsLocked]\n      ,[ICDILockedTillDate]\n      ,[HashPK]\n      ,[HashNonPK]\n      ,SysStartTime\n      ,SysEndTime\n  FROM [dbo].[AccountGrouping] WITH(NOLOCK)");
+                tw.WriteLine(script);
                 tw.Close();
             }
         }
@@ -210,6 +223,16 @@ namespace OnboardingTables
         private void GetTableDetails_Click(object sender, EventArgs e)
         {
             CreateColumnList();
+        }
+
+        private void SelectPrimaryKey_Click(object sender, EventArgs e)
+        {
+            PrimaryKeyColumns.Items.Clear();
+            TargetTableColumns = ColumnList.CheckedItems;
+            foreach (var columnName in ColumnList.CheckedItems)
+            {
+                PrimaryKeyColumns.Items.Add(columnName, false);
+            }
         }
     }
 }
