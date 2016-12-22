@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.Submit = new System.Windows.Forms.Button();
-            this.TableName = new System.Windows.Forms.TextBox();
+            this.TargetTableName = new System.Windows.Forms.TextBox();
             this.TargetTableNameLabel = new System.Windows.Forms.Label();
             this.SelectProject = new System.Windows.Forms.Button();
             this.BrowseProjectPath = new System.Windows.Forms.OpenFileDialog();
@@ -60,6 +60,7 @@
             this.PrimaryKeyColumns = new System.Windows.Forms.CheckedListBox();
             this.PrimaryKeyLabel = new System.Windows.Forms.Label();
             this.SelectPrimaryKey = new System.Windows.Forms.Button();
+            this.TemporalTable = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // Submit
@@ -73,14 +74,14 @@
             this.Submit.UseVisualStyleBackColor = true;
             this.Submit.Click += new System.EventHandler(this.Submit_Click);
             // 
-            // TableName
+            // TargetTableName
             // 
-            this.TableName.Location = new System.Drawing.Point(431, 155);
-            this.TableName.Margin = new System.Windows.Forms.Padding(2);
-            this.TableName.Name = "TableName";
-            this.TableName.Size = new System.Drawing.Size(93, 20);
-            this.TableName.TabIndex = 2;
-            this.TableName.Text = "AA_Area";
+            this.TargetTableName.Location = new System.Drawing.Point(431, 155);
+            this.TargetTableName.Margin = new System.Windows.Forms.Padding(2);
+            this.TargetTableName.Name = "TargetTableName";
+            this.TargetTableName.Size = new System.Drawing.Size(93, 20);
+            this.TargetTableName.TabIndex = 2;
+            this.TargetTableName.Text = "AA_Area";
             // 
             // TargetTableNameLabel
             // 
@@ -344,15 +345,26 @@
             this.SelectPrimaryKey.Name = "SelectPrimaryKey";
             this.SelectPrimaryKey.Size = new System.Drawing.Size(88, 26);
             this.SelectPrimaryKey.TabIndex = 34;
-            this.SelectPrimaryKey.Text = "Select PK";
+            this.SelectPrimaryKey.Text = "Select PK -->";
             this.SelectPrimaryKey.UseVisualStyleBackColor = true;
             this.SelectPrimaryKey.Click += new System.EventHandler(this.SelectPrimaryKey_Click);
+            // 
+            // TemporalTable
+            // 
+            this.TemporalTable.AutoSize = true;
+            this.TemporalTable.Location = new System.Drawing.Point(315, 344);
+            this.TemporalTable.Name = "TemporalTable";
+            this.TemporalTable.Size = new System.Drawing.Size(100, 17);
+            this.TemporalTable.TabIndex = 35;
+            this.TemporalTable.Text = "Temporal Table";
+            this.TemporalTable.UseVisualStyleBackColor = true;
             // 
             // TableOnboarding
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(826, 473);
+            this.Controls.Add(this.TemporalTable);
             this.Controls.Add(this.SelectPrimaryKey);
             this.Controls.Add(this.PrimaryKeyColumns);
             this.Controls.Add(this.PrimaryKeyLabel);
@@ -380,7 +392,7 @@
             this.Controls.Add(this.ProjectPath);
             this.Controls.Add(this.SelectProject);
             this.Controls.Add(this.TargetTableNameLabel);
-            this.Controls.Add(this.TableName);
+            this.Controls.Add(this.TargetTableName);
             this.Controls.Add(this.Submit);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "TableOnboarding";
@@ -393,7 +405,7 @@
         #endregion
 
         private System.Windows.Forms.Button Submit;
-        private System.Windows.Forms.TextBox TableName;
+        private System.Windows.Forms.TextBox TargetTableName;
         private System.Windows.Forms.Label TargetTableNameLabel;
         private System.Windows.Forms.Button SelectProject;
         private System.Windows.Forms.OpenFileDialog BrowseProjectPath;
@@ -423,6 +435,7 @@
         private System.Windows.Forms.CheckedListBox PrimaryKeyColumns;
         private System.Windows.Forms.Label PrimaryKeyLabel;
         private System.Windows.Forms.Button SelectPrimaryKey;
+        private System.Windows.Forms.CheckBox TemporalTable;
     }
 }
 

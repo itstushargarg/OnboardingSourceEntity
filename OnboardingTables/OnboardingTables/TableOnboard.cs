@@ -67,11 +67,11 @@ namespace OnboardingTables
         }
         public void CreateStgTable()
         {
-            string path = String.Format("{0}{1}\\Table\\{2}.sql", stgpath, SourceName.Text,TableName.Text);
-            //projectPath.AddItem("Build", path);
-            //projectPath.Save();
-            //File.Create(path).Dispose();
-            var script = String.Format("CREATE Table [stg].[{0}]", TableName.Text);
+            string path = String.Format("{0}{1}\\Table\\{2}.sql", stgpath, SourceName.Text,TargetTableName.Text);
+            projectPath.AddItem("Build", path);
+            projectPath.Save();
+            File.Create(path).Dispose();
+            String script = String.Format("CREATE Table [stg].[{0}]\n(", TargetTableName.Text);
             
             //Building the Column List for the table
             int i = 0;
@@ -85,73 +85,110 @@ namespace OnboardingTables
                     else isNull = "NULL";
                     var x = rowColumn[8].ToString();
                     if (rowColumn[8].ToString() != "") dataType = String.Format("[{0}]({1})", rowColumn[7].ToString().ToUpper(), rowColumn[8].ToString());
-                    else dataType = rowColumn[7].ToString().ToUpper();
+                    else dataType = String.Format("[{0}]",rowColumn[7].ToString().ToUpper());
                     script += String.Format("\n\t[{0}]\t\t\t{1}\t\t{2},", rowColumn[3].ToString(), dataType, isNull);
                     string URLName = (rowColumn[3].ToString());
                     i++;
                 }
-                //bool enabled = true;
             }
-            script = script.Remove(script.Length - 1, 1);
 
+            //Adding Primary Key Constraint
+            if (PrimaryKeyColumns.CheckedItems.Count == 0)
+            {
+                script = script.Remove(script.Length - 1, 1);
+            }
+            else
+            {
+                script += String.Format("\nCONSTRAINT [PK_{0}_{1}] PRIMARY KEY CLUSTERED\n(\n\t", TargetTableName.Text, PrimaryKeyColumns.CheckedItems[0]);
+                string pkColumns = null;
+                foreach (var pkColumn in PrimaryKeyColumns.CheckedItems)
+                {
+                    pkColumns += String.Format("[{0}],", pkColumn);
+                }
+                pkColumns = pkColumns.Remove(pkColumns.Length - 1, 1);
 
+                script += String.Format("{0} ASC\n)", pkColumns);
+            }
 
-
-
+            script += "\n) ON [stg_Filegroup] WITH (DATA_COMPRESSION = PAGE)";
             using (TextWriter tw = new StreamWriter(path))
             {
-
                 tw.WriteLine(script);
                 tw.Close();
             }
         }
 
-        public void CreateStgView(string pathi, Microsoft.Build.Evaluation.Project p)
+        public void CreateStgView()
         {
-            string path = String.Format("{0}{1}\\View\\{2}.sql", stgpath, SourceName.Text,TableName.Text);
+            string path = String.Format("{0}{1}\\View\\{2}.sql", stgpath, SourceName.Text,TargetTableName.Text);
             projectPath.AddItem("Build", path);
             projectPath.Save();
             File.Create(path).Dispose();
+            String script = String.Format("CREATE View [stg].[vw{0}]\nAS\nSELECT", TargetTableName.Text);
+            var index = script.Length;
+            foreach(String column in ColumnList.CheckedItems)
+            {
+                script += String.Format("\n\t,[{0}]", column);
+            }
+            //var x = script[index + 2];
+            script = script.Remove(index + 2, 1);
+
+            if (PrimaryKeyColumns.CheckedItems.Count == 0)
+            {
+                //HashRowKey
+                script += "\n\t,CONVERT(BINARY(16),HASHBYTES('md5', ";
+                index = script.Length;
+                foreach (String column in ColumnList.CheckedItems)
+                {
+                    script += String.Format("\n\t+ ISNULL(CONVERT(NVARCHAR,([{0}])),'^') + '|'", column);
+                }
+                script += "\n\t+ ISNULL(CONVERT(NVARCHAR,(SELECT CAST(ConfigValue AS SMALLINT) FROM [dbo].[Configuration] WITH (NOLOCK) WHERE ConfigName = 'CurrentFiscalYear')),'^'))) AS HashRowKey";
+            }
+            //var ax = script[index + 2];
+            script = script.Remove(index, 3);
+
+            script += String.Format("\n\t,(SELECT CAST(ConfigValue AS SMALLINT) FROM [dbo].[Configuration] WITH (NOLOCK) WHERE ConfigName = 'CurrentFiscalYear') AS FiscalYear\nFROM [stg].[{0}] WITH (NOLOCK)\nGO", TargetTableName.Text);
+
             using (TextWriter tw = new StreamWriter(path))
             {
-                tw.WriteLine("CREATE VIEW [stg].[vw" + TableName.Text + "]\nAS\nSELECT [AccountGroupingID]\n      ,[AccountGroupingName]\n      ,[FiscalYear]\n      ,[ICDIUpdatedBy]\n      ,[ICDIETLRunID]\n      ,[ICDIIsLocked]\n      ,[ICDILockedTillDate]\n      ,[HashPK]\n      ,[HashNonPK]\n      ,SysStartTime\n      ,SysEndTime\n  FROM [dbo].[AccountGrouping] WITH(NOLOCK)");
+                tw.WriteLine(script);
                 tw.Close();
             }
         }
 
         public void CreateDboTable(string pathi, Microsoft.Build.Evaluation.Project p)
         {
-            string path = String.Format("{0}{1}\\Table\\{2}.sql", dbopath, SourceName.Text,TableName.Text);
+            string path = String.Format("{0}{1}\\Table\\{2}.sql", dbopath, SourceName.Text,TargetTableName.Text);
             projectPath.AddItem("Build", path);
             projectPath.Save();
             File.Create(path).Dispose();
             using (TextWriter tw = new StreamWriter(path))
             {
-                tw.WriteLine("CREATE VIEW [dbo].[" + TableName.Text + "]\nAS\nSELECT [AccountGroupingID]\n      ,[AccountGroupingName]\n      ,[FiscalYear]\n      ,[ICDIUpdatedBy]\n      ,[ICDIETLRunID]\n      ,[ICDIIsLocked]\n      ,[ICDILockedTillDate]\n      ,[HashPK]\n      ,[HashNonPK]\n      ,SysStartTime\n      ,SysEndTime\n  FROM [dbo].[AccountGrouping] WITH(NOLOCK)");
+                tw.WriteLine("CREATE VIEW [dbo].[" + TargetTableName.Text + "]\nAS\nSELECT [AccountGroupingID]\n      ,[AccountGroupingName]\n      ,[FiscalYear]\n      ,[ICDIUpdatedBy]\n      ,[ICDIETLRunID]\n      ,[ICDIIsLocked]\n      ,[ICDILockedTillDate]\n      ,[HashPK]\n      ,[HashNonPK]\n      ,SysStartTime\n      ,SysEndTime\n  FROM [dbo].[AccountGrouping] WITH(NOLOCK)");
                 tw.Close();
             }
         }
 
         public void CreateDboView(string pathi, Microsoft.Build.Evaluation.Project p)
         {
-            string path = String.Format("{0}{1}\\View\\{2}.sql", dbopath, SourceName.Text,TableName.Text);
+            string path = String.Format("{0}{1}\\View\\{2}.sql", dbopath, SourceName.Text,TargetTableName.Text);
             projectPath.AddItem("Build", path);
             projectPath.Save();
             File.Create(path).Dispose();
             using (TextWriter tw = new StreamWriter(path))
             {
-                tw.WriteLine("CREATE VIEW [dbo].[" + TableName.Text + "]\nAS\nSELECT [AccountGroupingID]\n      ,[AccountGroupingName]\n      ,[FiscalYear]\n      ,[ICDIUpdatedBy]\n      ,[ICDIETLRunID]\n      ,[ICDIIsLocked]\n      ,[ICDILockedTillDate]\n      ,[HashPK]\n      ,[HashNonPK]\n      ,SysStartTime\n      ,SysEndTime\n  FROM [dbo].[AccountGrouping] WITH(NOLOCK)");
+                tw.WriteLine("CREATE VIEW [dbo].[" + TargetTableName.Text + "]\nAS\nSELECT [AccountGroupingID]\n      ,[AccountGroupingName]\n      ,[FiscalYear]\n      ,[ICDIUpdatedBy]\n      ,[ICDIETLRunID]\n      ,[ICDIIsLocked]\n      ,[ICDILockedTillDate]\n      ,[HashPK]\n      ,[HashNonPK]\n      ,SysStartTime\n      ,SysEndTime\n  FROM [dbo].[AccountGrouping] WITH(NOLOCK)");
                 tw.Close();
             }
         }
         private void Submit_Click(object sender, EventArgs e)
         {
 
-            string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\stg\MSSales\Table\" + TableName.Text + ".sql";
+            string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\stg\MSSales\Table\" + TargetTableName.Text + ".sql";
             if (!File.Exists(path))
             {
                 CreateStgTable();
-                //CreateStgView(path, projectPath);
+                CreateStgView();
                 //CreateDboTable(path, projectPath);
                 //CreateDboView(path, projectPath);
             }
