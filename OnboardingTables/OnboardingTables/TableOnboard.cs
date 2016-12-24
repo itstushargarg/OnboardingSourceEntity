@@ -33,10 +33,8 @@ namespace OnboardingTables
             {
                 foreach (DataRow rowColumn in sourceTableColumns)
                 {
-                    //Gets the url name and path when the status is enabled. The status of Enabled / Disabled is setup in the users option page
-                    string columnName = (rowColumn[3].ToString());
-                    //bool enabled = true;
-                    ColumnList.Items.Add(columnName, true);
+                    //Fetchting Column Names from the Source Table
+                    ColumnList.Items.Add(rowColumn[3].ToString(), true);
                 }
             }
             catch (Exception ex)
@@ -65,6 +63,63 @@ namespace OnboardingTables
             }
             AddCheckList();
         }
+
+        public void AddTableColumns(ref string script)
+        {
+            //Building the Column List for the table
+            int i = 0;
+            string isNull = null;
+            string dataType = null;
+            foreach (DataRow rowColumn in sourceTableColumns)
+            {
+                if (rowColumn[3].ToString() == ColumnList.CheckedItems[i].ToString())
+                {
+                    if (rowColumn[6].ToString() == "NO") isNull = "NOT NULL";
+                    else isNull = "NULL";
+                    var x = rowColumn[8].ToString();
+                    if (rowColumn[8].ToString() != "") dataType = String.Format("[{0}]({1})", rowColumn[7].ToString().ToUpper(), rowColumn[8].ToString());
+                    else if (rowColumn[12].ToString() != "" && rowColumn[12].ToString() != "0") dataType = String.Format("[{0}]({1},{2})", rowColumn[7].ToString().ToUpper(), rowColumn[10].ToString(), rowColumn[12].ToString());
+                    else dataType = String.Format("[{0}]", rowColumn[7].ToString().ToUpper());
+                    script += String.Format("\n\t[{0}]\t\t\t{1}\t\t{2},", rowColumn[3].ToString(), dataType, isNull);
+                    string URLName = (rowColumn[3].ToString());
+                    i++;
+                }
+            }
+        }
+
+        public void AddInhouseColumns(ref string script)
+        {
+            if (PrimaryKeyColumns.CheckedItems.Count > 0)
+            {
+                script += String.Format("\n\t[HashPK]\t[BINARY](16) NOT NULL,");
+                script += String.Format("\n\t[HashNonPK] [BINARY](16) NOT NULL,");
+            }
+            else
+            {
+                script += String.Format("\n\t[HashRowPK] [BINARY](16) NOT NULL,");
+            }
+            if (TemporalTableCheck.Checked)
+            {
+                script += String.Format("\n\t[ICDIUpdatedBy] [VARCHAR](50) NOT NULL CONSTRAINT [DF_{0}_ICDIUpdatedBy] DEFAULT SUSER_SNAME(),", TargetTableName.Text);
+                script += String.Format("\n\t[ICDIIsLocked] [BIT] NOT NULL CONSTRAINT [DF_{0}_ICDIIsLocked] DEFAULT 0,", TargetTableName.Text);
+                script += String.Format("\n\t[ICDILockedTillDate] [DATETIME] NULL,");
+                script += String.Format("\n\t[ICDIETLRunID] [INT] NOT NULL CONSTRAINT [DF_{0}_ICDIETLRunID] DEFAULT 0,", TargetTableName.Text);
+                script += String.Format("\n\t[SysStartTime] DATETIME2(0) GENERATED ALWAYS AS ROW START  DEFAULT GETUTCDATE() NOT NULL,");
+                script += String.Format("\n\t[SysEndTime] DATETIME2(0) GENERATED ALWAYS AS ROW END  DEFAULT CONVERT (DATETIME2, '9999-12-31 23:59:59.9999999') NOT NULL,");
+                script += String.Format("\n\tPERIOD FOR SYSTEM_TIME (SysStartTime, SysEndTime),");
+            }
+            else
+            {
+                script += String.Format("\n\t[ICDICreatedDate] [DATETIME] NOT NULL CONSTRAINT [DF_{0}_ICDICreatedDate] DEFAULT GETUTCDATE(),", TargetTableName.Text);
+                script += String.Format("\n\t[ICDICreatedBy] [VARCHAR](50) NOT NULL CONSTRAINT [DF_{0}_ICDICreatedBy] DEFAULT SUSER_SNAME(),", TargetTableName.Text);
+                script += String.Format("\n\t[ICDIUpdatedDate] [DATETIME] NOT NULL CONSTRAINT [DF_{0}_ICDIUpdatedDate] DEFAULT GETUTCDATE(),", TargetTableName.Text);
+                script += String.Format("\n\t[ICDIUpdatedBy] [VARCHAR](50) NOT NULL CONSTRAINT [DF_{0}_ICDIUpdatedBy] DEFAULT SUSER_SNAME(),", TargetTableName.Text);
+                script += String.Format("\n\t[ICDIIsDeleted] [BIT] NOT NULL CONSTRAINT [DF_{0}_ICDIIsDeleted] DEFAULT 0,", TargetTableName.Text);
+                script += String.Format("\n\t[ICDIETLRunID] [INT] NOT NULL CONSTRAINT [DF_{0}_ICDIETLRunID] DEFAULT 0,", TargetTableName.Text);
+                script += String.Format("\n\t[ICDIIsLocked] [BIT] NOT NULL CONSTRAINT [DF_{0}_ICDIIsLocked] DEFAULT 0,", TargetTableName.Text);
+                script += String.Format("\n\t[ICDILockedTillDate] [DATETIME] NULL,");
+            }
+        }
         public void CreateStgTable()
         {
             string path = String.Format("{0}{1}\\Table\\{2}.sql", stgpath, SourceName.Text,TargetTableName.Text);
@@ -72,25 +127,9 @@ namespace OnboardingTables
             projectPath.Save();
             File.Create(path).Dispose();
             String script = String.Format("CREATE Table [stg].[{0}]\n(", TargetTableName.Text);
-            
-            //Building the Column List for the table
-            int i = 0;
-            string isNull = null;
-            string dataType = null;
-            foreach (DataRow rowColumn in sourceTableColumns)
-            {
-                if(rowColumn[3].ToString() == ColumnList.CheckedItems[i].ToString())
-                {
-                    if(rowColumn[6].ToString() == "NO") isNull = "NOT NULL";
-                    else isNull = "NULL";
-                    var x = rowColumn[8].ToString();
-                    if (rowColumn[8].ToString() != "") dataType = String.Format("[{0}]({1})", rowColumn[7].ToString().ToUpper(), rowColumn[8].ToString());
-                    else dataType = String.Format("[{0}]",rowColumn[7].ToString().ToUpper());
-                    script += String.Format("\n\t[{0}]\t\t\t{1}\t\t{2},", rowColumn[3].ToString(), dataType, isNull);
-                    string URLName = (rowColumn[3].ToString());
-                    i++;
-                }
-            }
+
+
+            AddTableColumns(ref script);
 
             //Adding Primary Key Constraint
             if (PrimaryKeyColumns.CheckedItems.Count == 0)
@@ -143,12 +182,43 @@ namespace OnboardingTables
                     script += String.Format("\n\t+ ISNULL(CONVERT(NVARCHAR,([{0}])),'^') + '|'", column);
                 }
                 script += "\n\t+ ISNULL(CONVERT(NVARCHAR,(SELECT CAST(ConfigValue AS SMALLINT) FROM [dbo].[Configuration] WITH (NOLOCK) WHERE ConfigName = 'CurrentFiscalYear')),'^'))) AS HashRowKey";
+                //var ax = script[index + 2];
+                script = script.Remove(index, 3);
             }
-            //var ax = script[index + 2];
-            script = script.Remove(index, 3);
+            else
+            {
+                //HashPK and HashNonPK 
+                List<int> indices = PrimaryKeyColumns.CheckedIndices.OfType<int>().ToList();
+                String hashPK = null, hashNonPK = null;
+                hashPK += "\n\t,CONVERT(BINARY(16),HASHBYTES('md5', ";
+                hashNonPK += "\n\t,CONVERT(BINARY(16),HASHBYTES('md5', ";
+                index = hashPK.Length;
+                for (var i = 0; i < ColumnList.CheckedItems.Count; i++)
+                {
+                    if (indices.IndexOf(i) >= 0)
+                    {
+                        //HashPK
+                        hashPK += String.Format("\n\t+ ISNULL(CONVERT(NVARCHAR,([{0}])),'^') + '|'", ColumnList.CheckedItems[i]);
 
-            script += String.Format("\n\t,(SELECT CAST(ConfigValue AS SMALLINT) FROM [dbo].[Configuration] WITH (NOLOCK) WHERE ConfigName = 'CurrentFiscalYear') AS FiscalYear\nFROM [stg].[{0}] WITH (NOLOCK)\nGO", TargetTableName.Text);
-
+                    }
+                    else
+                    {
+                        //HashNonPK
+                        hashNonPK += String.Format("\n\t+ ISNULL(CONVERT(NVARCHAR,([{0}])),'^') + '|'", ColumnList.CheckedItems[i]);
+                    }
+                }
+                hashPK = hashPK.Remove(index, 3);
+                hashNonPK = hashNonPK.Remove(index, 3);
+                hashNonPK = hashNonPK.Remove(hashNonPK.Length - 6, 6);
+                hashPK += "\n\t+ ISNULL(CONVERT(NVARCHAR,(SELECT CAST(ConfigValue AS SMALLINT) FROM [dbo].[Configuration] WITH (NOLOCK) WHERE ConfigName = 'CurrentFiscalYear')),'^'))) AS HashPK";
+                hashNonPK += ")) AS HashNonPK";
+                script += hashPK + hashNonPK;
+            }
+            if(FiscalYearCheck.Checked)
+            {
+                script += String.Format("\n\t,(SELECT CAST(ConfigValue AS SMALLINT) FROM [dbo].[Configuration] WITH (NOLOCK) WHERE ConfigName = 'CurrentFiscalYear') AS FiscalYear");
+            }
+            script += String.Format("\nFROM [stg].[{0}] WITH (NOLOCK)\nGO", TargetTableName.Text);
             using (TextWriter tw = new StreamWriter(path))
             {
                 tw.WriteLine(script);
@@ -156,28 +226,112 @@ namespace OnboardingTables
             }
         }
 
-        public void CreateDboTable(string pathi, Microsoft.Build.Evaluation.Project p)
+        public void CreateDboTable()
         {
             string path = String.Format("{0}{1}\\Table\\{2}.sql", dbopath, SourceName.Text,TargetTableName.Text);
             projectPath.AddItem("Build", path);
             projectPath.Save();
             File.Create(path).Dispose();
+            String script = String.Format("CREATE Table [dbo].[{0}]\n(", TargetTableName.Text);
+
+            AddTableColumns(ref script);
+            if (FiscalYearCheck.Checked)
+            {
+                script += String.Format("\n\t[FiscalYear] [SMALLINT] NOT NULL,");
+            }
+            AddInhouseColumns(ref script);
+
+            //Adding Primary Key Constraint
+            if (PrimaryKeyColumns.CheckedItems.Count == 0)
+            {
+                script = script.Remove(script.Length - 1, 1);
+            }
+            else
+            {
+                script += String.Format("\nCONSTRAINT [PK_{0}_{1}] PRIMARY KEY CLUSTERED\n(\n\t", TargetTableName.Text, PrimaryKeyColumns.CheckedItems[0]);
+                string pkColumns = null;
+                foreach (var pkColumn in PrimaryKeyColumns.CheckedItems)
+                {
+                    pkColumns += String.Format("[{0}],", pkColumn);
+                }
+                if (FiscalYearCheck.Checked)
+                {
+                    pkColumns += String.Format("[FiscalYear],");
+                }
+                pkColumns = pkColumns.Remove(pkColumns.Length - 1, 1);
+
+                script += String.Format("{0} ASC\n)", pkColumns);
+            }
+
+            script += "\n) ON [dbo_Filegroup]";
+            if (TemporalTableCheck.Checked)
+            {
+                script += String.Format("\nWITH\n(\nSYSTEM_VERSIONING = ON (HISTORY_TABLE = History.{0}),\nDATA_COMPRESSION = PAGE\n)", TargetTableName.Text);
+            }
+            else
+            {
+                script += " WITH(DATA_COMPRESSION = PAGE)";
+            }
+            script += "\nGO";
             using (TextWriter tw = new StreamWriter(path))
             {
-                tw.WriteLine("CREATE VIEW [dbo].[" + TargetTableName.Text + "]\nAS\nSELECT [AccountGroupingID]\n      ,[AccountGroupingName]\n      ,[FiscalYear]\n      ,[ICDIUpdatedBy]\n      ,[ICDIETLRunID]\n      ,[ICDIIsLocked]\n      ,[ICDILockedTillDate]\n      ,[HashPK]\n      ,[HashNonPK]\n      ,SysStartTime\n      ,SysEndTime\n  FROM [dbo].[AccountGrouping] WITH(NOLOCK)");
+                tw.WriteLine(script);
                 tw.Close();
             }
         }
 
-        public void CreateDboView(string pathi, Microsoft.Build.Evaluation.Project p)
+        public void CreateDboView()
         {
             string path = String.Format("{0}{1}\\View\\{2}.sql", dbopath, SourceName.Text,TargetTableName.Text);
             projectPath.AddItem("Build", path);
             projectPath.Save();
             File.Create(path).Dispose();
+            String script = String.Format("CREATE View [dbo].[vw{0}]\nAS\nSELECT", TargetTableName.Text);
+            var index = script.Length;
+            //Adding Table Columns to the View
+            foreach (String column in ColumnList.CheckedItems)
+            {
+                script += String.Format("\n\t,[{0}]", column);
+            }
+            script = script.Remove(index + 2, 1);
+            if (FiscalYearCheck.Checked)
+            {
+                script += String.Format("\n\t,[FiscalYear]");
+            }
+            //
+            if (PrimaryKeyColumns.CheckedItems.Count > 0)
+            {
+                script += String.Format("\n\t,[HashPK]");
+                script += String.Format("\n\t,[HashNonPK]");
+            }
+            else
+            {
+                script += String.Format("\n\t,[HashRowPK]");
+            }
+            if (TemporalTableCheck.Checked)
+            {
+                script += String.Format("\n\t,[ICDIUpdatedBy]");
+                script += String.Format("\n\t,[ICDIIsLocked]");
+                script += String.Format("\n\t,[ICDILockedTillDate]");
+                script += String.Format("\n\t,[ICDIETLRunID]");
+                script += String.Format("\n\t,[SysStartTime]");
+                script += String.Format("\n\t,[SysEndTime]");
+            }
+            else
+            {
+                script += String.Format("\n\t,[ICDICreatedDate]");
+                script += String.Format("\n\t,[ICDICreatedBy]");
+                script += String.Format("\n\t,[ICDIUpdatedDate]");
+                script += String.Format("\n\t,[ICDIUpdatedBy]");
+                script += String.Format("\n\t,[ICDIIsDeleted]");
+                script += String.Format("\n\t,[ICDIETLRunID]");
+                script += String.Format("\n\t,[ICDIIsLocked]");
+                script += String.Format("\n\t,[ICDILockedTillDate]");
+            }
+            script += String.Format("\nFROM [dbo].[{0}] WITH (NOLOCK)\nGO", TargetTableName.Text);
             using (TextWriter tw = new StreamWriter(path))
             {
-                tw.WriteLine("CREATE VIEW [dbo].[" + TargetTableName.Text + "]\nAS\nSELECT [AccountGroupingID]\n      ,[AccountGroupingName]\n      ,[FiscalYear]\n      ,[ICDIUpdatedBy]\n      ,[ICDIETLRunID]\n      ,[ICDIIsLocked]\n      ,[ICDILockedTillDate]\n      ,[HashPK]\n      ,[HashNonPK]\n      ,SysStartTime\n      ,SysEndTime\n  FROM [dbo].[AccountGrouping] WITH(NOLOCK)");
+                tw.WriteLine(script);
                 tw.Close();
             }
         }
@@ -189,8 +343,8 @@ namespace OnboardingTables
             {
                 CreateStgTable();
                 CreateStgView();
-                //CreateDboTable(path, projectPath);
-                //CreateDboView(path, projectPath);
+                CreateDboTable();
+                CreateDboView();
             }
             else if (File.Exists(path))
             {

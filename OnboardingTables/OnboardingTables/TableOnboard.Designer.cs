@@ -60,7 +60,8 @@
             this.PrimaryKeyColumns = new System.Windows.Forms.CheckedListBox();
             this.PrimaryKeyLabel = new System.Windows.Forms.Label();
             this.SelectPrimaryKey = new System.Windows.Forms.Button();
-            this.TemporalTable = new System.Windows.Forms.CheckBox();
+            this.TemporalTableCheck = new System.Windows.Forms.CheckBox();
+            this.FiscalYearCheck = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // Submit
@@ -340,7 +341,7 @@
             // 
             // SelectPrimaryKey
             // 
-            this.SelectPrimaryKey.Location = new System.Drawing.Point(318, 288);
+            this.SelectPrimaryKey.Location = new System.Drawing.Point(318, 265);
             this.SelectPrimaryKey.Margin = new System.Windows.Forms.Padding(2);
             this.SelectPrimaryKey.Name = "SelectPrimaryKey";
             this.SelectPrimaryKey.Size = new System.Drawing.Size(88, 26);
@@ -349,22 +350,35 @@
             this.SelectPrimaryKey.UseVisualStyleBackColor = true;
             this.SelectPrimaryKey.Click += new System.EventHandler(this.SelectPrimaryKey_Click);
             // 
-            // TemporalTable
+            // TemporalTableCheck
             // 
-            this.TemporalTable.AutoSize = true;
-            this.TemporalTable.Location = new System.Drawing.Point(315, 344);
-            this.TemporalTable.Name = "TemporalTable";
-            this.TemporalTable.Size = new System.Drawing.Size(100, 17);
-            this.TemporalTable.TabIndex = 35;
-            this.TemporalTable.Text = "Temporal Table";
-            this.TemporalTable.UseVisualStyleBackColor = true;
+            this.TemporalTableCheck.AutoSize = true;
+            this.TemporalTableCheck.Location = new System.Drawing.Point(315, 344);
+            this.TemporalTableCheck.Name = "TemporalTableCheck";
+            this.TemporalTableCheck.Size = new System.Drawing.Size(100, 17);
+            this.TemporalTableCheck.TabIndex = 35;
+            this.TemporalTableCheck.Text = "Temporal Table";
+            this.TemporalTableCheck.UseVisualStyleBackColor = true;
+            // 
+            // FiscalYearCheck
+            // 
+            this.FiscalYearCheck.AutoSize = true;
+            this.FiscalYearCheck.Checked = true;
+            this.FiscalYearCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.FiscalYearCheck.Location = new System.Drawing.Point(315, 311);
+            this.FiscalYearCheck.Name = "FiscalYearCheck";
+            this.FiscalYearCheck.Size = new System.Drawing.Size(78, 17);
+            this.FiscalYearCheck.TabIndex = 36;
+            this.FiscalYearCheck.Text = "Fiscal Year";
+            this.FiscalYearCheck.UseVisualStyleBackColor = true;
             // 
             // TableOnboarding
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(826, 473);
-            this.Controls.Add(this.TemporalTable);
+            this.Controls.Add(this.FiscalYearCheck);
+            this.Controls.Add(this.TemporalTableCheck);
             this.Controls.Add(this.SelectPrimaryKey);
             this.Controls.Add(this.PrimaryKeyColumns);
             this.Controls.Add(this.PrimaryKeyLabel);
@@ -435,7 +449,8 @@
         private System.Windows.Forms.CheckedListBox PrimaryKeyColumns;
         private System.Windows.Forms.Label PrimaryKeyLabel;
         private System.Windows.Forms.Button SelectPrimaryKey;
-        private System.Windows.Forms.CheckBox TemporalTable;
+        private System.Windows.Forms.CheckBox TemporalTableCheck;
+        private System.Windows.Forms.CheckBox FiscalYearCheck;
     }
 }
 
