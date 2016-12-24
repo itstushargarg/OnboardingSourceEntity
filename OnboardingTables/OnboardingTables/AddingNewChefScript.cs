@@ -15,6 +15,7 @@ namespace OnboardingTables
     {
         public TableOnboarding tob;
         public static string ScriptName;
+        public static string chefpath;
         public AddingNewChefScript()
         {
             InitializeComponent();
@@ -24,11 +25,16 @@ namespace OnboardingTables
         {
             ScriptName = this.ChefScriptName.Text;
             String SourcePath = TableOnboarding.SqlProjpath;
-            String chefpath = SourcePath.Replace("DIDataManagement\\DIDataManagement.sqlproj", "CHEF.Customization\\dbo\\Scripts\\"+ ScriptName+".sql");
+            String chefsqlproj = TableOnboarding.ChefSqlProjpath;
+            String chefpath_filepath = SourcePath.Replace("DIDataManagement\\DIDataManagement\\DIDataManagement.sqlproj", "CHEF 5.1-SQL2016\\CHEF.Database\\CHEF\\Scripts\\Post-Deployment\\");
+            chefpath = SourcePath.Replace("DIDataManagement\\DIDataManagement\\DIDataManagement.sqlproj", "CHEF 5.1-SQL2016\\CHEF.Database\\CHEF\\Scripts\\Post-Deployment\\"+ ScriptName+".sql");
             File.Create(chefpath).Dispose();
-            var p = TableOnboarding.projectPath;
-            p.AddItem("Build", chefpath);
+            var p = TableOnboarding.chefprojectPath;
+            p.AddItem("None", "Scripts\\Post-Deployment\\" + ScriptName + ".sql");
             p.Save();
+            tob.ListofChefScripts(chefpath_filepath);
+            this.Close();
+            MessageBox.Show("The Source " + ScriptName + " Successfully added");
         }
     }
 }
