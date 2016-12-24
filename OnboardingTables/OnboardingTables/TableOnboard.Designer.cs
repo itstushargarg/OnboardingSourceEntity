@@ -49,17 +49,17 @@
             this.SourceTableName = new System.Windows.Forms.TextBox();
             this.GetTableDetails = new System.Windows.Forms.Button();
             this.AddScript = new System.Windows.Forms.Button();
-            this.ScriptName = new System.Windows.Forms.ComboBox();
             this.ChefScriptLabel = new System.Windows.Forms.Label();
             this.ProcessIDLabel = new System.Windows.Forms.Label();
-            this.ProcessID = new System.Windows.Forms.TextBox();
-            this.CatalogIDLog = new System.Windows.Forms.Label();
             this.CatalogID = new System.Windows.Forms.TextBox();
+            this.CatalogIDLabel = new System.Windows.Forms.Label();
+            this.ProcessID = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ColumnList = new System.Windows.Forms.CheckedListBox();
             this.PrimaryKeyColumns = new System.Windows.Forms.CheckedListBox();
             this.PrimaryKeyLabel = new System.Windows.Forms.Label();
             this.SelectPrimaryKey = new System.Windows.Forms.Button();
+            this.ScriptName = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // Submit
@@ -248,15 +248,6 @@
             this.AddScript.UseVisualStyleBackColor = true;
             this.AddScript.Click += new System.EventHandler(this.AddScript_Click);
             // 
-            // ScriptName
-            // 
-            this.ScriptName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ScriptName.Location = new System.Drawing.Point(132, 96);
-            this.ScriptName.Margin = new System.Windows.Forms.Padding(2);
-            this.ScriptName.Name = "ScriptName";
-            this.ScriptName.Size = new System.Drawing.Size(289, 21);
-            this.ScriptName.TabIndex = 24;
-            // 
             // ChefScriptLabel
             // 
             this.ChefScriptLabel.AutoSize = true;
@@ -277,31 +268,31 @@
             this.ProcessIDLabel.TabIndex = 29;
             this.ProcessIDLabel.Text = "Process ID:";
             // 
-            // ProcessID
-            // 
-            this.ProcessID.Location = new System.Drawing.Point(132, 189);
-            this.ProcessID.Margin = new System.Windows.Forms.Padding(2);
-            this.ProcessID.Name = "ProcessID";
-            this.ProcessID.Size = new System.Drawing.Size(158, 20);
-            this.ProcessID.TabIndex = 28;
-            // 
-            // CatalogIDLog
-            // 
-            this.CatalogIDLog.AutoSize = true;
-            this.CatalogIDLog.Location = new System.Drawing.Point(13, 189);
-            this.CatalogIDLog.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.CatalogIDLog.Name = "CatalogIDLog";
-            this.CatalogIDLog.Size = new System.Drawing.Size(60, 13);
-            this.CatalogIDLog.TabIndex = 27;
-            this.CatalogIDLog.Text = "Catalog ID:";
-            // 
             // CatalogID
             // 
-            this.CatalogID.Location = new System.Drawing.Point(431, 186);
+            this.CatalogID.Location = new System.Drawing.Point(132, 189);
             this.CatalogID.Margin = new System.Windows.Forms.Padding(2);
             this.CatalogID.Name = "CatalogID";
-            this.CatalogID.Size = new System.Drawing.Size(93, 20);
-            this.CatalogID.TabIndex = 26;
+            this.CatalogID.Size = new System.Drawing.Size(158, 20);
+            this.CatalogID.TabIndex = 28;
+            // 
+            // CatalogIDLabel
+            // 
+            this.CatalogIDLabel.AutoSize = true;
+            this.CatalogIDLabel.Location = new System.Drawing.Point(13, 189);
+            this.CatalogIDLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.CatalogIDLabel.Name = "CatalogIDLabel";
+            this.CatalogIDLabel.Size = new System.Drawing.Size(60, 13);
+            this.CatalogIDLabel.TabIndex = 27;
+            this.CatalogIDLabel.Text = "Catalog ID:";
+            // 
+            // ProcessID
+            // 
+            this.ProcessID.Location = new System.Drawing.Point(431, 186);
+            this.ProcessID.Margin = new System.Windows.Forms.Padding(2);
+            this.ProcessID.Name = "ProcessID";
+            this.ProcessID.Size = new System.Drawing.Size(93, 20);
+            this.ProcessID.TabIndex = 26;
             // 
             // label1
             // 
@@ -348,22 +339,31 @@
             this.SelectPrimaryKey.UseVisualStyleBackColor = true;
             this.SelectPrimaryKey.Click += new System.EventHandler(this.SelectPrimaryKey_Click);
             // 
+            // ScriptName
+            // 
+            this.ScriptName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ScriptName.Location = new System.Drawing.Point(132, 93);
+            this.ScriptName.Margin = new System.Windows.Forms.Padding(2);
+            this.ScriptName.Name = "ScriptName";
+            this.ScriptName.Size = new System.Drawing.Size(274, 21);
+            this.ScriptName.TabIndex = 35;
+            // 
             // TableOnboarding
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(826, 473);
+            this.Controls.Add(this.ScriptName);
             this.Controls.Add(this.SelectPrimaryKey);
             this.Controls.Add(this.PrimaryKeyColumns);
             this.Controls.Add(this.PrimaryKeyLabel);
             this.Controls.Add(this.ColumnList);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ProcessIDLabel);
-            this.Controls.Add(this.ProcessID);
-            this.Controls.Add(this.CatalogIDLog);
             this.Controls.Add(this.CatalogID);
+            this.Controls.Add(this.CatalogIDLabel);
+            this.Controls.Add(this.ProcessID);
             this.Controls.Add(this.AddScript);
-            this.Controls.Add(this.ScriptName);
             this.Controls.Add(this.ChefScriptLabel);
             this.Controls.Add(this.GetTableDetails);
             this.Controls.Add(this.SourceTableName);
@@ -412,17 +412,17 @@
         private System.Windows.Forms.TextBox SourceTableName;
         private System.Windows.Forms.Button GetTableDetails;
         private System.Windows.Forms.Button AddScript;
-        private System.Windows.Forms.ComboBox ScriptName;
         private System.Windows.Forms.Label ChefScriptLabel;
         private System.Windows.Forms.Label ProcessIDLabel;
+        private System.Windows.Forms.Label CatalogIDLabel;
         private System.Windows.Forms.TextBox ProcessID;
-        private System.Windows.Forms.Label CatalogIDLog;
-        private System.Windows.Forms.TextBox CatalogID;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckedListBox ColumnList;
         private System.Windows.Forms.CheckedListBox PrimaryKeyColumns;
         private System.Windows.Forms.Label PrimaryKeyLabel;
         private System.Windows.Forms.Button SelectPrimaryKey;
+        public System.Windows.Forms.TextBox CatalogID;
+        public System.Windows.Forms.ComboBox ScriptName;
     }
 }
 
