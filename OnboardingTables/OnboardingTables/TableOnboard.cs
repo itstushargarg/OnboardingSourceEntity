@@ -91,7 +91,7 @@ namespace OnboardingTables
 
         public void AddInhouseColumns(ref string script)
         {
-            if (PrimaryKeyColumns.CheckedItems.Count > 0)
+            if (PrimaryKeyColumns.CheckedItems.Count > 0 && PrimaryKeyColumns.CheckedItems.Count != ColumnList.CheckedItems.Count)
             {
                 script += String.Format("\n\t[HashPK]\t[BINARY](16) NOT NULL,");
                 script += String.Format("\n\t[HashNonPK] [BINARY](16) NOT NULL,");
@@ -134,7 +134,7 @@ namespace OnboardingTables
             AddTableColumns(ref script);
 
             //Adding Primary Key Constraint
-            if (PrimaryKeyColumns.CheckedItems.Count == 0)
+            if (PrimaryKeyColumns.CheckedItems.Count == 0 || PrimaryKeyColumns.CheckedItems.Count == ColumnList.CheckedItems.Count)
             {
                 script = script.Remove(script.Length - 1, 1);
             }
@@ -174,7 +174,7 @@ namespace OnboardingTables
             //var x = script[index + 2];
             script = script.Remove(index + 2, 1);
 
-            if (PrimaryKeyColumns.CheckedItems.Count == 0)
+            if (PrimaryKeyColumns.CheckedItems.Count == 0 || PrimaryKeyColumns.CheckedItems.Count == ColumnList.CheckedItems.Count)
             {
                 //HashRowKey
                 script += "\n\t,CONVERT(BINARY(16),HASHBYTES('md5', ";
@@ -183,7 +183,15 @@ namespace OnboardingTables
                 {
                     script += String.Format("\n\t+ ISNULL(CONVERT(NVARCHAR,([{0}])),'^') + '|'", column);
                 }
-                script += "\n\t+ ISNULL(CONVERT(NVARCHAR,(SELECT CAST(ConfigValue AS SMALLINT) FROM [dbo].[Configuration] WITH (NOLOCK) WHERE ConfigName = 'CurrentFiscalYear')),'^'))) AS HashRowKey";
+                if (FiscalYearCheck.Checked)
+                {
+                    script += "\n\t+ ISNULL(CONVERT(NVARCHAR,(SELECT CAST(ConfigValue AS SMALLINT) FROM [dbo].[Configuration] WITH (NOLOCK) WHERE ConfigName = 'CurrentFiscalYear')),'^'))) AS HashRowKey";
+                }
+                else
+                {
+                    script = script.Remove(script.Length - 6, 6);
+                    script += ")) AS HashRowKey";
+                }
                 //var ax = script[index + 2];
                 script = script.Remove(index, 3);
             }
@@ -212,7 +220,15 @@ namespace OnboardingTables
                 hashPK = hashPK.Remove(index, 3);
                 hashNonPK = hashNonPK.Remove(index, 3);
                 hashNonPK = hashNonPK.Remove(hashNonPK.Length - 6, 6);
-                hashPK += "\n\t+ ISNULL(CONVERT(NVARCHAR,(SELECT CAST(ConfigValue AS SMALLINT) FROM [dbo].[Configuration] WITH (NOLOCK) WHERE ConfigName = 'CurrentFiscalYear')),'^'))) AS HashPK";
+                if (FiscalYearCheck.Checked)
+                {
+                    hashPK += "\n\t+ ISNULL(CONVERT(NVARCHAR,(SELECT CAST(ConfigValue AS SMALLINT) FROM [dbo].[Configuration] WITH (NOLOCK) WHERE ConfigName = 'CurrentFiscalYear')),'^'))) AS HashPK";
+                }
+                else
+                {
+                    hashPK = hashPK.Remove(hashPK.Length - 6, 6);
+                    hashPK += ")) AS hashPK";
+                }
                 hashNonPK += ")) AS HashNonPK";
                 script += hashPK + hashNonPK;
             }
@@ -244,7 +260,7 @@ namespace OnboardingTables
             AddInhouseColumns(ref script);
 
             //Adding Primary Key Constraint
-            if (PrimaryKeyColumns.CheckedItems.Count == 0)
+            if (PrimaryKeyColumns.CheckedItems.Count == 0 || PrimaryKeyColumns.CheckedItems.Count == ColumnList.CheckedItems.Count)
             {
                 script = script.Remove(script.Length - 1, 1);
             }
@@ -301,7 +317,7 @@ namespace OnboardingTables
                 script += String.Format("\n\t,[FiscalYear]");
             }
             //
-            if (PrimaryKeyColumns.CheckedItems.Count > 0)
+            if (PrimaryKeyColumns.CheckedItems.Count > 0 && PrimaryKeyColumns.CheckedItems.Count != ColumnList.CheckedItems.Count)
             {
                 script += String.Format("\n\t,[HashPK]");
                 script += String.Format("\n\t,[HashNonPK]");
