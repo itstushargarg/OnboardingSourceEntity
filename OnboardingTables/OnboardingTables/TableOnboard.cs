@@ -98,7 +98,7 @@ namespace OnboardingTables
             }
             else
             {
-                script += String.Format("\n\t[HashRowPK] [BINARY](16) NOT NULL,");
+                script += String.Format("\n\t[HashRowKey] [BINARY](16) NOT NULL,");
             }
             if (TemporalTableCheck.Checked)
             {
@@ -324,7 +324,7 @@ namespace OnboardingTables
             }
             else
             {
-                script += String.Format("\n\t,[HashRowPK]");
+                script += String.Format("\n\t,[HashRowKey]");
             }
             if (TemporalTableCheck.Checked)
             {
@@ -379,6 +379,11 @@ namespace OnboardingTables
                 CreateDboTable();
                 CreateDboView();
                 CreateMetadataFile();
+                //Adding temporal table to TemporalSystemVersioning
+                if (TemporalTableCheck.Checked)
+                {
+                    string data = String.Format("\nUNION ALL SELECT '{0}'", TargetTableName.Text);
+                }
             }
             else if (File.Exists(path))
             {
