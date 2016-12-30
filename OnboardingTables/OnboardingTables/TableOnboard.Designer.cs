@@ -422,7 +422,7 @@
         private System.Windows.Forms.TextBox ProjectPath;
         private System.Windows.Forms.Button SelectProject;
         private System.Windows.Forms.Label SourceNameLabel;
-        private System.Windows.Forms.ComboBox SourceName;
+        public System.Windows.Forms.ComboBox SourceName;
         private System.Windows.Forms.Button AddSource;
         private System.Windows.Forms.Label ChefScriptLabel;
         public System.Windows.Forms.ComboBox ScriptName;

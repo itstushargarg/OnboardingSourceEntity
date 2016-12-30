@@ -58,7 +58,7 @@
             this.Submit.Location = new System.Drawing.Point(33, 199);
             this.Submit.Name = "Submit";
             this.Submit.Size = new System.Drawing.Size(75, 23);
-            this.Submit.TabIndex = 2;
+            this.Submit.TabIndex = 6;
             this.Submit.Text = "Submit";
             this.Submit.UseVisualStyleBackColor = true;
             this.Submit.Click += new System.EventHandler(this.Submit_Click);
@@ -68,7 +68,7 @@
             this.ConnectionString.Location = new System.Drawing.Point(136, 84);
             this.ConnectionString.Name = "ConnectionString";
             this.ConnectionString.Size = new System.Drawing.Size(641, 20);
-            this.ConnectionString.TabIndex = 4;
+            this.ConnectionString.TabIndex = 3;
             // 
             // ConnectionStringLabel
             // 
@@ -76,7 +76,7 @@
             this.ConnectionStringLabel.Location = new System.Drawing.Point(30, 87);
             this.ConnectionStringLabel.Name = "ConnectionStringLabel";
             this.ConnectionStringLabel.Size = new System.Drawing.Size(91, 13);
-            this.ConnectionStringLabel.TabIndex = 3;
+            this.ConnectionStringLabel.TabIndex = 2;
             this.ConnectionStringLabel.Text = "ConnectionString:";
             // 
             // FrequencyNumber
@@ -84,7 +84,8 @@
             this.FrequencyNumber.Location = new System.Drawing.Point(136, 131);
             this.FrequencyNumber.Name = "FrequencyNumber";
             this.FrequencyNumber.Size = new System.Drawing.Size(100, 20);
-            this.FrequencyNumber.TabIndex = 6;
+            this.FrequencyNumber.TabIndex = 5;
+            this.FrequencyNumber.Text = "1440";
             // 
             // FrequencyNumberLabel
             // 
@@ -92,7 +93,7 @@
             this.FrequencyNumberLabel.Location = new System.Drawing.Point(30, 134);
             this.FrequencyNumberLabel.Name = "FrequencyNumberLabel";
             this.FrequencyNumberLabel.Size = new System.Drawing.Size(97, 13);
-            this.FrequencyNumberLabel.TabIndex = 5;
+            this.FrequencyNumberLabel.TabIndex = 4;
             this.FrequencyNumberLabel.Text = "FrequencyNumber:";
             // 
             // AddingNewSource

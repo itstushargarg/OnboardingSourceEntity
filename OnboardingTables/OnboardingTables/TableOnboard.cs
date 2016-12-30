@@ -413,70 +413,12 @@ namespace OnboardingTables
                 tw.Close();
             }
         }
-
-        public void AddToSourceMaster()
-        {
-            String file = ChefSqlProjpath.Replace("CHEF.sqlproj", "Scripts\\Post-Deployment\\CHEF_SourceMaster_Insert.sql");
-            string data = String.Format("\n,('{0}'\t\t\t\t\t,1440	, DATEADD(MINUTE,1740,CONVERT(DATETIME, CONVERT(VARCHAR, GETDATE(), 101))) , 1 , 0 , 0 , NULL , DATEADD( MINUTE , -1440 , DATEADD(dd, 0, DATEDIFF(dd, 0, GETUTCDATE())) ),1);", SourceName.Text);
-            string text = File.ReadAllText(file);
-            int lastindex = text.LastIndexOf("GETUTCDATE()", StringComparison.OrdinalIgnoreCase);
-            lastindex += 12;
-            //Finding index of next newline character
-            while (text[lastindex] != '\n')
-            {
-                lastindex++;
-            }
-            text = text.Insert(lastindex, data);
-            using (TextWriter tw = new StreamWriter(file))
-            {
-                tw.Write(text);
-                tw.Close();
-            }
-        }
-        public void AddToProcessMonior()
-        {
-            //Checking if Catalog ID exists in the Table ProcessMonitor
-            var connectionString = String.Format("Data Source=AZICDEVDISQL1;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
-            SqlDataReader reader;
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string[] restrictions = new string[4] { null, "CHEF", "Configuration", null };
-                string queryString = String.Format("SELECT CatalogID FROM CHEF.ProcessMonitor Where CatalogID = {0};", CatalogID.Text);
-                SqlCommand command = new SqlCommand(queryString, connection);
-                connection.Open();
-                reader = command.ExecuteReader();
-                if (!reader.HasRows)
-                {
-                    String file = ChefSqlProjpath.Replace("CHEF.sqlproj", "Scripts\\Post-Deployment\\CHEF_ProcessMonitor_insert.sql");
-                    string data = String.Format("\nUNION ALL");
-                    data += String.Format("\nSELECT SourceMasterID, {0}, GETUTCDATE() , NULL FROM  [CHEF].[SourceMaster] WITH (NOLOCK) WHERE Sourcename ='{1}'", CatalogID.Text, SourceName.Text);
-                    string text = File.ReadAllText(file);
-                    int lastindex = text.LastIndexOf("Sourcename", StringComparison.OrdinalIgnoreCase);
-                    lastindex += 10;
-                    //Finding index of next newline character
-                    while (text[lastindex] != '\n')
-                    {
-                        lastindex++;
-                    }
-                    text = text.Insert(lastindex, data);
-                    using (TextWriter tw = new StreamWriter(file))
-                    {
-                        tw.Write(text);
-                        tw.Close();
-                    }
-                }
-                reader.Close();
-                connection.Close();
-            }
-        }
         public void Submit_Click(object sender, EventArgs e)
         {
             string path = @"C:\Users\tugar\Source\Repos\Sales-IC-Datamg-AthenaDataManagement\DIDataManagement\DIDataManagement\stg\MSSales\Table\" + TargetTableName.Text + ".sql";
             if (!File.Exists(path))
             {
                 CreateMetadataFile();
-                AddToProcessMonior();
-                AddToSourceMaster();
                 CreateStgTable();
                 CreateStgView();
                 CreateDboTable();
