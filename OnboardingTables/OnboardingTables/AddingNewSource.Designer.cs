@@ -85,6 +85,7 @@
             this.FrequencyNumber.Name = "FrequencyNumber";
             this.FrequencyNumber.Size = new System.Drawing.Size(100, 20);
             this.FrequencyNumber.TabIndex = 6;
+            this.FrequencyNumber.Text = "1440";
             // 
             // FrequencyNumberLabel
             // 

@@ -23,6 +23,16 @@ namespace OnboardingTables
 
         public void AddConnectionStringToChef()
         {
+            var connectionString = String.Format("Data Source=AZICDEVDISQL1;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string[] restrictions = new string[4] { null, "CHEF", "Configuration", null };
+                string queryString = String.Format("INSERT INTO CHEF.Configuration VALUES ('{0}', {1}, NULL, NULL, GETUTCDATE(), GETUTCDATE())", NewSourceName.Text, ConnectionString.Text);
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                var reader = command.ExecuteScalar();
+                connection.Close();
+            }
 
         }
 
