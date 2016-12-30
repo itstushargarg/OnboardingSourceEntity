@@ -323,6 +323,8 @@
             // TemporalTableCheck
             // 
             this.TemporalTableCheck.AutoSize = true;
+            this.TemporalTableCheck.Checked = true;
+            this.TemporalTableCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.TemporalTableCheck.Location = new System.Drawing.Point(315, 366);
             this.TemporalTableCheck.Name = "TemporalTableCheck";
             this.TemporalTableCheck.Size = new System.Drawing.Size(100, 17);
