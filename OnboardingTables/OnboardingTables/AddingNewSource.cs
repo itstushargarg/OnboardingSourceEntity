@@ -63,7 +63,7 @@ namespace OnboardingTables
             p.AddItem("Folder", FunctionsPath);
             p.AddItem("Folder", stgFunctionsPath);
             p.Save();
-            tob.ListofSources(dboPath);
+            tob.ListofSources();
             this.Close();
             MessageBox.Show("The Source " + SourceName + " Successfully added");
         }

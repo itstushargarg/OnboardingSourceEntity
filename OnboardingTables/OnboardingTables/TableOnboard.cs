@@ -124,7 +124,7 @@ namespace OnboardingTables
         }
         public void CreateStgTable()
         {
-            string path = String.Format("{0}{1}\\Table\\{2}.sql", stgpath, SourceName.Text,TargetTableName.Text);
+            string path = String.Format("{0}{1}\\Table\\{2}.sql", stgpath, TargetFolderName.Text,TargetTableName.Text);
             projectPath.AddItem("Build", path);
             projectPath.Save();
             File.Create(path).Dispose();
@@ -161,7 +161,7 @@ namespace OnboardingTables
 
         public void CreateStgView()
         {
-            string path = String.Format("{0}{1}\\View\\{2}.sql", stgpath, SourceName.Text,TargetTableName.Text);
+            string path = String.Format("{0}{1}\\View\\{2}.sql", stgpath, TargetFolderName.Text,TargetTableName.Text);
             projectPath.AddItem("Build", path);
             projectPath.Save();
             File.Create(path).Dispose();
@@ -246,7 +246,7 @@ namespace OnboardingTables
 
         public void CreateDboTable()
         {
-            string path = String.Format("{0}{1}\\Table\\{2}.sql", dbopath, SourceName.Text,TargetTableName.Text);
+            string path = String.Format("{0}{1}\\Table\\{2}.sql", dbopath, TargetFolderName.Text,TargetTableName.Text);
             projectPath.AddItem("Build", path);
             projectPath.Save();
             File.Create(path).Dispose();
@@ -300,7 +300,7 @@ namespace OnboardingTables
 
         public void CreateDboView()
         {
-            string path = String.Format("{0}{1}\\View\\{2}.sql", dbopath, SourceName.Text,TargetTableName.Text);
+            string path = String.Format("{0}{1}\\View\\{2}.sql", dbopath, TargetFolderName.Text,TargetTableName.Text);
             projectPath.AddItem("Build", path);
             projectPath.Save();
             File.Create(path).Dispose();
@@ -509,12 +509,13 @@ namespace OnboardingTables
             stgpath = ProjectPath.Text.Replace("DIDataManagement.sqlproj", "stg\\");
             SqlProjpath = ProjectPath.Text;
             projectPath = new Microsoft.Build.Evaluation.Project(SqlProjpath);
-            ListofSources(dbopath);
+            ListofSources();
+            ListOfFolders(dbopath);
             ListofChefScripts(chefpath);
             ChefSqlProjpath = ProjectPath.Text.Replace("\\DIDataManagement\\DIDataManagement\\DIDataManagement.sqlproj", "\\CHEF 5.1-SQL2016\\CHEF.Database\\CHEF\\CHEF.sqlproj");
             chefprojectPath = new Microsoft.Build.Evaluation.Project(ChefSqlProjpath);
         }
-        public void ListofSources(String dboFilePath)
+        public void ListofSources()
         {
             SourceName.Items.Clear();
             var connectionString = String.Format("Data Source=AZICDEVDISQL1;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
@@ -531,15 +532,20 @@ namespace OnboardingTables
                 }
                 connection.Close();
             }
-            //DirectoryInfo d = new DirectoryInfo(@dboFilePath);//Assuming Test is your Folder
-            //DirectoryInfo[] Files = d.GetDirectories();
-            //foreach (DirectoryInfo file in Files)
-            //{
-            //    if(file.Name!="Common" && file.Name != "Fact" && file.Name != "Dimension")
-            //        SourceName.Items.Add(file);
-            //}
 
             SourceName.Text = AddingNewSource.SourceName;
+        }
+
+        public void ListOfFolders(String dboFilePath)
+        {
+            TargetFolderName.Items.Clear();
+            DirectoryInfo d = new DirectoryInfo(@dboFilePath);//Assuming Test is your Folder
+            DirectoryInfo[] Files = d.GetDirectories();
+            foreach (DirectoryInfo file in Files)
+            {
+                if (file.Name != "Common" && file.Name != "Fact" && file.Name != "Dimension")
+                    TargetFolderName.Items.Add(file);
+            }
         }
         public void ListofChefScripts(String ChefFilePath)
         {
