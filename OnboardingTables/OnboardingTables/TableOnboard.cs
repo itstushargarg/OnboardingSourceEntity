@@ -48,9 +48,9 @@ namespace OnboardingTables
         }
 
 
-        private void CreateColumnList()
+        private void CreateColumnList(String connectionString)
         {
-            var connectionString = String.Format("Data Source={0};Initial Catalog={1};Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True", ServerName.Text, DatabaseName.Text);
+            //var connectionString = String.Format("Data Source={0};Initial Catalog={1};Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True", ServerName.Text, DatabaseName.Text);
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string[] restrictions = new string[4] { null, SourceSchemaName.Text, SourceTableName.Text, null };
@@ -516,15 +516,28 @@ namespace OnboardingTables
         }
         public void ListofSources(String dboFilePath)
         {
-
             SourceName.Items.Clear();
-            DirectoryInfo d = new DirectoryInfo(@dboFilePath);//Assuming Test is your Folder
-            DirectoryInfo[] Files = d.GetDirectories();
-            foreach (DirectoryInfo file in Files)
+            var connectionString = String.Format("Data Source=AZICDEVDISQL1;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                if(file.Name!="Common" && file.Name != "Fact" && file.Name != "Dimension")
-                    SourceName.Items.Add(file);
+                string[] restrictions = new string[4] { null, "CHEF", "Configuration", null };
+                string queryString = String.Format("SELECT ConfigKey FROM CHEF.Configuration WHERE TValue like 'Data%'");
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                var reader =  command.ExecuteReader();
+                while (reader.Read())
+                {
+                    SourceName.Items.Add(reader.GetString(0));
+                }
+                connection.Close();
             }
+            //DirectoryInfo d = new DirectoryInfo(@dboFilePath);//Assuming Test is your Folder
+            //DirectoryInfo[] Files = d.GetDirectories();
+            //foreach (DirectoryInfo file in Files)
+            //{
+            //    if(file.Name!="Common" && file.Name != "Fact" && file.Name != "Dimension")
+            //        SourceName.Items.Add(file);
+            //}
 
             SourceName.Text = AddingNewSource.SourceName;
         }
@@ -563,7 +576,31 @@ namespace OnboardingTables
 
         private void GetTableDetails_Click(object sender, EventArgs e)
         {
-            CreateColumnList();
+            var connectionString = String.Format("Data Source=AZICDEVDISQL1;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
+            String reader;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string[] restrictions = new string[4] { null, "CHEF", "Configuration", null };
+                string queryString = String.Format("SELECT TValue FROM CHEF.Configuration WHERE ConfigKey = '{0}'", SourceName.Text);
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                reader =(String) command.ExecuteScalar();
+                if (reader.Contains("Thumbprint"))
+                {
+                    SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(reader);
+                    if (builder.IntegratedSecurity == false)
+                    {
+                        ConnectionEncryption Decrypter = new ConnectionEncryption();
+                        builder.Password = Decrypter.DecryptString(builder.Password);
+                    }
+                    CreateColumnList(builder.ToString());
+                }
+                else
+                {
+                    CreateColumnList(ConnectionString.Text);
+                }
+                connection.Close();
+            }
         }
 
         private void SelectPrimaryKey_Click(object sender, EventArgs e)
@@ -576,6 +613,18 @@ namespace OnboardingTables
             }
         }
 
-
+        private void SourceName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var connectionString = String.Format("Data Source=AZICDEVDISQL1;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string[] restrictions = new string[4] { null, "CHEF", "Configuration", null };
+                string queryString = String.Format("SELECT TValue FROM CHEF.Configuration WHERE ConfigKey = '{0}'", SourceName.Text);
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                ConnectionString.Text = (String)command.ExecuteScalar();
+                connection.Close();
+            }
+        }
     }
 }

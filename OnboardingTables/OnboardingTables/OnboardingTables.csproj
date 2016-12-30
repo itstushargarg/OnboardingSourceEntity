@@ -36,6 +36,7 @@
     <Reference Include="Microsoft.Build" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,6 +60,7 @@
     <Compile Include="AddingNewSource.Designer.cs">
       <DependentUpon>AddingNewSource.cs</DependentUpon>
     </Compile>
+    <Compile Include="Encryption.cs" />
     <Compile Include="TableOnboard.cs">
       <SubType>Form</SubType>
     </Compile>
