@@ -61,6 +61,12 @@
       <DependentUpon>AddingNewSource.cs</DependentUpon>
     </Compile>
     <Compile Include="Encryption.cs" />
+    <Compile Include="AddingNewFolder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddingNewFolder.Designer.cs">
+      <DependentUpon>AddingNewFolder.cs</DependentUpon>
+    </Compile>
     <Compile Include="TableOnboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +80,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddingNewSource.resx">
       <DependentUpon>AddingNewSource.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddingNewFolder.resx">
+      <DependentUpon>AddingNewFolder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TableOnboard.resx">
       <DependentUpon>TableOnboard.cs</DependentUpon>

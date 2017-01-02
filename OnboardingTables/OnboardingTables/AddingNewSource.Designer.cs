@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.SourceNameLabel = new System.Windows.Forms.Label();
             this.NewSourceName = new System.Windows.Forms.TextBox();
             this.Submit = new System.Windows.Forms.Button();
             this.ConnectionString = new System.Windows.Forms.TextBox();
@@ -37,14 +37,14 @@
             this.FrequencyNumberLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // label1
+            // SourceNameLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(30, 40);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "SourceName:";
+            this.SourceNameLabel.AutoSize = true;
+            this.SourceNameLabel.Location = new System.Drawing.Point(30, 40);
+            this.SourceNameLabel.Name = "SourceNameLabel";
+            this.SourceNameLabel.Size = new System.Drawing.Size(75, 13);
+            this.SourceNameLabel.TabIndex = 0;
+            this.SourceNameLabel.Text = "Source Name:";
             // 
             // NewSourceName
             // 
@@ -55,7 +55,7 @@
             // 
             // Submit
             // 
-            this.Submit.Location = new System.Drawing.Point(33, 199);
+            this.Submit.Location = new System.Drawing.Point(33, 189);
             this.Submit.Name = "Submit";
             this.Submit.Size = new System.Drawing.Size(75, 23);
             this.Submit.TabIndex = 2;
@@ -75,9 +75,9 @@
             this.ConnectionStringLabel.AutoSize = true;
             this.ConnectionStringLabel.Location = new System.Drawing.Point(30, 87);
             this.ConnectionStringLabel.Name = "ConnectionStringLabel";
-            this.ConnectionStringLabel.Size = new System.Drawing.Size(91, 13);
+            this.ConnectionStringLabel.Size = new System.Drawing.Size(94, 13);
             this.ConnectionStringLabel.TabIndex = 3;
-            this.ConnectionStringLabel.Text = "ConnectionString:";
+            this.ConnectionStringLabel.Text = "Connection String:";
             // 
             // FrequencyNumber
             // 
@@ -92,22 +92,22 @@
             this.FrequencyNumberLabel.AutoSize = true;
             this.FrequencyNumberLabel.Location = new System.Drawing.Point(30, 134);
             this.FrequencyNumberLabel.Name = "FrequencyNumberLabel";
-            this.FrequencyNumberLabel.Size = new System.Drawing.Size(97, 13);
+            this.FrequencyNumberLabel.Size = new System.Drawing.Size(100, 13);
             this.FrequencyNumberLabel.TabIndex = 5;
-            this.FrequencyNumberLabel.Text = "FrequencyNumber:";
+            this.FrequencyNumberLabel.Text = "Frequency Number:";
             // 
             // AddingNewSource
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(811, 251);
+            this.ClientSize = new System.Drawing.Size(811, 243);
             this.Controls.Add(this.FrequencyNumber);
             this.Controls.Add(this.FrequencyNumberLabel);
             this.Controls.Add(this.ConnectionString);
             this.Controls.Add(this.ConnectionStringLabel);
             this.Controls.Add(this.Submit);
             this.Controls.Add(this.NewSourceName);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.SourceNameLabel);
             this.Name = "AddingNewSource";
             this.Text = "AddingNewSource";
             this.ResumeLayout(false);
@@ -117,7 +117,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label SourceNameLabel;
         private System.Windows.Forms.TextBox NewSourceName;
         private System.Windows.Forms.Button Submit;
         private System.Windows.Forms.TextBox ConnectionString;

@@ -62,6 +62,7 @@
             this.Submit = new System.Windows.Forms.Button();
             this.TargetFolderNameLabel = new System.Windows.Forms.Label();
             this.TargetFolderName = new System.Windows.Forms.ComboBox();
+            this.AddNewFolder = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ProjectPathLabel
@@ -374,11 +375,23 @@
             this.TargetFolderName.Size = new System.Drawing.Size(158, 21);
             this.TargetFolderName.TabIndex = 32;
             // 
+            // AddNewFolder
+            // 
+            this.AddNewFolder.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
+            this.AddNewFolder.Location = new System.Drawing.Point(552, 219);
+            this.AddNewFolder.Name = "AddNewFolder";
+            this.AddNewFolder.Size = new System.Drawing.Size(99, 23);
+            this.AddNewFolder.TabIndex = 33;
+            this.AddNewFolder.Text = "Add New Folder";
+            this.AddNewFolder.UseVisualStyleBackColor = true;
+            this.AddNewFolder.Click += new System.EventHandler(this.AddNewFolder_Click);
+            // 
             // TableOnboarding
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(826, 473);
+            this.Controls.Add(this.AddNewFolder);
             this.Controls.Add(this.TargetFolderName);
             this.Controls.Add(this.TargetFolderNameLabel);
             this.Controls.Add(this.ProjectPathLabel);
@@ -412,7 +425,7 @@
             this.Controls.Add(this.Submit);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "TableOnboarding";
-            this.Text = "0";
+            this.Text = "Table Onboarding";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -453,6 +466,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label TargetFolderNameLabel;
         private System.Windows.Forms.ComboBox TargetFolderName;
+        private System.Windows.Forms.Button AddNewFolder;
     }
 }
 
