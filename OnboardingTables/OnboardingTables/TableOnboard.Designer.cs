@@ -217,7 +217,7 @@
             this.SourceTableNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.SourceTableNameLabel.Name = "SourceTableNameLabel";
             this.SourceTableNameLabel.Size = new System.Drawing.Size(105, 13);
-            this.SourceTableNameLabel.TabIndex = 17;
+            this.SourceTableNameLabel.TabIndex = 15;
             this.SourceTableNameLabel.Text = "Source Table Name:";
             // 
             // SourceTableName
@@ -226,7 +226,7 @@
             this.SourceTableName.Margin = new System.Windows.Forms.Padding(2);
             this.SourceTableName.Name = "SourceTableName";
             this.SourceTableName.Size = new System.Drawing.Size(103, 20);
-            this.SourceTableName.TabIndex = 19;
+            this.SourceTableName.TabIndex = 17;
             this.SourceTableName.Text = "Area";
             // 
             // TargetTableNameLabel
@@ -236,7 +236,7 @@
             this.TargetTableNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.TargetTableNameLabel.Name = "TargetTableNameLabel";
             this.TargetTableNameLabel.Size = new System.Drawing.Size(102, 13);
-            this.TargetTableNameLabel.TabIndex = 20;
+            this.TargetTableNameLabel.TabIndex = 18;
             this.TargetTableNameLabel.Text = "Target Table Name:";
             // 
             // TargetTableName
@@ -245,7 +245,7 @@
             this.TargetTableName.Margin = new System.Windows.Forms.Padding(2);
             this.TargetTableName.Name = "TargetTableName";
             this.TargetTableName.Size = new System.Drawing.Size(93, 20);
-            this.TargetTableName.TabIndex = 21;
+            this.TargetTableName.TabIndex = 19;
             this.TargetTableName.Text = "AA_Area";
             // 
             // BrowseProjectPath
@@ -262,7 +262,7 @@
             this.SourceSchemaName.Margin = new System.Windows.Forms.Padding(2);
             this.SourceSchemaName.Name = "SourceSchemaName";
             this.SourceSchemaName.Size = new System.Drawing.Size(51, 20);
-            this.SourceSchemaName.TabIndex = 18;
+            this.SourceSchemaName.TabIndex = 16;
             this.SourceSchemaName.Text = "dbo";
             this.SourceSchemaName.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -272,7 +272,7 @@
             this.GetTableDetails.Margin = new System.Windows.Forms.Padding(2);
             this.GetTableDetails.Name = "GetTableDetails";
             this.GetTableDetails.Size = new System.Drawing.Size(99, 26);
-            this.GetTableDetails.TabIndex = 22;
+            this.GetTableDetails.TabIndex = 20;
             this.GetTableDetails.Text = "Get Table Details";
             this.GetTableDetails.UseVisualStyleBackColor = true;
             this.GetTableDetails.Click += new System.EventHandler(this.GetTableDetails_Click);
@@ -283,7 +283,7 @@
             this.ColumnListLabel.Location = new System.Drawing.Point(13, 252);
             this.ColumnListLabel.Name = "ColumnListLabel";
             this.ColumnListLabel.Size = new System.Drawing.Size(50, 13);
-            this.ColumnListLabel.TabIndex = 23;
+            this.ColumnListLabel.TabIndex = 24;
             this.ColumnListLabel.Text = "Columns:";
             // 
             // ColumnList
@@ -292,7 +292,7 @@
             this.ColumnList.Location = new System.Drawing.Point(132, 252);
             this.ColumnList.Name = "ColumnList";
             this.ColumnList.Size = new System.Drawing.Size(158, 154);
-            this.ColumnList.TabIndex = 24;
+            this.ColumnList.TabIndex = 25;
             // 
             // PrimaryKeyColumns
             // 
@@ -308,7 +308,7 @@
             this.PrimaryKeyLabel.Location = new System.Drawing.Point(319, 252);
             this.PrimaryKeyLabel.Name = "PrimaryKeyLabel";
             this.PrimaryKeyLabel.Size = new System.Drawing.Size(65, 13);
-            this.PrimaryKeyLabel.TabIndex = 25;
+            this.PrimaryKeyLabel.TabIndex = 26;
             this.PrimaryKeyLabel.Text = "Primary Key:";
             // 
             // SelectPrimaryKey
@@ -317,7 +317,7 @@
             this.SelectPrimaryKey.Margin = new System.Windows.Forms.Padding(2);
             this.SelectPrimaryKey.Name = "SelectPrimaryKey";
             this.SelectPrimaryKey.Size = new System.Drawing.Size(88, 26);
-            this.SelectPrimaryKey.TabIndex = 26;
+            this.SelectPrimaryKey.TabIndex = 28;
             this.SelectPrimaryKey.Text = "Select PK -->";
             this.SelectPrimaryKey.UseVisualStyleBackColor = true;
             this.SelectPrimaryKey.Click += new System.EventHandler(this.SelectPrimaryKey_Click);
@@ -330,7 +330,7 @@
             this.TemporalTableCheck.Location = new System.Drawing.Point(315, 366);
             this.TemporalTableCheck.Name = "TemporalTableCheck";
             this.TemporalTableCheck.Size = new System.Drawing.Size(100, 17);
-            this.TemporalTableCheck.TabIndex = 29;
+            this.TemporalTableCheck.TabIndex = 30;
             this.TemporalTableCheck.Text = "Temporal Table";
             this.TemporalTableCheck.UseVisualStyleBackColor = true;
             // 
@@ -342,7 +342,7 @@
             this.FiscalYearCheck.Location = new System.Drawing.Point(315, 333);
             this.FiscalYearCheck.Name = "FiscalYearCheck";
             this.FiscalYearCheck.Size = new System.Drawing.Size(78, 17);
-            this.FiscalYearCheck.TabIndex = 28;
+            this.FiscalYearCheck.TabIndex = 29;
             this.FiscalYearCheck.Text = "Fiscal Year";
             this.FiscalYearCheck.UseVisualStyleBackColor = true;
             // 
@@ -352,7 +352,7 @@
             this.Submit.Margin = new System.Windows.Forms.Padding(2);
             this.Submit.Name = "Submit";
             this.Submit.Size = new System.Drawing.Size(88, 26);
-            this.Submit.TabIndex = 30;
+            this.Submit.TabIndex = 31;
             this.Submit.Text = "Submit";
             this.Submit.UseVisualStyleBackColor = true;
             this.Submit.Click += new System.EventHandler(this.Submit_Click);
@@ -364,7 +364,7 @@
             this.TargetFolderNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.TargetFolderNameLabel.Name = "TargetFolderNameLabel";
             this.TargetFolderNameLabel.Size = new System.Drawing.Size(104, 13);
-            this.TargetFolderNameLabel.TabIndex = 31;
+            this.TargetFolderNameLabel.TabIndex = 21;
             this.TargetFolderNameLabel.Text = "Target Folder Name:";
             // 
             // TargetFolderName
@@ -374,7 +374,7 @@
             this.TargetFolderName.Margin = new System.Windows.Forms.Padding(2);
             this.TargetFolderName.Name = "TargetFolderName";
             this.TargetFolderName.Size = new System.Drawing.Size(158, 21);
-            this.TargetFolderName.TabIndex = 32;
+            this.TargetFolderName.TabIndex = 22;
             // 
             // AddNewFolder
             // 
@@ -382,7 +382,7 @@
             this.AddNewFolder.Location = new System.Drawing.Point(552, 219);
             this.AddNewFolder.Name = "AddNewFolder";
             this.AddNewFolder.Size = new System.Drawing.Size(99, 23);
-            this.AddNewFolder.TabIndex = 33;
+            this.AddNewFolder.TabIndex = 23;
             this.AddNewFolder.Text = "Add New Folder";
             this.AddNewFolder.UseVisualStyleBackColor = true;
             this.AddNewFolder.Click += new System.EventHandler(this.AddNewFolder_Click);

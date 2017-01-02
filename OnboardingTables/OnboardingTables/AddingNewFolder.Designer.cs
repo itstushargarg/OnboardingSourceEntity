@@ -38,7 +38,7 @@
             this.Submit.Location = new System.Drawing.Point(97, 100);
             this.Submit.Name = "Submit";
             this.Submit.Size = new System.Drawing.Size(75, 23);
-            this.Submit.TabIndex = 5;
+            this.Submit.TabIndex = 2;
             this.Submit.Text = "Submit";
             this.Submit.UseVisualStyleBackColor = true;
             this.Submit.Click += new System.EventHandler(this.Submit_Click);
@@ -48,7 +48,7 @@
             this.NewFolderName.Location = new System.Drawing.Point(152, 42);
             this.NewFolderName.Name = "NewFolderName";
             this.NewFolderName.Size = new System.Drawing.Size(100, 20);
-            this.NewFolderName.TabIndex = 4;
+            this.NewFolderName.TabIndex = 1;
             // 
             // FolderNameLabel
             // 
@@ -56,7 +56,7 @@
             this.FolderNameLabel.Location = new System.Drawing.Point(21, 45);
             this.FolderNameLabel.Name = "FolderNameLabel";
             this.FolderNameLabel.Size = new System.Drawing.Size(95, 13);
-            this.FolderNameLabel.TabIndex = 3;
+            this.FolderNameLabel.TabIndex = 0;
             this.FolderNameLabel.Text = "New Folder Name:";
             // 
             // AddingNewFolder
