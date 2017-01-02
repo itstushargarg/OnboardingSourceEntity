@@ -206,6 +206,7 @@
             this.ConnectionString.Location = new System.Drawing.Point(132, 162);
             this.ConnectionString.Margin = new System.Windows.Forms.Padding(2);
             this.ConnectionString.Name = "ConnectionString";
+            this.ConnectionString.ReadOnly = true;
             this.ConnectionString.Size = new System.Drawing.Size(392, 20);
             this.ConnectionString.TabIndex = 14;
             // 
