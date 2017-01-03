@@ -380,7 +380,7 @@ namespace OnboardingTables
                 columns += String.Format("[FiscalYear],");
             }
             columns = columns.Remove(columns.Length - 1, 1);
-            string xml = String.Format("SELECT\n\t{0},\n\t{1},\n\t'{2}\',\n\t1,\n\t'stg_{3}',", ProcessID.Text, CatalogID.Text, SourceName.Text, TargetTableName.Text);
+            string xml = String.Format("\n\tSELECT\n\t\t{0},\n\t\t{1},\n\t\t'{2}\',\n\t\t1,\n\t\t'stg_{3}',", ProcessID.Text, CatalogID.Text, SourceName.Text, TargetTableName.Text);
             xml += String.Format("\n\t\t'<CHEFMetaData ApplicationName =\"IncentiveCompensation\">");
             xml += String.Format("\n\t\t<Process ID = \"{0}\" Name=\"stg_{1}\" DefaultAllowTruncate = \"False\" VerboseLogging = \"False\" ExecuteExistingPackage = \"False\" >", ProcessID.Text, TargetTableName.Text);
             xml += String.Format("\n\t\t<ConnectionSet>");
@@ -401,7 +401,7 @@ namespace OnboardingTables
             xml += String.Format("\n\t\tSystem_User,");
             xml += String.Format("\n\t\tGetDate()");
             xml += String.Format("\nUNION ALL");
-            xml += String.Format("\n\n\tSELECT \n\t{0}, \n\t{1} ,\n\t'{2}',\n\t2, \n\t'dbo_{3}',", dboProcessid, CatalogID.Text, SourceName.Text, TargetTableName.Text);
+            xml += String.Format("\n\n\tSELECT \n\t\t{0}, \n\t\t{1} ,\n\t\t'{2}',\n\t\t2, \n\t\t'dbo_{3}',", dboProcessid, CatalogID.Text, SourceName.Text, TargetTableName.Text);
             xml += String.Format("\n\t\t'<CHEFMetaData ApplicationName=\"IncentiveCompensation\">");
             xml += String.Format("\n\t\t<Process ID = \"{0}\" Name = \"dbo_{1}\" DefaultAllowTruncate = \"False\" VerboseLogging = \"False\" ExecuteExistingPackage = \"False\" >", dboProcessid, TargetTableName.Text);
             xml += String.Format("\n\t\t<ConnectionSet>");
