@@ -380,8 +380,8 @@ namespace OnboardingTables
                 columns += String.Format("[FiscalYear],");
             }
             columns = columns.Remove(columns.Length - 1, 1);
-            string xml = String.Format("SELECT\n\t{0},\n\t{1},\n\t'{2}\',\n\t1,\n\t'stg_{3}'", ProcessID.Text, CatalogID.Text, SourceName.Text, TargetTableName.Text);
-            xml += String.Format("\n\t\t,'< CHEFMetaData ApplicationName =\"IncentiveCompensation\">");
+            string xml = String.Format("SELECT\n\t{0},\n\t{1},\n\t'{2}\',\n\t1,\n\t'stg_{3}',", ProcessID.Text, CatalogID.Text, SourceName.Text, TargetTableName.Text);
+            xml += String.Format("\n\t\t'<CHEFMetaData ApplicationName =\"IncentiveCompensation\">");
             xml += String.Format("\n\t\t<Process ID = \"{0}\" Name=\"stg_{1}\" DefaultAllowTruncate = \"False\" VerboseLogging = \"False\" ExecuteExistingPackage = \"False\" >", ProcessID.Text, TargetTableName.Text);
             xml += String.Format("\n\t\t<ConnectionSet>");
             xml += String.Format("\n\t\t<SQLConnection key = \"{0}\" />", SourceName.Text);
@@ -413,13 +413,16 @@ namespace OnboardingTables
             xml += String.Format("\n\t\t<Variable Name = \"ETLRunId\" DataType = \"String\" Value = \"\" />");
             xml += String.Format("\n\t\t</Variables>");
             xml += String.Format("\n\t\t<Step ID=\"{0}1\" Name=\"{1} Generate Merge Query\" TypeID=\"1\" TypeName=\"Staging\">", dboProcessid, TargetTableName.Text);
-            xml += String.Format("\n\t\t<SetVariables>\n<SetVariable SQLStatement = \"SELECT CHEF.fnETLRunID(''{0}'')\" TargetConnection = \"CHEF\">", SourceName.Text);
-            xml += String.Format("\n\t\t<ResultSet VariableName = \"ETLRunId\" Order = \"0\" />\n</SetVariable >");
+            xml += String.Format("\n\t\t<SetVariables>");
+            xml += String.Format("\n\t\t<SetVariable SQLStatement = \"SELECT CHEF.fnETLRunID(''{0}'')\" TargetConnection = \"CHEF\">", SourceName.Text);
+            xml += String.Format("\n\t\t<ResultSet VariableName = \"ETLRunId\" Order = \"0\" />");
+            xml += String.Format("\n\t\t</SetVariable>");
             xml += String.Format("\n\t\t<SetVariable SQLStatement = \"{0}\" TargetConnection = \"ICDDH\" >", mergeQuery);
             xml += String.Format("\n\t\t<ResultSet VariableName = \"MergeQuery\" Order = \"0\" />");
             xml += String.Format("\n\t\t</SetVariable>");
             xml += String.Format("\n\t\t</SetVariables>");
-            xml += String.Format("\n\t\t</Step>\n<Step ID=\"{0}2\" Name=\"{1} Execute Merge Query\" TypeID=\"1\" TypeName=\"Staging\">", dboProcessid, TargetTableName.Text);
+            xml += String.Format("\n\t\t</Step>");
+            xml += String.Format("\n\t\t<Step ID=\"{0}2\" Name=\"{1} Execute Merge Query\" TypeID=\"1\" TypeName=\"Staging\">", dboProcessid, TargetTableName.Text);
             xml += String.Format("\n\t\t<SQLTaskSet Name = \"Execute Merge\" TargetConnection = \"ICDDH\" RunParallel = \"False\" >");
             xml += String.Format("\n\t\t<SQLTask Name = \"Execute Merge\" SQLStatement = \"&quot;+@[CHEF::MergeQuery]+&quot;\" />");
             xml += String.Format("\n\t\t</SQLTaskSet>");
