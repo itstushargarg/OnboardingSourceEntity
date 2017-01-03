@@ -451,13 +451,16 @@ namespace OnboardingTables
                 int lastindex;
                 if (lastindexGetDate >= lastindexGetUtcDate)
                 {
-                    lastindex = lastindexGetDate;
+                    lastindex = lastindexGetDate + 9;
                 }
                 else
                 {
-                    lastindex = lastindexGetUtcDate;
+                    lastindex = lastindexGetUtcDate + 12;
                 }
-                lastindex += 12;
+                while (text[lastindex] != '\n')
+                {
+                    lastindex++;
+                }
                 text = text.Insert(lastindex, "\nUNION ALL\n" + xml);
                 string initialpart = text.Substring(0, lastindex + 12);
                 string lastpart = text.Substring(lastindex + 12);
