@@ -26,6 +26,7 @@ namespace OnboardingTables
         public TableOnboarding()
         {
             InitializeComponent();
+            ListofSources();
         }
 
         private void AddCheckList()
@@ -379,7 +380,57 @@ namespace OnboardingTables
                 columns += String.Format("[FiscalYear],");
             }
             columns = columns.Remove(columns.Length - 1, 1);
-            string xml = String.Format("SELECT\n {0},\n{1},\n'{2}\',\n1,\n'stg_{3}' \n,' < CHEFMetaData ApplicationName =\"IncentiveCompensation\">\n <Process ID = \"{0}\" Name=\"stg_{3}\" DefaultAllowTruncate = \"False\" VerboseLogging = \"False\" ExecuteExistingPackage = \"False\" > \n    <ConnectionSet>\n<SQLConnection key = \"{2}\" />\n<SQLConnection key = \"ICDDH\" />\n<SQLConnection key = \"CHEF\" />\n</ConnectionSet>\n  <Step ID=\"{0}1\" Name=\"{2}_{3}\" TypeID=\"1\" TypeName=\"Staging\"> \n<DataFlowSet Name=\"Loading {3}\" SourceConnection=\"{2}\" TargetConnection=\"ICDDH\" SourceType=\"SELECTSQL\" TargetType=\"Table\" PickColumnsFromTarget=\"True\" RunParallel=\"True\" TruncateOrDeleteBeforeInsert=\"Truncate\" DeleteFilterClause=\"\">\n <DataFlow Name=\"Populate {3}\" SourceName=\"{6}\" TargetName=\"[stg].[{3}]\" />\n</DataFlowSet>\n</Step>\n</Process>\n</CHEFMetaData>', \n0,\nSystem_User, \nGetDate(), \nSystem_User, \nGetDate() \nUNION ALL\n\n  SELECT \n{4}, \n{1} ,\n'{2}',\n 2, \n'dbo_{3}', \n'<CHEFMetaData ApplicationName=\"IncentiveCompensation\">\n<Process ID = \"{4}\" Name = \"dbo_{3}\" DefaultAllowTruncate = \"False\" VerboseLogging = \"False\" ExecuteExistingPackage = \"False\" >  \n  <ConnectionSet>\n<SQLConnection key = \"CHEF\" />\n<SQLConnection key = \"ICDDH\" />\n</ConnectionSet>\n<Variables>\n<Variable Name = \"MergeQuery\" DataType = \"String\" Value = \"\"/>\n<Variable Name = \"ETLRunId\" DataType = \"String\" Value = \"\" />\n</Variables><Step ID=\"{4}1\" Name=\"{3} Generate Merge Query\" TypeID=\"1\" TypeName=\"Staging\">\n<SetVariables>\n<SetVariable SQLStatement = \"SELECT CHEF.fnETLRunID(''{2}'')\" TargetConnection = \"CHEF\">\n<ResultSet VariableName = \"ETLRunId\" Order = \"0\" />\n</SetVariable >\n<SetVariable SQLStatement = \"{5}\" TargetConnection = \"ICDDH\" ><ResultSet VariableName = \"MergeQuery\" Order = \"0\" />\n</SetVariable>\n</SetVariables>\n</Step>\n<Step ID=\"{4}2\" Name=\"{3} Execute Merge Query\" TypeID=\"1\" TypeName=\"Staging\"><SQLTaskSet Name = \"Execute Merge\" TargetConnection = \"ICDDH\" RunParallel = \"False\" >\n<SQLTask Name = \"Execute Merge\" SQLStatement = \"&quot;+@[CHEF::MergeQuery]+&quot;\" />\n</SQLTaskSet>\n</Step>\n</Process>\n</CHEFMetaData>'\n,0\n,System_User\n,GetDate()\n,System_User\n,GetDate()\n", ProcessID.Text, CatalogID.Text, SourceName.Text, TargetTableName.Text, dboProcessid, mergeQuery, columns);
+            string xml = String.Format("SELECT\n\t{0},\n\t{1},\n\t'{2}\',\n\t1,\n\t'stg_{3}'", ProcessID.Text, CatalogID.Text, SourceName.Text, TargetTableName.Text);
+            xml += String.Format("\n\t\t,'< CHEFMetaData ApplicationName =\"IncentiveCompensation\">");
+            xml += String.Format("\n\t\t<Process ID = \"{0}\" Name=\"stg_{1}\" DefaultAllowTruncate = \"False\" VerboseLogging = \"False\" ExecuteExistingPackage = \"False\" >", ProcessID.Text, TargetTableName.Text);
+            xml += String.Format("\n\t\t<ConnectionSet>");
+            xml += String.Format("\n\t\t<SQLConnection key = \"{0}\" />", SourceName.Text);
+            xml += String.Format("\n\t\t<SQLConnection key = \"ICDDH\" />");
+            xml += String.Format("\n\t\t<SQLConnection key = \"CHEF\" />");
+            xml += String.Format("\n\t\t</ConnectionSet>");
+            xml += String.Format("\n\t\t<Step ID=\"{0}1\" Name=\"{1}_{2}\" TypeID=\"1\" TypeName=\"Staging\">", ProcessID.Text, SourceName.Text, TargetTableName.Text);
+            xml += String.Format("\n\t\t<DataFlowSet Name=\"Loading {0}\" SourceConnection=\"{1}\" TargetConnection=\"ICDDH\" SourceType=\"SELECTSQL\" TargetType=\"Table\" PickColumnsFromTarget=\"True\" RunParallel=\"True\" TruncateOrDeleteBeforeInsert=\"Truncate\" DeleteFilterClause=\"\">", TargetTableName.Text, SourceName.Text);
+            xml += String.Format("\n\t\t <DataFlow Name=\"Populate {0}\" SourceName=\"SELECT {1} FROM {2}.{3}  WITH (NOLOCK)\" TargetName=\"[stg].[{0}]\" />", TargetTableName.Text, columns, SourceSchemaName.Text, SourceTableName);
+            xml += String.Format("\n\t\t</DataFlowSet>");
+            xml += String.Format("\n\t\t</Step>");
+            xml += String.Format("\n\t\t</Process>");
+            xml += String.Format("\n\t\t</CHEFMetaData>',");
+            xml += String.Format("\n\t\t0,");
+            xml += String.Format("\n\t\tSystem_User,");
+            xml += String.Format("\n\t\tGetDate(),");
+            xml += String.Format("\n\t\tSystem_User,");
+            xml += String.Format("\n\t\tGetDate()");
+            xml += String.Format("\nUNION ALL");
+            xml += String.Format("\n\n\tSELECT \n\t{0}, \n\t{1} ,\n\t'{2}',\n\t2, \n\t'dbo_{3}',", dboProcessid, CatalogID.Text, SourceName.Text, TargetTableName.Text);
+            xml += String.Format("\n\t\t'<CHEFMetaData ApplicationName=\"IncentiveCompensation\">");
+            xml += String.Format("\n\t\t<Process ID = \"{0}\" Name = \"dbo_{1}\" DefaultAllowTruncate = \"False\" VerboseLogging = \"False\" ExecuteExistingPackage = \"False\" >", dboProcessid, TargetTableName.Text);
+            xml += String.Format("\n\t\t<ConnectionSet>");
+            xml += String.Format("\n\t\t<SQLConnection key = \"CHEF\" />");
+            xml += String.Format("\n\t\t<SQLConnection key = \"ICDDH\" />");
+            xml += String.Format("\n\t\t</ConnectionSet>");
+            xml += String.Format("\n\t\t<Variables>");
+            xml += String.Format("\n\t\t<Variable Name = \"MergeQuery\" DataType = \"String\" Value = \"\"/>");
+            xml += String.Format("\n\t\t<Variable Name = \"ETLRunId\" DataType = \"String\" Value = \"\" />");
+            xml += String.Format("\n\t\t</Variables>");
+            xml += String.Format("\n\t\t<Step ID=\"{0}1\" Name=\"{1} Generate Merge Query\" TypeID=\"1\" TypeName=\"Staging\">", dboProcessid, TargetTableName.Text);
+            xml += String.Format("\n\t\t<SetVariables>\n<SetVariable SQLStatement = \"SELECT CHEF.fnETLRunID(''{0}'')\" TargetConnection = \"CHEF\">", SourceName.Text);
+            xml += String.Format("\n\t\t<ResultSet VariableName = \"ETLRunId\" Order = \"0\" />\n</SetVariable >");
+            xml += String.Format("\n\t\t<SetVariable SQLStatement = \"{0}\" TargetConnection = \"ICDDH\" >", mergeQuery);
+            xml += String.Format("\n\t\t<ResultSet VariableName = \"MergeQuery\" Order = \"0\" />");
+            xml += String.Format("\n\t\t</SetVariable>");
+            xml += String.Format("\n\t\t</SetVariables>");
+            xml += String.Format("\n\t\t</Step>\n<Step ID=\"{0}2\" Name=\"{1} Execute Merge Query\" TypeID=\"1\" TypeName=\"Staging\">", dboProcessid, TargetTableName.Text);
+            xml += String.Format("\n\t\t<SQLTaskSet Name = \"Execute Merge\" TargetConnection = \"ICDDH\" RunParallel = \"False\" >");
+            xml += String.Format("\n\t\t<SQLTask Name = \"Execute Merge\" SQLStatement = \"&quot;+@[CHEF::MergeQuery]+&quot;\" />");
+            xml += String.Format("\n\t\t</SQLTaskSet>");
+            xml += String.Format("\n\t\t</Step>");
+            xml += String.Format("\n\t\t</Process>");
+            xml += String.Format("\n\t\t</CHEFMetaData>'");
+            xml += String.Format("\n\t\t,0");
+            xml += String.Format("\n\t\t,System_User");
+            xml += String.Format("\n\t\t,GetDate()");
+            xml += String.Format("\n\t\t,System_User");
+            xml += String.Format("\n\t\t,GetDate()\n");
             string data = String.Format("USE [$(DatabaseName)];\nGO\n--------------------------------------------------\n--Insert / Update / Delete script for table MetaData\n--------------------------------------------------\nSET NOCOUNT ON\nCREATE TABLE #MetaData\n(\n\n[ProcessID][int] NOT NULL,\n[CatalogID][int] NOT NULL,\n[CatalogName][varchar](128) NOT NULL,\n[Precedence][int] NOT NULL,\n[ProcessName][varchar](128) NOT NULL,\n[MetaData][xml] NOT NULL,\n[Type][tinyint] NOT NULL,\n[CreatedBy][varchar](32) NOT NULL CONSTRAINT[DF_MetaData_CreatedBy]  DEFAULT(left(suser_sname(), (32))),\n[CreatedDate][datetime] NOT NULL CONSTRAINT[DF_MetaData_CreatedDate]  DEFAULT(getdate()),\n[UpdatedBy][varchar](32) NOT NULL CONSTRAINT[DF_MetaData_UpdatedBy]  DEFAULT(left(suser_sname(), (32))),\n[UpdatedDate][datetime] NOT NULL CONSTRAINT[DF_MetaData_UpdatedDate]  DEFAULT(getdate())\n)\nGO\n DECLARE\n@vInsertedRows INT = 0\n, @vUpdatedRows INT = 0\n, @vDeletedRows INT = 0\n, @vNow         DATETIME\nSELECT @vNow = GETDATE()\n\n--------------------------------------------------\n-- Populate base temp table.\n--------------------------------------------------\nINSERT #MetaData\n([ProcessID],[CatalogID],[CatalogName],[Precedence],[ProcessName],[MetaData],[Type],[CreatedBy],[CreatedDate],[UpdatedBy],[UpdatedDate])\n-------------------------------------------------------\n-- Begin script transaction\n----------------------------------------------------\nBEGIN TRAN\n\n\n--------------------------------------------------\n-- UPDATE existing data.\n\n--------------------------------------------------\n-- Dev Note - Update will not update ' to NULL OR 0 to NULL\nUPDATE[CHEF].[MetaData]\nSET[CatalogName] = source.[CatalogName],\n[Precedence] = source.[Precedence],\n[ProcessName] = source.[ProcessName],\n [MetaData] = source.[MetaData],\n[Type] = source.[Type],\n[UpdatedBy] = source.[UpdatedBy],\n[UpdatedDate] = source.[UpdatedDate]\nFROM #MetaData source\nJOIN[CHEF].[MetaData] target\nON      source.ProcessID = target.ProcessID AND source.CatalogID = target.CatalogID\nAND(\nISNULL(source.[CatalogName], '') <> ISNULL(target.[CatalogName], '')\nOR  ISNULL(source.[Precedence], '') <> ISNULL(target.[Precedence], '')\nOR  ISNULL(source.[ProcessName], '') <> ISNULL(target.[ProcessName], '')\nOR  CONVERT(VARCHAR(MAX), source.[MetaData]) <> CONVERT(VARCHAR(MAX), target.[MetaData])\n\nOR  ISNULL(source.[Type], 0) <> ISNULL(target.[Type], 0)\nOR  ISNULL(source.[UpdatedBy], '') <> ISNULL(target.[UpdatedBy], ''))\n\nSELECT @vUpdatedRows = @@ROWCOUNT\n--------------------------------------------------\n-- Insert new data.{0}\n--------------------------------------------------\nINSERT[CHEF].[MetaData]([ProcessID],[CatalogID],[CatalogName],[Precedence],[ProcessName],[MetaData],[Type],[CreatedBy],[CreatedDate],[UpdatedBy],[UpdatedDate])\nSELECT[ProcessID],[CatalogID],[CatalogName],[Precedence],[ProcessName],[MetaData],[Type],[CreatedBy],[CreatedDate],[UpdatedBy],[UpdatedDate]\nFROM #MetaData source\nWHERE NOT EXISTS\n(\nSELECT* FROM [CHEF].[MetaData] target WHERE source.ProcessID = target.ProcessID AND source.CatalogID = target.CatalogID\n)\nSELECT @vInsertedRows = @@ROWCOUNT\nGOTO SuccessfulExit\nFailureExit:\nROLLBACK\nRETURN\nSuccessfulExit:\nPRINT 'Data for MetaData modified. Inserted: ' + CONVERT(VARCHAR(10), @vInsertedRows) + ' rows. Updated: ' + CONVERT(VARCHAR(10), @vUpdatedRows) + ' rows. Deleted: ' + CONVERT(VARCHAR(10), ISNULL(@vDeletedRows, 0)) + ' rows'\nCOMMIT\n--------------------------------------------------\n-- Drop temp table \n--------------------------------------------------\nGO\nDROP TABLE #MetaData\nGO\n", xml);
 
             if (new FileInfo(file).Length == 0)
@@ -392,7 +443,17 @@ namespace OnboardingTables
             {
                 //string breakpoint = "-----------------------------------------------------\n-- Begin script transaction\n---------------------------------------------------- - ";
                 string text = File.ReadAllText(file);
-                int lastindex = text.LastIndexOf("GETUTCDATE()", StringComparison.OrdinalIgnoreCase);
+                int lastindexGetDate = text.LastIndexOf("GETDATE()", StringComparison.OrdinalIgnoreCase);
+                int lastindexGetUtcDate = text.LastIndexOf("GETUTCDATE()", StringComparison.OrdinalIgnoreCase);
+                int lastindex;
+                if (lastindexGetDate >= lastindexGetUtcDate)
+                {
+                    lastindex = lastindexGetDate;
+                }
+                else
+                {
+                    lastindex = lastindexGetUtcDate;
+                }
                 lastindex += 12;
                 text = text.Insert(lastindex, "\nUNION ALL\n" + xml);
                 string initialpart = text.Substring(0, lastindex + 12);
@@ -500,7 +561,6 @@ namespace OnboardingTables
             stgpath = ProjectPath.Text.Replace("DIDataManagement.sqlproj", "stg\\");
             SqlProjpath = ProjectPath.Text;
             projectPath = new Microsoft.Build.Evaluation.Project(SqlProjpath);
-            ListofSources();
             ListOfFolders(dbopath);
             ListofChefScripts(chefpath);
             ChefSqlProjpath = ProjectPath.Text.Replace("\\DIDataManagement\\DIDataManagement\\DIDataManagement.sqlproj", "\\CHEF 5.1-SQL2016\\CHEF.Database\\CHEF\\CHEF.sqlproj");

@@ -16,16 +16,16 @@ namespace OnboardingTables
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new TableOnboarding());
-            try
-            {
-                Application.Run(new TableOnboarding());
-            }
-            catch (SystemException e)//just as an example 
-            {
-                //log or handle the error here. 
-                MessageBox.Show("Error encountered while processing. Please try again!");
-            }
+            Application.Run(new TableOnboarding());
+            //try
+            //{
+            //    Application.Run(new TableOnboarding());
+            //}
+            //catch (SystemException e)//just as an example 
+            //{
+            //    //log or handle the error here. 
+            //    MessageBox.Show("Error encountered while processing. Please try again!");
+            //}
         }
     }
 }
