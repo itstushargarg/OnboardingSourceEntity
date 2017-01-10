@@ -79,8 +79,12 @@ namespace OnboardingTables
                 {
                     if (rowColumn[6].ToString() == "NO") isNull = "NOT NULL";
                     else isNull = "NULL";
-                    var x = rowColumn[8].ToString();
-                    if (rowColumn[8].ToString() != "") dataType = String.Format("[{0}]({1})", rowColumn[7].ToString().ToUpper(), rowColumn[8].ToString());
+                    //var x = rowColumn[8].ToString();
+                    if (rowColumn[8].ToString() != "")
+                    {
+                        if(rowColumn[8].ToString() != "-1") dataType = String.Format("[{0}]({1})", rowColumn[7].ToString().ToUpper(), rowColumn[8].ToString());
+                        else dataType = String.Format("[{0}](max)", rowColumn[7].ToString().ToUpper());
+                    }
                     else if (rowColumn[12].ToString() != "" && rowColumn[12].ToString() != "0") dataType = String.Format("[{0}]({1},{2})", rowColumn[7].ToString().ToUpper(), rowColumn[10].ToString(), rowColumn[12].ToString());
                     else dataType = String.Format("[{0}]", rowColumn[7].ToString().ToUpper());
                     script += String.Format("\n\t[{0}]\t\t\t{1}\t\t{2},", rowColumn[3].ToString(), dataType, isNull);

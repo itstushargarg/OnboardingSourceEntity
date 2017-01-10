@@ -227,7 +227,6 @@
             this.SourceTableName.Name = "SourceTableName";
             this.SourceTableName.Size = new System.Drawing.Size(103, 20);
             this.SourceTableName.TabIndex = 17;
-            this.SourceTableName.Text = "Area";
             // 
             // TargetTableNameLabel
             // 
@@ -246,7 +245,6 @@
             this.TargetTableName.Name = "TargetTableName";
             this.TargetTableName.Size = new System.Drawing.Size(93, 20);
             this.TargetTableName.TabIndex = 19;
-            this.TargetTableName.Text = "AA_Area";
             // 
             // BrowseProjectPath
             // 
@@ -263,7 +261,6 @@
             this.SourceSchemaName.Name = "SourceSchemaName";
             this.SourceSchemaName.Size = new System.Drawing.Size(51, 20);
             this.SourceSchemaName.TabIndex = 16;
-            this.SourceSchemaName.Text = "dbo";
             this.SourceSchemaName.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // GetTableDetails
