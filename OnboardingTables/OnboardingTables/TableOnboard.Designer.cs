@@ -297,7 +297,7 @@
             this.PrimaryKeyColumns.Location = new System.Drawing.Point(431, 252);
             this.PrimaryKeyColumns.Name = "PrimaryKeyColumns";
             this.PrimaryKeyColumns.Size = new System.Drawing.Size(158, 154);
-            this.PrimaryKeyColumns.TabIndex = 27;
+            this.PrimaryKeyColumns.TabIndex = 28;
             // 
             // PrimaryKeyLabel
             // 
@@ -314,7 +314,7 @@
             this.SelectPrimaryKey.Margin = new System.Windows.Forms.Padding(2);
             this.SelectPrimaryKey.Name = "SelectPrimaryKey";
             this.SelectPrimaryKey.Size = new System.Drawing.Size(88, 26);
-            this.SelectPrimaryKey.TabIndex = 28;
+            this.SelectPrimaryKey.TabIndex = 27;
             this.SelectPrimaryKey.Text = "Select PK -->";
             this.SelectPrimaryKey.UseVisualStyleBackColor = true;
             this.SelectPrimaryKey.Click += new System.EventHandler(this.SelectPrimaryKey_Click);
