@@ -598,6 +598,44 @@ namespace OnboardingTables
             SourceName.Text = AddingNewSource.SourceName;
         }
 
+        public void ListOfTables()
+        {
+            string reader, connectionString;
+            reader = ConnectionString.Text;
+            var regexIsEncrypted = string.Format(@"\; *ENCRYPT *= *TRUE *\;");
+            if (Regex.IsMatch(reader.ToUpper(), regexIsEncrypted))
+            {
+                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(reader);
+                if (builder.IntegratedSecurity == false)
+                {
+                    ConnectionEncryption Decrypter = new ConnectionEncryption();
+                    builder.Password = Decrypter.DecryptString(builder.Password);
+                }
+                connectionString = builder.ToString();
+            }
+            else
+            {
+                connectionString = ConnectionString.Text;
+            }
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                List<string> tables = new List<string>();
+                DataTable dt = connection.GetSchema("Tables");
+                foreach (DataRow row in dt.Rows)
+                {
+                    string tablename = (string)row[2];
+                    tables.Add(tablename);
+                }
+                connection.Close();
+                AutoCompleteStringCollection allowedTypes = new AutoCompleteStringCollection();
+                allowedTypes.AddRange(tables.ToArray());
+                SourceTableName.AutoCompleteCustomSource = allowedTypes;
+                SourceTableName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                SourceTableName.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            }
+        }
+
         public void ListOfFolders(String dboFilePath)
         {
             TargetFolderName.Items.Clear();
@@ -650,31 +688,22 @@ namespace OnboardingTables
 
         private void GetTableDetails_Click(object sender, EventArgs e)
         {
-            var connectionString = String.Format("Data Source=AZICDEVDISQL1;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
             String reader;
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            reader = ConnectionString.Text;
+            var regexIsEncrypted = string.Format(@"\; *ENCRYPT *= *TRUE *\;");
+            if (Regex.IsMatch(reader.ToUpper(), regexIsEncrypted))
             {
-                string[] restrictions = new string[4] { null, "CHEF", "Configuration", null };
-                string queryString = String.Format("SELECT TValue FROM CHEF.Configuration WHERE ConfigKey = '{0}'", SourceName.Text);
-                SqlCommand command = new SqlCommand(queryString, connection);
-                connection.Open();
-                reader =(String) command.ExecuteScalar();
-                var regexIsEncrypted = string.Format(@"\; *ENCRYPT *= *TRUE *\;");
-                if(Regex.IsMatch(reader.ToUpper(), regexIsEncrypted))
+                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(reader);
+                if (builder.IntegratedSecurity == false)
                 {
-                    SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(reader);
-                    if (builder.IntegratedSecurity == false)
-                    {
-                        ConnectionEncryption Decrypter = new ConnectionEncryption();
-                        builder.Password = Decrypter.DecryptString(builder.Password);
-                    }
-                    CreateColumnList(builder.ToString());
+                    ConnectionEncryption Decrypter = new ConnectionEncryption();
+                    builder.Password = Decrypter.DecryptString(builder.Password);
                 }
-                else
-                {
-                    CreateColumnList(ConnectionString.Text);
-                }
-                connection.Close();
+                CreateColumnList(builder.ToString());
+            }
+            else
+            {
+                CreateColumnList(ConnectionString.Text);
             }
         }
 
@@ -699,6 +728,7 @@ namespace OnboardingTables
                 connection.Open();
                 ConnectionString.Text = (String)command.ExecuteScalar();
                 connection.Close();
+                ListOfTables();
             }
         }
     }
