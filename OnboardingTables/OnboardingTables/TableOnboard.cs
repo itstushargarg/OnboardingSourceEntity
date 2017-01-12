@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -394,7 +395,7 @@ namespace OnboardingTables
             xml += String.Format("\n\t\t    </ConnectionSet>");
             xml += String.Format("\n\t\t    <Step ID=\"{0}1\" Name=\"{1}_{2}\" TypeID=\"1\" TypeName=\"Staging\">", ProcessID.Text, SourceName.Text, TargetTableName.Text);
             xml += String.Format("\n\t\t      <DataFlowSet Name=\"Loading {0}\" SourceConnection=\"{1}\" TargetConnection=\"ICDDH\" SourceType=\"SELECTSQL\" TargetType=\"Table\" PickColumnsFromTarget=\"True\" RunParallel=\"True\" TruncateOrDeleteBeforeInsert=\"Truncate\" DeleteFilterClause=\"\">", TargetTableName.Text, SourceName.Text);
-            xml += String.Format("\n\t\t       <DataFlow Name=\"Populate {0}\" SourceName=\"SELECT {1} FROM {2}.{3}  WITH (NOLOCK)\" TargetName=\"[stg].[{0}]\" />", TargetTableName.Text, columns, SourceSchemaName.Text, SourceTableName);
+            xml += String.Format("\n\t\t       <DataFlow Name=\"Populate {0}\" SourceName=\"SELECT {1} FROM {2}.{3}  WITH (NOLOCK)\" TargetName=\"[stg].[{0}]\" />", TargetTableName.Text, columns, SourceSchemaName.Text, SourceTableName.Text);
             xml += String.Format("\n\t\t      </DataFlowSet>");
             xml += String.Format("\n\t\t    </Step>");
             xml += String.Format("\n\t\t  </Process>");
@@ -658,7 +659,8 @@ namespace OnboardingTables
                 SqlCommand command = new SqlCommand(queryString, connection);
                 connection.Open();
                 reader =(String) command.ExecuteScalar();
-                if (reader.Contains("Thumbprint"))
+                var regexIsEncrypted = string.Format(@"\; *ENCRYPT *= *TRUE *\;");
+                if(Regex.IsMatch(reader.ToUpper(), regexIsEncrypted))
                 {
                     SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(reader);
                     if (builder.IntegratedSecurity == false)
