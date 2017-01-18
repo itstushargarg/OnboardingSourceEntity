@@ -76,14 +76,14 @@ namespace OnboardingTables
             string dataType = null;
             foreach (DataRow rowColumn in sourceTableColumns)
             {
-                if (rowColumn[3].ToString() == ColumnList.CheckedItems[i].ToString())
+                if (i < ColumnList.CheckedItems.Count && rowColumn[3].ToString() == ColumnList.CheckedItems[i].ToString())
                 {
                     if (rowColumn[6].ToString() == "NO") isNull = "NOT NULL";
                     else isNull = "NULL";
                     //var x = rowColumn[8].ToString();
                     if (rowColumn[8].ToString() != "")
                     {
-                        if(rowColumn[8].ToString() != "-1") dataType = String.Format("[{0}]({1})", rowColumn[7].ToString().ToUpper(), rowColumn[8].ToString());
+                        if (rowColumn[8].ToString() != "-1") dataType = String.Format("[{0}]({1})", rowColumn[7].ToString().ToUpper(), rowColumn[8].ToString());
                         else dataType = String.Format("[{0}](max)", rowColumn[7].ToString().ToUpper());
                     }
                     else if (rowColumn[12].ToString() != "" && rowColumn[12].ToString() != "0") dataType = String.Format("[{0}]({1},{2})", rowColumn[7].ToString().ToUpper(), rowColumn[10].ToString(), rowColumn[12].ToString());
@@ -134,7 +134,8 @@ namespace OnboardingTables
             projectPath.AddItem("Build", path);
             projectPath.Save();
             File.Create(path).Dispose();
-            String script = String.Format("CREATE Table [stg].[{0}]\n(", TargetTableName.Text);
+            String script = String.Format("--This code is generated using TOT(Table Onboarding Tool)");
+            script += String.Format("\nCREATE Table [stg].[{0}]\n(", TargetTableName.Text);
 
 
             AddTableColumns(ref script);
@@ -167,11 +168,12 @@ namespace OnboardingTables
 
         public void CreateStgView()
         {
-            string path = String.Format("{0}{1}\\View\\{2}.sql", stgpath, TargetFolderName.Text,TargetTableName.Text);
+            string path = String.Format("{0}{1}\\View\\vw{2}.sql", stgpath, TargetFolderName.Text,TargetTableName.Text);
             projectPath.AddItem("Build", path);
             projectPath.Save();
             File.Create(path).Dispose();
-            String script = String.Format("CREATE View [stg].[vw{0}]\nAS\nSELECT", TargetTableName.Text);
+            String script = String.Format("--This code is generated using TOT(Table Onboarding Tool)");
+            script += String.Format("\nCREATE View [stg].[vw{0}]\nAS\nSELECT", TargetTableName.Text);
             var index = script.Length;
             foreach(String column in ColumnList.CheckedItems)
             {
@@ -256,7 +258,8 @@ namespace OnboardingTables
             projectPath.AddItem("Build", path);
             projectPath.Save();
             File.Create(path).Dispose();
-            String script = String.Format("CREATE Table [dbo].[{0}]\n(", TargetTableName.Text);
+            String script = String.Format("--This code is generated using TOT(Table Onboarding Tool)");
+            script += String.Format("\nCREATE Table [dbo].[{0}]\n(", TargetTableName.Text);
 
             AddTableColumns(ref script);
             if (FiscalYearCheck.Checked)
@@ -306,11 +309,12 @@ namespace OnboardingTables
 
         public void CreateDboView()
         {
-            string path = String.Format("{0}{1}\\View\\{2}.sql", dbopath, TargetFolderName.Text,TargetTableName.Text);
+            string path = String.Format("{0}{1}\\View\\vw{2}.sql", dbopath, TargetFolderName.Text,TargetTableName.Text);
             projectPath.AddItem("Build", path);
             projectPath.Save();
             File.Create(path).Dispose();
-            String script = String.Format("CREATE View [dbo].[vw{0}]\nAS\nSELECT", TargetTableName.Text);
+            String script = String.Format("--This code is generated using TOT(Table Onboarding Tool)");
+            script += String.Format("\nCREATE View [dbo].[vw{0}]\nAS\nSELECT", TargetTableName.Text);
             var index = script.Length;
             //Adding Table Columns to the View
             foreach (String column in ColumnList.CheckedItems)
@@ -385,7 +389,9 @@ namespace OnboardingTables
                 columns += String.Format("[FiscalYear],");
             }
             columns = columns.Remove(columns.Length - 1, 1);
-            string xml = String.Format("\n\tSELECT\n\t\t{0},\n\t\t{1},\n\t\t'{2}\',\n\t\t1,\n\t\t'stg_{3}',", ProcessID.Text, CatalogID.Text, SourceName.Text, TargetTableName.Text);
+            string xml = "";
+            xml += String.Format("\n\t--This code is generated using TOT(Table Onboarding Tool)");
+            xml += String.Format("\n\tSELECT\n\t\t{0},\n\t\t{1},\n\t\t'{2}\',\n\t\t1,\n\t\t'stg_{3}',", ProcessID.Text, CatalogID.Text, SourceName.Text, TargetTableName.Text);
             xml += String.Format("\n\t\t'<CHEFMetaData ApplicationName =\"IncentiveCompensation\">");
             xml += String.Format("\n\t\t  <Process ID = \"{0}\" Name=\"stg_{1}\" DefaultAllowTruncate = \"False\" VerboseLogging = \"False\" ExecuteExistingPackage = \"False\" >", ProcessID.Text, TargetTableName.Text);
             xml += String.Format("\n\t\t    <ConnectionSet>");
@@ -406,7 +412,8 @@ namespace OnboardingTables
             xml += String.Format("\n\t\tSystem_User,");
             xml += String.Format("\n\t\tGetDate()");
             xml += String.Format("\n\nUNION ALL");
-            xml += String.Format("\n\n\tSELECT \n\t\t{0}, \n\t\t{1} ,\n\t\t'{2}',\n\t\t2, \n\t\t'dbo_{3}',", dboProcessid, CatalogID.Text, SourceName.Text, TargetTableName.Text);
+            xml += String.Format("\n\n\t--This code is generated using TOT(Table Onboarding Tool)");
+            xml += String.Format("\n\tSELECT \n\t\t{0}, \n\t\t{1} ,\n\t\t'{2}',\n\t\t2, \n\t\t'dbo_{3}',", dboProcessid, CatalogID.Text, SourceName.Text, TargetTableName.Text);
             xml += String.Format("\n\t\t'<CHEFMetaData ApplicationName=\"IncentiveCompensation\">");
             xml += String.Format("\n\t\t  <Process ID = \"{0}\" Name = \"dbo_{1}\" DefaultAllowTruncate = \"False\" VerboseLogging = \"False\" ExecuteExistingPackage = \"False\" >", dboProcessid, TargetTableName.Text);
             xml += String.Format("\n\t\t    <ConnectionSet>");
