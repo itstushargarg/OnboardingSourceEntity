@@ -67,6 +67,12 @@
     <Compile Include="AddingNewFolder.Designer.cs">
       <DependentUpon>AddingNewFolder.cs</DependentUpon>
     </Compile>
+    <Compile Include="StartingPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StartingPage.Designer.cs">
+      <DependentUpon>StartingPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="TableOnboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddingNewFolder.resx">
       <DependentUpon>AddingNewFolder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StartingPage.resx">
+      <DependentUpon>StartingPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TableOnboard.resx">
       <DependentUpon>TableOnboard.cs</DependentUpon>

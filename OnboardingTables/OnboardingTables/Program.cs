@@ -16,7 +16,7 @@ namespace OnboardingTables
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TableOnboarding());
+            Application.Run(new StartingPage());
             //try
             //{
             //    Application.Run(new TableOnboarding());
