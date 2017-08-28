@@ -24,7 +24,7 @@ namespace OnboardingTables
 
         public void AddConnectionStringToChef()
         {
-            var connectionString = String.Format("Data Source=AZICDEVDISQL1;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
+            var connectionString = String.Format("Data Source=AZICUATDIWSQl2;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string[] restrictions = new string[4] { null, "CHEF", "Configuration", null };
@@ -41,7 +41,7 @@ namespace OnboardingTables
         public void AddToSourceMaster()
         {
             //Checking if Catalog ID exists in the Table ProcessMonitor
-            var connectionString = String.Format("Data Source=AZICDEVDISQL1;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
+            var connectionString = String.Format("Data Source=AZICUATDIWSQl2;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
             SqlDataReader reader;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
