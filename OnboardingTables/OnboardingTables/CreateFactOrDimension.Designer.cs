@@ -83,6 +83,7 @@
             // TablesList
             // 
             this.TablesList.FormattingEnabled = true;
+            this.TablesList.HorizontalScrollbar = true;
             this.TablesList.Location = new System.Drawing.Point(178, 126);
             this.TablesList.Name = "TablesList";
             this.TablesList.Size = new System.Drawing.Size(160, 154);

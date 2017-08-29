@@ -53,6 +53,7 @@
             this.AddingFactTablesandViews.TabIndex = 1;
             this.AddingFactTablesandViews.Text = "Adding Fact Tables and Views";
             this.AddingFactTablesandViews.UseVisualStyleBackColor = true;
+            this.AddingFactTablesandViews.Click += new System.EventHandler(this.AddingFactTablesandViews_Click);
             // 
             // AddingDimensionTablesandViews
             // 
@@ -62,6 +63,7 @@
             this.AddingDimensionTablesandViews.TabIndex = 2;
             this.AddingDimensionTablesandViews.Text = "Adding Dimension Tables and Views";
             this.AddingDimensionTablesandViews.UseVisualStyleBackColor = true;
+            this.AddingDimensionTablesandViews.Click += new System.EventHandler(this.AddingDimensionTablesandViews_Click);
             // 
             // AddingDimensionSP
             // 

@@ -22,5 +22,17 @@ namespace OnboardingTables
             TableOnboarding frm = new TableOnboarding();
             frm.Show();
         }
+
+        private void AddingFactTablesandViews_Click(object sender, EventArgs e)
+        {
+            CreateFactOrDimension frm = new CreateFactOrDimension();
+            frm.Show();
+        }
+
+        private void AddingDimensionTablesandViews_Click(object sender, EventArgs e)
+        {
+            CreateFactOrDimension frm = new CreateFactOrDimension();
+            frm.Show();
+        }
     }
 }
