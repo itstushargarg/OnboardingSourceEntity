@@ -14,51 +14,27 @@ namespace OnboardingTables
     public partial class CreateFactOrDimension : Form
     {
         public CheckedListBox OriginalTable;
+        public DataRowCollection sourceTableColumns;
         public CreateFactOrDimension()
         {
             InitializeComponent();
             SearchTable.TextChanged += new EventHandler(SearchTable_TextChanged);
             OriginalTable = new CheckedListBox();
             ListOfTables();
-            //ListofSources();
-        }
-
-        public void ListofSources()
-        {
-            TablesList.Items.Clear();
-            var connectionString = String.Format("Data Source=AZICUATDIWSQl2;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string[] restrictions = new string[4] { null, "CHEF", "Configuration", null };
-                string queryString = String.Format("SELECT ConfigKey FROM CHEF.Configuration WHERE TValue like 'Data%'");
-                SqlCommand command = new SqlCommand(queryString, connection);
-                connection.Open();
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    TablesList.Items.Add(reader.GetString(0));
-                }
-                connection.Close();
-            }
-
-            TablesList.Text = AddingNewSource.SourceName;
         }
 
         public void ListOfTables()
         {
-            //string reader;
             var connectionString = String.Format("Data Source=AZICDDHUAT01.partners.extranet.microsoft.com;Initial Catalog=ICDDH;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                //List<string> tables = new List<string>();
                 DataTable dt = connection.GetSchema("Tables");
                 foreach (DataRow row in dt.Rows)
                 {
                     string tablename = (string)row[1] + '.' + (string)row[2];
                     TablesList.Items.Add(tablename);
                     OriginalTable.Items.Add(tablename);
-                    //tables.Add(tablename);
                 }
                 dt = connection.GetSchema("Views");
                 foreach (DataRow row in dt.Rows)
@@ -66,15 +42,8 @@ namespace OnboardingTables
                     string tablename = (string)row[1] + '.' + (string)row[2];
                     TablesList.Items.Add(tablename);
                     OriginalTable.Items.Add(tablename);
-                    //tables.Add(tablename);
                 }
                 connection.Close();
-                //OriginalTable.Items.Add(TablesList.Items);
-                //AutoCompleteStringCollection allowedTypes = new AutoCompleteStringCollection();
-                //allowedTypes.AddRange(tables.ToArray());
-                //SearchTable.AutoCompleteCustomSource = allowedTypes;
-                //SearchTable.AutoCompleteMode = AutoCompleteMode.Suggest;
-                //SearchTable.AutoCompleteSource = AutoCompleteSource.CustomSource;
             }
         }
 
@@ -91,6 +60,51 @@ namespace OnboardingTables
                 }
             }
             TablesList.EndUpdate();
+        }
+
+        private void GetColumns_Click(object sender, EventArgs e)
+        {
+            if(TablesList.CheckedItems.Count == 1)
+            {
+                //var connectionString = String.Format("Data Source={0};Initial Catalog={1};Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True", ServerName.Text, DatabaseName.Text);
+                var connectionString = String.Format("Data Source=AZICDDHUAT01.partners.extranet.microsoft.com;Initial Catalog=ICDDH;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
+                var tableDetails = TablesList.CheckedItems[0].ToString().Split('.');
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string[] restrictions = new string[4] { null, tableDetails[0], tableDetails[1], null };
+                    connection.Open();
+                    sourceTableColumns = connection.GetSchema("Columns", restrictions).Rows;
+
+                    foreach (System.Data.DataRow rowColumn in sourceTableColumns)
+                    {
+                        var ColumnName = (rowColumn[3].ToString());
+                    }
+                    connection.Close();
+                }
+                AddColumnList();
+            }
+            else
+            {
+                MessageBox.Show("Please select one table at a time.");
+            }
+        }
+        private void AddColumnList()
+        {
+            ColumnsList.Items.Clear();
+            try
+            {
+                foreach (DataRow rowColumn in sourceTableColumns)
+                {
+                    //Fetchting Column Names from the Source Table
+                    ColumnsList.Items.Add(rowColumn[3].ToString(), true);
+                }
+            }
+            catch (Exception ex)
+            {
+                //Error message the user will see
+                //string FriendlyError = "There has been populating checkboxes with the urls - A notification has been sent to development";
+                //ShowMessageBox.MsgBox(FriendlyError, "There has been an Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

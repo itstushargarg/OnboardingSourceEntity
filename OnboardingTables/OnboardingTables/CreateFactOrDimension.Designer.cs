@@ -123,6 +123,7 @@
             this.GetColumns.TabIndex = 8;
             this.GetColumns.Text = "Get Columns";
             this.GetColumns.UseVisualStyleBackColor = true;
+            this.GetColumns.Click += new System.EventHandler(this.GetColumns_Click);
             // 
             // AddColumns
             // 
