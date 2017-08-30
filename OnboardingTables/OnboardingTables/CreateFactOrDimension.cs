@@ -146,6 +146,7 @@ namespace OnboardingTables
                 foreach (var col in SelectedColumnsList.CheckedItems.Cast<string>().ToList())
                 {
                     SelectedColumnsList.Items.Remove(col);
+                    SelectedPKColumnsList.Items.Remove(col);
                 }
             }
         }
