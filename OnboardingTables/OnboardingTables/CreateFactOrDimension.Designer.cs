@@ -133,6 +133,7 @@
             this.AddColumns.TabIndex = 9;
             this.AddColumns.Text = "Add Columns";
             this.AddColumns.UseVisualStyleBackColor = true;
+            this.AddColumns.Click += new System.EventHandler(this.AddColumns_Click);
             // 
             // SelectedColumnsLabel
             // 
@@ -151,6 +152,7 @@
             this.SelectAsPKColumns.TabIndex = 15;
             this.SelectAsPKColumns.Text = "Select As PK Columns";
             this.SelectAsPKColumns.UseVisualStyleBackColor = true;
+            this.SelectAsPKColumns.Click += new System.EventHandler(this.SelectAsPKColumns_Click);
             // 
             // DeleteSelectedColumns
             // 
@@ -160,6 +162,7 @@
             this.DeleteSelectedColumns.TabIndex = 14;
             this.DeleteSelectedColumns.Text = "Delete Selected Columns";
             this.DeleteSelectedColumns.UseVisualStyleBackColor = true;
+            this.DeleteSelectedColumns.Click += new System.EventHandler(this.DeleteSelectedColumns_Click);
             // 
             // SelectedPKColumnsList
             // 
@@ -194,6 +197,7 @@
             this.DeleteSelectedColumnsFromPK.TabIndex = 16;
             this.DeleteSelectedColumnsFromPK.Text = "Delete Selected Columns From PK";
             this.DeleteSelectedColumnsFromPK.UseVisualStyleBackColor = true;
+            this.DeleteSelectedColumnsFromPK.Click += new System.EventHandler(this.DeleteSelectedColumnsFromPK_Click);
             // 
             // CreateTable
             // 

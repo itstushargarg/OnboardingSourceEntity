@@ -106,5 +106,93 @@ namespace OnboardingTables
                 //ShowMessageBox.MsgBox(FriendlyError, "There has been an Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void AddColumns_Click(object sender, EventArgs e)
+        {
+            if(ColumnsList.CheckedItems.Count == 0)
+            {
+                MessageBox.Show("Please select atleast one column.");
+                return;
+            }
+            else
+            {
+                //Add a check to check if the same column exists from before
+                List<string> duplicateColumns = new List<string>();
+                foreach (var dupCol in ColumnsList.CheckedItems.Cast<String>().ToList().Intersect(SelectedColumnsList.Items.Cast<String>().ToList()))
+                {
+                    duplicateColumns.Add(dupCol.ToString());
+                }
+                if (duplicateColumns.Count != 0)
+                {
+                    var duplicateColumnsString = string.Join("\n\t- ", duplicateColumns.ToArray());
+                    MessageBox.Show(String.Format("Below is a list of column(s) that already exist in the 'Selected Columns' list: \n\t- {0}\nPlease make the required changes to add the selected column(s) to the list!", duplicateColumnsString));
+                }
+                else
+                {
+                    SelectedColumnsList.Items.AddRange(ColumnsList.CheckedItems.Cast<string>().ToArray());
+                }
+            }
+        }
+
+        private void DeleteSelectedColumns_Click(object sender, EventArgs e)
+        {
+            if (SelectedColumnsList.CheckedItems.Count == 0)
+            {
+                MessageBox.Show("Please select atleast one column.");
+                return;
+            }
+            else
+            {
+                foreach (var col in SelectedColumnsList.CheckedItems.Cast<string>().ToList())
+                {
+                    SelectedColumnsList.Items.Remove(col);
+                }
+            }
+        }
+
+        private void SelectAsPKColumns_Click(object sender, EventArgs e)
+        {
+
+            if (SelectedColumnsList.CheckedItems.Count == 0)
+            {
+                MessageBox.Show("Please select atleast one column.");
+                return;
+            }
+            else
+            {
+                List<string> duplicateColumns = new List<string>();
+                foreach (var dupCol in SelectedColumnsList.CheckedItems.Cast<String>().ToList().Intersect(SelectedPKColumnsList.Items.Cast<String>().ToList()))
+                {
+                    duplicateColumns.Add(dupCol.ToString());
+                }
+                if (duplicateColumns.Count != 0)
+                {
+                    var duplicateColumnsString = string.Join("\n\t- ", duplicateColumns.ToArray());
+                    MessageBox.Show(String.Format("Below is a list of column(s) that already exist in the 'PK Columns' list: \n\t- {0}\nPlease make the required changes to add the selected column(s) to the list!", duplicateColumnsString));
+                }
+                else
+                {
+                    SelectedPKColumnsList.Items.AddRange(SelectedColumnsList.CheckedItems.Cast<string>().ToArray());
+                }
+            }
+        }
+
+        private void DeleteSelectedColumnsFromPK_Click(object sender, EventArgs e)
+        {
+
+            if (SelectedPKColumnsList.CheckedItems.Count == 0)
+            {
+                MessageBox.Show("Please select atleast one column.");
+                return;
+            }
+            else
+            {
+                foreach (var col in SelectedPKColumnsList.CheckedItems.Cast<string>().ToList())
+                {
+                    SelectedPKColumnsList.Items.Remove(col);
+                }
+            }
+        }
+
     }
 }
