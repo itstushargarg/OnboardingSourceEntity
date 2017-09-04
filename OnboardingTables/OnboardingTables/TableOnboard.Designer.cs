@@ -285,6 +285,7 @@
             // 
             // ColumnList
             // 
+            this.ColumnList.CheckOnClick = true;
             this.ColumnList.FormattingEnabled = true;
             this.ColumnList.Location = new System.Drawing.Point(132, 252);
             this.ColumnList.Name = "ColumnList";
@@ -293,6 +294,7 @@
             // 
             // PrimaryKeyColumns
             // 
+            this.PrimaryKeyColumns.CheckOnClick = true;
             this.PrimaryKeyColumns.FormattingEnabled = true;
             this.PrimaryKeyColumns.Location = new System.Drawing.Point(431, 252);
             this.PrimaryKeyColumns.Name = "PrimaryKeyColumns";

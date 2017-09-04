@@ -14,7 +14,8 @@ namespace OnboardingTables
     public partial class CreateFactOrDimension : Form
     {
         public CheckedListBox OriginalTable;
-        public DataRowCollection sourceTableColumns;
+        public IEnumerable<DataRow> sourceTableColumns;
+        public List<DataRow> finalTableColumns;
         public CreateFactOrDimension()
         {
             InitializeComponent();
@@ -47,6 +48,24 @@ namespace OnboardingTables
             }
         }
 
+        private void SelectAllTables_CheckedChanged(object sender, EventArgs e)
+        {
+            if (SelectAllTables.Checked)
+            {
+                for (int i = 0; i < TablesList.Items.Count; i++)
+                {
+                    TablesList.SetItemChecked(i, true);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < TablesList.Items.Count; i++)
+                {
+                    TablesList.SetItemChecked(i, false);
+                }
+            }
+        }
+
         private void SearchTable_TextChanged(object sender, EventArgs e)
         {
             var registrationsList = OriginalTable.Items.Cast<String>().ToList();
@@ -64,7 +83,7 @@ namespace OnboardingTables
 
         private void GetColumns_Click(object sender, EventArgs e)
         {
-            if(TablesList.CheckedItems.Count == 1)
+            if (TablesList.CheckedItems.Count == 1)
             {
                 //var connectionString = String.Format("Data Source={0};Initial Catalog={1};Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True", ServerName.Text, DatabaseName.Text);
                 var connectionString = String.Format("Data Source=AZICDDHUAT01.partners.extranet.microsoft.com;Initial Catalog=ICDDH;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
@@ -73,12 +92,7 @@ namespace OnboardingTables
                 {
                     string[] restrictions = new string[4] { null, tableDetails[0], tableDetails[1], null };
                     connection.Open();
-                    sourceTableColumns = connection.GetSchema("Columns", restrictions).Rows;
-
-                    foreach (System.Data.DataRow rowColumn in sourceTableColumns)
-                    {
-                        var ColumnName = (rowColumn[3].ToString());
-                    }
+                    sourceTableColumns = connection.GetSchema("Columns", restrictions).Rows.Cast<DataRow>();
                     connection.Close();
                 }
                 AddColumnList();
@@ -107,9 +121,27 @@ namespace OnboardingTables
             }
         }
 
+        private void SelectAllColumns_CheckedChanged(object sender, EventArgs e)
+        {
+            if (SelectAllColumns.Checked)
+            {
+                for (int i = 0; i < ColumnsList.Items.Count; i++)
+                {
+                    ColumnsList.SetItemChecked(i, true);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < ColumnsList.Items.Count; i++)
+                {
+                    ColumnsList.SetItemChecked(i, false);
+                }
+            }
+        }
+
         private void AddColumns_Click(object sender, EventArgs e)
         {
-            if(ColumnsList.CheckedItems.Count == 0)
+            if (ColumnsList.CheckedItems.Count == 0)
             {
                 MessageBox.Show("Please select atleast one column.");
                 return;
@@ -130,6 +162,27 @@ namespace OnboardingTables
                 else
                 {
                     SelectedColumnsList.Items.AddRange(ColumnsList.CheckedItems.Cast<string>().ToArray());
+                    finalTableColumns = (from col in sourceTableColumns 
+                                        join a in ColumnsList.CheckedItems.Cast<string>().ToArray() on col.ItemArray[3] equals a
+                                        select col).ToList();
+                }
+            }
+        }
+
+        private void SelectAllSelectedColumns_CheckedChanged(object sender, EventArgs e)
+        {
+            if (SelectAllSelectedColumns.Checked)
+            {
+                for (int i = 0; i < SelectedColumnsList.Items.Count; i++)
+                {
+                    SelectedColumnsList.SetItemChecked(i, true);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < SelectedColumnsList.Items.Count; i++)
+                {
+                    SelectedColumnsList.SetItemChecked(i, false);
                 }
             }
         }
@@ -178,6 +231,24 @@ namespace OnboardingTables
             }
         }
 
+        private void SelectAllPKColumns_CheckedChanged(object sender, EventArgs e)
+        {
+            if (SelectAllPKColumns.Checked)
+            {
+                for (int i = 0; i < SelectedPKColumnsList.Items.Count; i++)
+                {
+                    SelectedPKColumnsList.SetItemChecked(i, true);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < SelectedPKColumnsList.Items.Count; i++)
+                {
+                    SelectedPKColumnsList.SetItemChecked(i, false);
+                }
+            }
+        }
+
         private void DeleteSelectedColumnsFromPK_Click(object sender, EventArgs e)
         {
 
@@ -194,6 +265,5 @@ namespace OnboardingTables
                 }
             }
         }
-
     }
 }

@@ -46,6 +46,10 @@
             this.SelectedColumnsList = new System.Windows.Forms.CheckedListBox();
             this.DeleteSelectedColumnsFromPK = new System.Windows.Forms.Button();
             this.CreateTable = new System.Windows.Forms.Button();
+            this.SelectAllTables = new System.Windows.Forms.CheckBox();
+            this.SelectAllColumns = new System.Windows.Forms.CheckBox();
+            this.SelectAllSelectedColumns = new System.Windows.Forms.CheckBox();
+            this.SelectAllPKColumns = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // TableNameLabel
@@ -82,6 +86,7 @@
             // 
             // TablesList
             // 
+            this.TablesList.CheckOnClick = true;
             this.TablesList.FormattingEnabled = true;
             this.TablesList.HorizontalScrollbar = true;
             this.TablesList.Location = new System.Drawing.Point(178, 126);
@@ -109,6 +114,7 @@
             // 
             // ColumnsList
             // 
+            this.ColumnsList.CheckOnClick = true;
             this.ColumnsList.FormattingEnabled = true;
             this.ColumnsList.Location = new System.Drawing.Point(495, 126);
             this.ColumnsList.Name = "ColumnsList";
@@ -117,7 +123,7 @@
             // 
             // GetColumns
             // 
-            this.GetColumns.Location = new System.Drawing.Point(376, 176);
+            this.GetColumns.Location = new System.Drawing.Point(376, 190);
             this.GetColumns.Name = "GetColumns";
             this.GetColumns.Size = new System.Drawing.Size(75, 23);
             this.GetColumns.TabIndex = 8;
@@ -166,6 +172,7 @@
             // 
             // SelectedPKColumnsList
             // 
+            this.SelectedPKColumnsList.CheckOnClick = true;
             this.SelectedPKColumnsList.FormattingEnabled = true;
             this.SelectedPKColumnsList.Location = new System.Drawing.Point(495, 347);
             this.SelectedPKColumnsList.Name = "SelectedPKColumnsList";
@@ -183,6 +190,7 @@
             // 
             // SelectedColumnsList
             // 
+            this.SelectedColumnsList.CheckOnClick = true;
             this.SelectedColumnsList.FormattingEnabled = true;
             this.SelectedColumnsList.Location = new System.Drawing.Point(178, 347);
             this.SelectedColumnsList.Name = "SelectedColumnsList";
@@ -208,11 +216,57 @@
             this.CreateTable.Text = "Create Table";
             this.CreateTable.UseVisualStyleBackColor = true;
             // 
+            // SelectAllTables
+            // 
+            this.SelectAllTables.AutoSize = true;
+            this.SelectAllTables.Location = new System.Drawing.Point(157, 126);
+            this.SelectAllTables.Name = "SelectAllTables";
+            this.SelectAllTables.Size = new System.Drawing.Size(15, 14);
+            this.SelectAllTables.TabIndex = 18;
+            this.SelectAllTables.UseVisualStyleBackColor = true;
+            this.SelectAllTables.CheckedChanged += new System.EventHandler(this.SelectAllTables_CheckedChanged);
+            // 
+            // SelectAllColumns
+            // 
+            this.SelectAllColumns.AutoSize = true;
+            this.SelectAllColumns.Checked = true;
+            this.SelectAllColumns.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.SelectAllColumns.Location = new System.Drawing.Point(474, 126);
+            this.SelectAllColumns.Name = "SelectAllColumns";
+            this.SelectAllColumns.Size = new System.Drawing.Size(15, 14);
+            this.SelectAllColumns.TabIndex = 19;
+            this.SelectAllColumns.UseVisualStyleBackColor = true;
+            this.SelectAllColumns.CheckedChanged += new System.EventHandler(this.SelectAllColumns_CheckedChanged);
+            // 
+            // SelectAllSelectedColumns
+            // 
+            this.SelectAllSelectedColumns.AutoSize = true;
+            this.SelectAllSelectedColumns.Location = new System.Drawing.Point(157, 347);
+            this.SelectAllSelectedColumns.Name = "SelectAllSelectedColumns";
+            this.SelectAllSelectedColumns.Size = new System.Drawing.Size(15, 14);
+            this.SelectAllSelectedColumns.TabIndex = 20;
+            this.SelectAllSelectedColumns.UseVisualStyleBackColor = true;
+            this.SelectAllSelectedColumns.CheckedChanged += new System.EventHandler(this.SelectAllSelectedColumns_CheckedChanged);
+            // 
+            // SelectAllPKColumns
+            // 
+            this.SelectAllPKColumns.AutoSize = true;
+            this.SelectAllPKColumns.Location = new System.Drawing.Point(474, 347);
+            this.SelectAllPKColumns.Name = "SelectAllPKColumns";
+            this.SelectAllPKColumns.Size = new System.Drawing.Size(15, 14);
+            this.SelectAllPKColumns.TabIndex = 21;
+            this.SelectAllPKColumns.UseVisualStyleBackColor = true;
+            this.SelectAllPKColumns.CheckedChanged += new System.EventHandler(this.SelectAllPKColumns_CheckedChanged);
+            // 
             // CreateFactOrDimension
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(850, 613);
+            this.Controls.Add(this.SelectAllPKColumns);
+            this.Controls.Add(this.SelectAllSelectedColumns);
+            this.Controls.Add(this.SelectAllColumns);
+            this.Controls.Add(this.SelectAllTables);
             this.Controls.Add(this.CreateTable);
             this.Controls.Add(this.DeleteSelectedColumnsFromPK);
             this.Controls.Add(this.SelectAsPKColumns);
@@ -258,5 +312,9 @@
         private System.Windows.Forms.CheckedListBox SelectedColumnsList;
         private System.Windows.Forms.Button DeleteSelectedColumnsFromPK;
         private System.Windows.Forms.Button CreateTable;
+        private System.Windows.Forms.CheckBox SelectAllTables;
+        private System.Windows.Forms.CheckBox SelectAllColumns;
+        private System.Windows.Forms.CheckBox SelectAllSelectedColumns;
+        private System.Windows.Forms.CheckBox SelectAllPKColumns;
     }
 }
