@@ -506,7 +506,7 @@ namespace OnboardingTables
         public void AddToProcessMonior()
         {
             //Checking if Catalog ID exists in the Table ProcessMonitor
-            var connectionString = String.Format("Data Source=AZICUATDIWSQl2;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
+            var connectionString = String.Format("Data Source=AZICDMPERF01;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
             SqlDataReader reader;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -587,7 +587,7 @@ namespace OnboardingTables
         public void ListofSources()
         {
             SourceName.Items.Clear();
-            var connectionString = String.Format("Data Source=AZICUATDIWSQl2;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
+            var connectionString = String.Format("Data Source=AZICDMPERF01;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string[] restrictions = new string[4] { null, "CHEF", "Configuration", null };
@@ -726,7 +726,7 @@ namespace OnboardingTables
 
         private void SourceName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var connectionString = String.Format("Data Source=AZICUATDIWSQl2;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
+            var connectionString = String.Format("Data Source=AZICDMPERF01;Initial Catalog=CHEF;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True");
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string[] restrictions = new string[4] { null, "CHEF", "Configuration", null };
