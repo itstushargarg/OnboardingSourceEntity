@@ -24,12 +24,12 @@ namespace OnboardingTables
         private void ChefScriptSubmit_Click(object sender, EventArgs e)
         {
             ScriptName = this.ChefScriptName.Text;
-            String SourcePath = TableOnboarding.SqlProjpath;
-            String chefsqlproj = TableOnboarding.ChefSqlProjpath;
+            String SourcePath = StartingPage.SqlProjpath;
+            String chefsqlproj = StartingPage.ChefSqlProjpath;
             String chefpath_filepath = SourcePath.Replace("DIDataManagement\\DIDataManagement\\DIDataManagement.sqlproj", "CHEF 5.1-SQL2016\\CHEF.Database\\CHEF\\Scripts\\Post-Deployment\\");
             chefpath = SourcePath.Replace("DIDataManagement\\DIDataManagement\\DIDataManagement.sqlproj", "CHEF 5.1-SQL2016\\CHEF.Database\\CHEF\\Scripts\\Post-Deployment\\"+ ScriptName+".sql");
             File.Create(chefpath).Dispose();
-            var p = TableOnboarding.chefprojectPath;
+            var p = StartingPage.chefprojectPath;
             p.AddItem("None", "Scripts\\Post-Deployment\\" + ScriptName + ".sql");
             p.Save();
             tob.ListofChefScripts(chefpath_filepath);

@@ -152,7 +152,7 @@
             // 
             // SelectAsPKColumns
             // 
-            this.SelectAsPKColumns.Location = new System.Drawing.Point(344, 449);
+            this.SelectAsPKColumns.Location = new System.Drawing.Point(344, 415);
             this.SelectAsPKColumns.Name = "SelectAsPKColumns";
             this.SelectAsPKColumns.Size = new System.Drawing.Size(145, 23);
             this.SelectAsPKColumns.TabIndex = 15;
@@ -162,9 +162,9 @@
             // 
             // DeleteSelectedColumns
             // 
-            this.DeleteSelectedColumns.Location = new System.Drawing.Point(344, 397);
+            this.DeleteSelectedColumns.Location = new System.Drawing.Point(56, 403);
             this.DeleteSelectedColumns.Name = "DeleteSelectedColumns";
-            this.DeleteSelectedColumns.Size = new System.Drawing.Size(145, 23);
+            this.DeleteSelectedColumns.Size = new System.Drawing.Size(97, 46);
             this.DeleteSelectedColumns.TabIndex = 14;
             this.DeleteSelectedColumns.Text = "Delete Selected Columns";
             this.DeleteSelectedColumns.UseVisualStyleBackColor = true;
@@ -199,7 +199,7 @@
             // 
             // DeleteSelectedColumnsFromPK
             // 
-            this.DeleteSelectedColumnsFromPK.Location = new System.Drawing.Point(661, 397);
+            this.DeleteSelectedColumnsFromPK.Location = new System.Drawing.Point(684, 397);
             this.DeleteSelectedColumnsFromPK.Name = "DeleteSelectedColumnsFromPK";
             this.DeleteSelectedColumnsFromPK.Size = new System.Drawing.Size(145, 52);
             this.DeleteSelectedColumnsFromPK.TabIndex = 16;

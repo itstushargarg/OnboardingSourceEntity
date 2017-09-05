@@ -52,7 +52,7 @@ namespace OnboardingTables
                 reader = command.ExecuteReader();
                 if (!reader.HasRows)
                 {
-                    String file = TableOnboarding.ChefSqlProjpath.Replace("CHEF.sqlproj", "Scripts\\Post-Deployment\\CHEF_SourceMaster_Insert.sql");
+                    String file = StartingPage.ChefSqlProjpath.Replace("CHEF.sqlproj", "Scripts\\Post-Deployment\\CHEF_SourceMaster_Insert.sql");
                     string data = String.Format("\n,('{0}'\t\t\t\t\t,1440	, DATEADD(MINUTE,1740,CONVERT(DATETIME, CONVERT(VARCHAR, GETDATE(), 101))) , 1 , 0 , 0 , NULL , DATEADD( MINUTE , -1440 , DATEADD(dd, 0, DATEDIFF(dd, 0, GETUTCDATE())) ),1);", tob.SourceName.Text);
                     string text = File.ReadAllText(file);
                     int lastindex = text.LastIndexOf("GETUTCDATE()", StringComparison.OrdinalIgnoreCase);
@@ -76,7 +76,7 @@ namespace OnboardingTables
         public void AddSqlcmdVariable()
         {
 
-            String file = TableOnboarding.ChefSqlProjpath;
+            String file = StartingPage.ChefSqlProjpath;
             string text = File.ReadAllText(file);
             int count = Regex.Matches(text, "</SqlCmdVariable>").Count;
             int lastindex = text.LastIndexOf("</SqlCmdVariable>", StringComparison.OrdinalIgnoreCase);
@@ -111,7 +111,7 @@ namespace OnboardingTables
             };  
             foreach (string publish in publishFiles)
             {
-                String file = TableOnboarding.ChefSqlProjpath.Replace("CHEF.sqlproj", publish);
+                String file = StartingPage.ChefSqlProjpath.Replace("CHEF.sqlproj", publish);
                 string text = File.ReadAllText(file);
                 int lastindex = text.LastIndexOf("</SqlCmdVariable>", StringComparison.OrdinalIgnoreCase);
                 lastindex += 17;

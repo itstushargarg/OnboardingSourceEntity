@@ -22,9 +22,9 @@ namespace OnboardingTables
         public void AddNewFolder()
         {
             SourceName = this.NewFolderName.Text;
-            String SourcePath = TableOnboarding.SqlProjpath;
-            String dboPath = TableOnboarding.dbopath;
-            String stgPath = TableOnboarding.stgpath;
+            String SourcePath = StartingPage.SqlProjpath;
+            String dboPath = StartingPage.dbopath;
+            String stgPath = StartingPage.stgpath;
             String NewSourcePath = dboPath + SourceName + "\\";
             String stgNewSourcePath = stgPath + SourceName + "\\";
             String TablePath = "dbo\\" + SourceName + "\\Table";
@@ -35,7 +35,7 @@ namespace OnboardingTables
             String stgViewPath = "stg\\" + SourceName + "\\View";
             String stgProcedurePath = "stg\\" + SourceName + "\\Procedure";
             String stgFunctionsPath = "stg\\" + SourceName + "\\Functions";
-            var p = TableOnboarding.projectPath;
+            var p = StartingPage.projectPath;
             System.IO.Directory.CreateDirectory(NewSourcePath);
             System.IO.Directory.CreateDirectory(stgNewSourcePath);
             p.AddItem("Folder", "dbo\\" + SourceName);

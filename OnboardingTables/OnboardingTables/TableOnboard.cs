@@ -18,16 +18,12 @@ namespace OnboardingTables
         public DataRowCollection sourceTableColumns;
         public DataRowCollection targetTableColumns;
         public CheckedListBox.CheckedItemCollection TargetTableColumns;
-        public static string SqlProjpath;
-        public static string dbopath;
-        public static string stgpath;
-        public static string ChefSqlProjpath;
-        public static Microsoft.Build.Evaluation.Project projectPath;
-        public static Microsoft.Build.Evaluation.Project chefprojectPath;
         public TableOnboarding()
         {
             InitializeComponent();
             ListofSources();
+            ListOfFolders(StartingPage.dbopath);
+            ListofChefScripts(StartingPage.chefpath);
         }
 
         private void AddCheckList()
@@ -130,9 +126,9 @@ namespace OnboardingTables
         }
         public void CreateStgTable()
         {
-            string path = String.Format("{0}{1}\\Table\\{2}.sql", stgpath, TargetFolderName.Text,TargetTableName.Text);
-            projectPath.AddItem("Build", path);
-            projectPath.Save();
+            string path = String.Format("{0}{1}\\Table\\{2}.sql", StartingPage.stgpath, TargetFolderName.Text,TargetTableName.Text);
+            StartingPage.projectPath.AddItem("Build", path);
+            StartingPage.projectPath.Save();
             File.Create(path).Dispose();
             String script = String.Format("--This code is generated using TOT(Table Onboarding Tool)");
             script += String.Format("\nCREATE Table [stg].[{0}]\n(", TargetTableName.Text);
@@ -168,9 +164,9 @@ namespace OnboardingTables
 
         public void CreateStgView()
         {
-            string path = String.Format("{0}{1}\\View\\vw{2}.sql", stgpath, TargetFolderName.Text,TargetTableName.Text);
-            projectPath.AddItem("Build", path);
-            projectPath.Save();
+            string path = String.Format("{0}{1}\\View\\vw{2}.sql", StartingPage.stgpath, TargetFolderName.Text,TargetTableName.Text);
+            StartingPage.projectPath.AddItem("Build", path);
+            StartingPage.projectPath.Save();
             File.Create(path).Dispose();
             String script = String.Format("--This code is generated using TOT(Table Onboarding Tool)");
             script += String.Format("\nCREATE View [stg].[vw{0}]\nAS\nSELECT", TargetTableName.Text);
@@ -254,9 +250,9 @@ namespace OnboardingTables
 
         public void CreateDboTable()
         {
-            string path = String.Format("{0}{1}\\Table\\{2}.sql", dbopath, TargetFolderName.Text,TargetTableName.Text);
-            projectPath.AddItem("Build", path);
-            projectPath.Save();
+            string path = String.Format("{0}{1}\\Table\\{2}.sql", StartingPage.dbopath, TargetFolderName.Text,TargetTableName.Text);
+            StartingPage.projectPath.AddItem("Build", path);
+            StartingPage.projectPath.Save();
             File.Create(path).Dispose();
             String script = String.Format("--This code is generated using TOT(Table Onboarding Tool)");
             script += String.Format("\nCREATE Table [dbo].[{0}]\n(", TargetTableName.Text);
@@ -309,9 +305,9 @@ namespace OnboardingTables
 
         public void CreateDboView()
         {
-            string path = String.Format("{0}{1}\\View\\vw{2}.sql", dbopath, TargetFolderName.Text,TargetTableName.Text);
-            projectPath.AddItem("Build", path);
-            projectPath.Save();
+            string path = String.Format("{0}{1}\\View\\vw{2}.sql", StartingPage.dbopath, TargetFolderName.Text,TargetTableName.Text);
+            StartingPage.projectPath.AddItem("Build", path);
+            StartingPage.projectPath.Save();
             File.Create(path).Dispose();
             String script = String.Format("--This code is generated using TOT(Table Onboarding Tool)");
             script += String.Format("\nCREATE View [dbo].[vw{0}]\nAS\nSELECT", TargetTableName.Text);
@@ -367,7 +363,7 @@ namespace OnboardingTables
         {
             ScriptName.Text = ScriptName.SelectedItem.ToString();
             int dboProcessid = Int32.Parse(ProcessID.Text) + 1;
-            String chefpath_filepath = SqlProjpath.Replace("DIDataManagement\\DIDataManagement\\DIDataManagement.sqlproj", "CHEF 5.1-SQL2016\\CHEF.Database\\CHEF\\Scripts\\Post-Deployment\\");
+            String chefpath_filepath = StartingPage.SqlProjpath.Replace("DIDataManagement\\DIDataManagement\\DIDataManagement.sqlproj", "CHEF 5.1-SQL2016\\CHEF.Database\\CHEF\\Scripts\\Post-Deployment\\");
             String file = chefpath_filepath + ScriptName.Text;
             String mergeQuery = null;
             if ((TemporalTableCheck.Checked) && (PrimaryKeyColumns.CheckedItems.Count == 0 || ColumnList.CheckedItems.Count == PrimaryKeyColumns.CheckedItems.Count))
@@ -485,7 +481,7 @@ namespace OnboardingTables
         }
         public void AddToTemporal()
         {
-            String file = SqlProjpath.Replace("DIDataManagement.sqlproj", "Scripts\\Post-Deployment\\TemporalSystemVersioning.sql");
+            String file = StartingPage.SqlProjpath.Replace("DIDataManagement.sqlproj", "Scripts\\Post-Deployment\\TemporalSystemVersioning.sql");
             string data = String.Format("\nUNION ALL SELECT '{0}'", TargetTableName.Text);
             string text = File.ReadAllText(file);
             int lastindex = text.LastIndexOf("UNION ALL SELECT", StringComparison.OrdinalIgnoreCase);
@@ -517,7 +513,7 @@ namespace OnboardingTables
                 reader = command.ExecuteReader();
                 if (!reader.HasRows)
                 {
-                    String file = TableOnboarding.ChefSqlProjpath.Replace("CHEF.sqlproj", "Scripts\\Post-Deployment\\CHEF_ProcessMonitor_insert.sql");
+                    String file = StartingPage.ChefSqlProjpath.Replace("CHEF.sqlproj", "Scripts\\Post-Deployment\\CHEF_ProcessMonitor_insert.sql");
                     string data = String.Format("\nUNION ALL");
                     data += String.Format("\nSELECT SourceMasterID, {0}, GETUTCDATE() , NULL FROM  [CHEF].[SourceMaster] WITH (NOLOCK) WHERE Sourcename ='{1}'", CatalogID.Text, SourceName.Text);
                     string text = File.ReadAllText(file);
@@ -566,24 +562,6 @@ namespace OnboardingTables
             }
         }
 
-
-        private void SelectProject_Click(object sender, EventArgs e)
-        {
-            if (BrowseProjectPath.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                ProjectPath.Text = BrowseProjectPath.FileName;
-            }
-            String chefpath = ProjectPath.Text.Replace("DIDataManagement\\DIDataManagement\\DIDataManagement.sqlproj", "CHEF 5.1-SQL2016\\CHEF.Database\\CHEF\\Scripts\\Post-Deployment\\");
-
-            dbopath = ProjectPath.Text.Replace("DIDataManagement.sqlproj", "dbo\\");
-            stgpath = ProjectPath.Text.Replace("DIDataManagement.sqlproj", "stg\\");
-            SqlProjpath = ProjectPath.Text;
-            projectPath = new Microsoft.Build.Evaluation.Project(SqlProjpath);
-            ListOfFolders(dbopath);
-            ListofChefScripts(chefpath);
-            ChefSqlProjpath = ProjectPath.Text.Replace("\\DIDataManagement\\DIDataManagement\\DIDataManagement.sqlproj", "\\CHEF 5.1-SQL2016\\CHEF.Database\\CHEF\\CHEF.sqlproj");
-            chefprojectPath = new Microsoft.Build.Evaluation.Project(ChefSqlProjpath);
-        }
         public void ListofSources()
         {
             SourceName.Items.Clear();

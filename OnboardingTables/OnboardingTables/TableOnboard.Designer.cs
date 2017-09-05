@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.ProjectPathLabel = new System.Windows.Forms.Label();
-            this.ProjectPath = new System.Windows.Forms.TextBox();
-            this.SelectProject = new System.Windows.Forms.Button();
             this.SourceNameLabel = new System.Windows.Forms.Label();
             this.SourceName = new System.Windows.Forms.ComboBox();
             this.AddSource = new System.Windows.Forms.Button();
@@ -65,39 +62,10 @@
             this.AddNewFolder = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // ProjectPathLabel
-            // 
-            this.ProjectPathLabel.AutoSize = true;
-            this.ProjectPathLabel.Location = new System.Drawing.Point(13, 27);
-            this.ProjectPathLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.ProjectPathLabel.Name = "ProjectPathLabel";
-            this.ProjectPathLabel.Size = new System.Drawing.Size(68, 13);
-            this.ProjectPathLabel.TabIndex = 0;
-            this.ProjectPathLabel.Text = "Project Path:";
-            // 
-            // ProjectPath
-            // 
-            this.ProjectPath.Location = new System.Drawing.Point(132, 27);
-            this.ProjectPath.Margin = new System.Windows.Forms.Padding(2);
-            this.ProjectPath.Name = "ProjectPath";
-            this.ProjectPath.Size = new System.Drawing.Size(390, 20);
-            this.ProjectPath.TabIndex = 1;
-            // 
-            // SelectProject
-            // 
-            this.SelectProject.Location = new System.Drawing.Point(552, 23);
-            this.SelectProject.Margin = new System.Windows.Forms.Padding(2);
-            this.SelectProject.Name = "SelectProject";
-            this.SelectProject.Size = new System.Drawing.Size(99, 26);
-            this.SelectProject.TabIndex = 2;
-            this.SelectProject.Text = "Select Project";
-            this.SelectProject.UseVisualStyleBackColor = true;
-            this.SelectProject.Click += new System.EventHandler(this.SelectProject_Click);
-            // 
             // SourceNameLabel
             // 
             this.SourceNameLabel.AutoSize = true;
-            this.SourceNameLabel.Location = new System.Drawing.Point(13, 62);
+            this.SourceNameLabel.Location = new System.Drawing.Point(13, 25);
             this.SourceNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.SourceNameLabel.Name = "SourceNameLabel";
             this.SourceNameLabel.Size = new System.Drawing.Size(75, 13);
@@ -107,7 +75,7 @@
             // SourceName
             // 
             this.SourceName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SourceName.Location = new System.Drawing.Point(132, 62);
+            this.SourceName.Location = new System.Drawing.Point(132, 25);
             this.SourceName.Margin = new System.Windows.Forms.Padding(2);
             this.SourceName.Name = "SourceName";
             this.SourceName.Size = new System.Drawing.Size(274, 21);
@@ -117,7 +85,7 @@
             // AddSource
             // 
             this.AddSource.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
-            this.AddSource.Location = new System.Drawing.Point(552, 60);
+            this.AddSource.Location = new System.Drawing.Point(552, 23);
             this.AddSource.Name = "AddSource";
             this.AddSource.Size = new System.Drawing.Size(99, 23);
             this.AddSource.TabIndex = 5;
@@ -128,7 +96,7 @@
             // ChefScriptLabel
             // 
             this.ChefScriptLabel.AutoSize = true;
-            this.ChefScriptLabel.Location = new System.Drawing.Point(13, 96);
+            this.ChefScriptLabel.Location = new System.Drawing.Point(13, 59);
             this.ChefScriptLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ChefScriptLabel.Name = "ChefScriptLabel";
             this.ChefScriptLabel.Size = new System.Drawing.Size(62, 13);
@@ -138,7 +106,7 @@
             // ScriptName
             // 
             this.ScriptName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ScriptName.Location = new System.Drawing.Point(132, 93);
+            this.ScriptName.Location = new System.Drawing.Point(132, 56);
             this.ScriptName.Margin = new System.Windows.Forms.Padding(2);
             this.ScriptName.Name = "ScriptName";
             this.ScriptName.Size = new System.Drawing.Size(274, 21);
@@ -147,7 +115,7 @@
             // AddScript
             // 
             this.AddScript.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
-            this.AddScript.Location = new System.Drawing.Point(552, 91);
+            this.AddScript.Location = new System.Drawing.Point(552, 54);
             this.AddScript.Name = "AddScript";
             this.AddScript.Size = new System.Drawing.Size(99, 23);
             this.AddScript.TabIndex = 8;
@@ -158,7 +126,7 @@
             // CatalogIDLabel
             // 
             this.CatalogIDLabel.AutoSize = true;
-            this.CatalogIDLabel.Location = new System.Drawing.Point(13, 130);
+            this.CatalogIDLabel.Location = new System.Drawing.Point(13, 93);
             this.CatalogIDLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.CatalogIDLabel.Name = "CatalogIDLabel";
             this.CatalogIDLabel.Size = new System.Drawing.Size(60, 13);
@@ -167,7 +135,7 @@
             // 
             // CatalogID
             // 
-            this.CatalogID.Location = new System.Drawing.Point(132, 130);
+            this.CatalogID.Location = new System.Drawing.Point(132, 93);
             this.CatalogID.Margin = new System.Windows.Forms.Padding(2);
             this.CatalogID.Name = "CatalogID";
             this.CatalogID.Size = new System.Drawing.Size(158, 20);
@@ -176,7 +144,7 @@
             // ProcessIDLabel
             // 
             this.ProcessIDLabel.AutoSize = true;
-            this.ProcessIDLabel.Location = new System.Drawing.Point(319, 133);
+            this.ProcessIDLabel.Location = new System.Drawing.Point(319, 96);
             this.ProcessIDLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ProcessIDLabel.Name = "ProcessIDLabel";
             this.ProcessIDLabel.Size = new System.Drawing.Size(62, 13);
@@ -185,7 +153,7 @@
             // 
             // ProcessID
             // 
-            this.ProcessID.Location = new System.Drawing.Point(431, 127);
+            this.ProcessID.Location = new System.Drawing.Point(431, 90);
             this.ProcessID.Margin = new System.Windows.Forms.Padding(2);
             this.ProcessID.Name = "ProcessID";
             this.ProcessID.Size = new System.Drawing.Size(93, 20);
@@ -194,7 +162,7 @@
             // ConnectionStringLabel
             // 
             this.ConnectionStringLabel.AutoSize = true;
-            this.ConnectionStringLabel.Location = new System.Drawing.Point(13, 162);
+            this.ConnectionStringLabel.Location = new System.Drawing.Point(13, 125);
             this.ConnectionStringLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ConnectionStringLabel.Name = "ConnectionStringLabel";
             this.ConnectionStringLabel.Size = new System.Drawing.Size(94, 13);
@@ -203,7 +171,7 @@
             // 
             // ConnectionString
             // 
-            this.ConnectionString.Location = new System.Drawing.Point(132, 162);
+            this.ConnectionString.Location = new System.Drawing.Point(132, 125);
             this.ConnectionString.Margin = new System.Windows.Forms.Padding(2);
             this.ConnectionString.Name = "ConnectionString";
             this.ConnectionString.ReadOnly = true;
@@ -213,7 +181,7 @@
             // SourceTableNameLabel
             // 
             this.SourceTableNameLabel.AutoSize = true;
-            this.SourceTableNameLabel.Location = new System.Drawing.Point(13, 194);
+            this.SourceTableNameLabel.Location = new System.Drawing.Point(13, 157);
             this.SourceTableNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.SourceTableNameLabel.Name = "SourceTableNameLabel";
             this.SourceTableNameLabel.Size = new System.Drawing.Size(105, 13);
@@ -222,7 +190,7 @@
             // 
             // SourceTableName
             // 
-            this.SourceTableName.Location = new System.Drawing.Point(187, 191);
+            this.SourceTableName.Location = new System.Drawing.Point(187, 154);
             this.SourceTableName.Margin = new System.Windows.Forms.Padding(2);
             this.SourceTableName.Name = "SourceTableName";
             this.SourceTableName.Size = new System.Drawing.Size(103, 20);
@@ -231,7 +199,7 @@
             // TargetTableNameLabel
             // 
             this.TargetTableNameLabel.AutoSize = true;
-            this.TargetTableNameLabel.Location = new System.Drawing.Point(319, 194);
+            this.TargetTableNameLabel.Location = new System.Drawing.Point(319, 157);
             this.TargetTableNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.TargetTableNameLabel.Name = "TargetTableNameLabel";
             this.TargetTableNameLabel.Size = new System.Drawing.Size(102, 13);
@@ -240,7 +208,7 @@
             // 
             // TargetTableName
             // 
-            this.TargetTableName.Location = new System.Drawing.Point(431, 191);
+            this.TargetTableName.Location = new System.Drawing.Point(431, 154);
             this.TargetTableName.Margin = new System.Windows.Forms.Padding(2);
             this.TargetTableName.Name = "TargetTableName";
             this.TargetTableName.Size = new System.Drawing.Size(93, 20);
@@ -256,7 +224,7 @@
             // 
             // SourceSchemaName
             // 
-            this.SourceSchemaName.Location = new System.Drawing.Point(132, 191);
+            this.SourceSchemaName.Location = new System.Drawing.Point(132, 154);
             this.SourceSchemaName.Margin = new System.Windows.Forms.Padding(2);
             this.SourceSchemaName.Name = "SourceSchemaName";
             this.SourceSchemaName.Size = new System.Drawing.Size(51, 20);
@@ -265,7 +233,7 @@
             // 
             // GetTableDetails
             // 
-            this.GetTableDetails.Location = new System.Drawing.Point(552, 187);
+            this.GetTableDetails.Location = new System.Drawing.Point(552, 150);
             this.GetTableDetails.Margin = new System.Windows.Forms.Padding(2);
             this.GetTableDetails.Name = "GetTableDetails";
             this.GetTableDetails.Size = new System.Drawing.Size(99, 26);
@@ -277,7 +245,7 @@
             // ColumnListLabel
             // 
             this.ColumnListLabel.AutoSize = true;
-            this.ColumnListLabel.Location = new System.Drawing.Point(13, 252);
+            this.ColumnListLabel.Location = new System.Drawing.Point(13, 215);
             this.ColumnListLabel.Name = "ColumnListLabel";
             this.ColumnListLabel.Size = new System.Drawing.Size(50, 13);
             this.ColumnListLabel.TabIndex = 24;
@@ -287,7 +255,7 @@
             // 
             this.ColumnList.CheckOnClick = true;
             this.ColumnList.FormattingEnabled = true;
-            this.ColumnList.Location = new System.Drawing.Point(132, 252);
+            this.ColumnList.Location = new System.Drawing.Point(132, 215);
             this.ColumnList.Name = "ColumnList";
             this.ColumnList.Size = new System.Drawing.Size(158, 154);
             this.ColumnList.TabIndex = 25;
@@ -296,7 +264,7 @@
             // 
             this.PrimaryKeyColumns.CheckOnClick = true;
             this.PrimaryKeyColumns.FormattingEnabled = true;
-            this.PrimaryKeyColumns.Location = new System.Drawing.Point(431, 252);
+            this.PrimaryKeyColumns.Location = new System.Drawing.Point(431, 215);
             this.PrimaryKeyColumns.Name = "PrimaryKeyColumns";
             this.PrimaryKeyColumns.Size = new System.Drawing.Size(158, 154);
             this.PrimaryKeyColumns.TabIndex = 28;
@@ -304,7 +272,7 @@
             // PrimaryKeyLabel
             // 
             this.PrimaryKeyLabel.AutoSize = true;
-            this.PrimaryKeyLabel.Location = new System.Drawing.Point(319, 252);
+            this.PrimaryKeyLabel.Location = new System.Drawing.Point(319, 215);
             this.PrimaryKeyLabel.Name = "PrimaryKeyLabel";
             this.PrimaryKeyLabel.Size = new System.Drawing.Size(65, 13);
             this.PrimaryKeyLabel.TabIndex = 26;
@@ -312,7 +280,7 @@
             // 
             // SelectPrimaryKey
             // 
-            this.SelectPrimaryKey.Location = new System.Drawing.Point(318, 287);
+            this.SelectPrimaryKey.Location = new System.Drawing.Point(318, 250);
             this.SelectPrimaryKey.Margin = new System.Windows.Forms.Padding(2);
             this.SelectPrimaryKey.Name = "SelectPrimaryKey";
             this.SelectPrimaryKey.Size = new System.Drawing.Size(88, 26);
@@ -326,7 +294,7 @@
             this.TemporalTableCheck.AutoSize = true;
             this.TemporalTableCheck.Checked = true;
             this.TemporalTableCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TemporalTableCheck.Location = new System.Drawing.Point(315, 366);
+            this.TemporalTableCheck.Location = new System.Drawing.Point(315, 329);
             this.TemporalTableCheck.Name = "TemporalTableCheck";
             this.TemporalTableCheck.Size = new System.Drawing.Size(100, 17);
             this.TemporalTableCheck.TabIndex = 30;
@@ -338,7 +306,7 @@
             this.FiscalYearCheck.AutoSize = true;
             this.FiscalYearCheck.Checked = true;
             this.FiscalYearCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.FiscalYearCheck.Location = new System.Drawing.Point(315, 333);
+            this.FiscalYearCheck.Location = new System.Drawing.Point(315, 296);
             this.FiscalYearCheck.Name = "FiscalYearCheck";
             this.FiscalYearCheck.Size = new System.Drawing.Size(78, 17);
             this.FiscalYearCheck.TabIndex = 29;
@@ -347,7 +315,7 @@
             // 
             // Submit
             // 
-            this.Submit.Location = new System.Drawing.Point(318, 419);
+            this.Submit.Location = new System.Drawing.Point(318, 382);
             this.Submit.Margin = new System.Windows.Forms.Padding(2);
             this.Submit.Name = "Submit";
             this.Submit.Size = new System.Drawing.Size(88, 26);
@@ -359,7 +327,7 @@
             // TargetFolderNameLabel
             // 
             this.TargetFolderNameLabel.AutoSize = true;
-            this.TargetFolderNameLabel.Location = new System.Drawing.Point(13, 224);
+            this.TargetFolderNameLabel.Location = new System.Drawing.Point(13, 187);
             this.TargetFolderNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.TargetFolderNameLabel.Name = "TargetFolderNameLabel";
             this.TargetFolderNameLabel.Size = new System.Drawing.Size(104, 13);
@@ -369,7 +337,7 @@
             // TargetFolderName
             // 
             this.TargetFolderName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.TargetFolderName.Location = new System.Drawing.Point(132, 221);
+            this.TargetFolderName.Location = new System.Drawing.Point(132, 184);
             this.TargetFolderName.Margin = new System.Windows.Forms.Padding(2);
             this.TargetFolderName.Name = "TargetFolderName";
             this.TargetFolderName.Size = new System.Drawing.Size(158, 21);
@@ -378,7 +346,7 @@
             // AddNewFolder
             // 
             this.AddNewFolder.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
-            this.AddNewFolder.Location = new System.Drawing.Point(552, 219);
+            this.AddNewFolder.Location = new System.Drawing.Point(552, 182);
             this.AddNewFolder.Name = "AddNewFolder";
             this.AddNewFolder.Size = new System.Drawing.Size(99, 23);
             this.AddNewFolder.TabIndex = 23;
@@ -390,13 +358,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(826, 473);
+            this.ClientSize = new System.Drawing.Size(711, 451);
             this.Controls.Add(this.AddNewFolder);
             this.Controls.Add(this.TargetFolderName);
             this.Controls.Add(this.TargetFolderNameLabel);
-            this.Controls.Add(this.ProjectPathLabel);
-            this.Controls.Add(this.ProjectPath);
-            this.Controls.Add(this.SelectProject);
             this.Controls.Add(this.SourceNameLabel);
             this.Controls.Add(this.SourceName);
             this.Controls.Add(this.AddSource);
@@ -432,10 +397,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label ProjectPathLabel;
-        private System.Windows.Forms.TextBox ProjectPath;
-        private System.Windows.Forms.Button SelectProject;
         private System.Windows.Forms.Label SourceNameLabel;
         public System.Windows.Forms.ComboBox SourceName;
         private System.Windows.Forms.Button AddSource;
