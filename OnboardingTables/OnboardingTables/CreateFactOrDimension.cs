@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,11 +17,13 @@ namespace OnboardingTables
         public CheckedListBox OriginalTable;
         public IEnumerable<DataRow> sourceTableColumns;
         public List<DataRow> finalTableColumns;
+        string tableType; //dimemsion/fact
         public CreateFactOrDimension()
         {
             InitializeComponent();
             SearchTable.TextChanged += new EventHandler(SearchTable_TextChanged);
             OriginalTable = new CheckedListBox();
+            finalTableColumns = new List<DataRow>();
             ListOfTables();
         }
 
@@ -162,9 +165,10 @@ namespace OnboardingTables
                 else
                 {
                     SelectedColumnsList.Items.AddRange(ColumnsList.CheckedItems.Cast<string>().ToArray());
-                    finalTableColumns = (from col in sourceTableColumns 
+                    var selectedColumns  = (from col in sourceTableColumns 
                                         join a in ColumnsList.CheckedItems.Cast<string>().ToArray() on col.ItemArray[3] equals a
                                         select col).ToList();
+                    finalTableColumns.AddRange(selectedColumns);
                 }
             }
         }
@@ -200,6 +204,13 @@ namespace OnboardingTables
                 {
                     SelectedColumnsList.Items.Remove(col);
                     SelectedPKColumnsList.Items.Remove(col);
+                }
+                var selectedColumns = (from col in sourceTableColumns
+                                       join a in SelectedColumnsList.CheckedItems.Cast<string>().ToArray() on col.ItemArray[3] equals a
+                                       select col).ToList();
+                foreach (var col in selectedColumns)
+                {
+                    finalTableColumns.Remove(col);
                 }
             }
         }
@@ -263,6 +274,112 @@ namespace OnboardingTables
                 {
                     SelectedPKColumnsList.Items.Remove(col);
                 }
+            }
+        }
+
+        public void AddTableColumns(ref string script)
+        {
+            //Building the Column List for the table
+            int i = 0;
+            string isNull = null;
+            string dataType = null;
+            foreach (DataRow rowColumn in finalTableColumns)
+            {
+                if (rowColumn[6].ToString() == "NO") isNull = "NOT NULL";
+                else isNull = "NULL";
+                //var x = rowColumn[8].ToString();
+                if (rowColumn[8].ToString() != "")
+                {
+                    if (rowColumn[8].ToString() != "-1") dataType = String.Format("[{0}]({1})", rowColumn[7].ToString().ToUpper(), rowColumn[8].ToString());
+                    else dataType = String.Format("[{0}](max)", rowColumn[7].ToString().ToUpper());
+                }
+                else if (rowColumn[12].ToString() != "" && rowColumn[12].ToString() != "0") dataType = String.Format("[{0}]({1},{2})", rowColumn[7].ToString().ToUpper(), rowColumn[10].ToString(), rowColumn[12].ToString());
+                else dataType = String.Format("[{0}]", rowColumn[7].ToString().ToUpper());
+                script += String.Format("\n\t[{0}]\t\t\t{1}\t\t{2},", rowColumn[3].ToString(), dataType, isNull);
+                string URLName = (rowColumn[3].ToString());
+                i++;
+            }
+        }
+
+        private int CreateNewTable()
+        {
+            tableType = DimensionRadioButton.Checked ? "Dimension" : "Fact";
+
+            string path = String.Format("{0}{1}\\Table\\{2}.sql", StartingPage.dbopath, tableType, NewTableName.Text);
+            StartingPage.projectPath.AddItem("Build", path);
+            StartingPage.projectPath.Save();
+            File.Create(path).Dispose();
+            String script = String.Format("--This code is generated using TOT(Table Onboarding Tool)");
+            script += String.Format("\nCREATE Table [dbo].[{0}]\n(", NewTableName.Text);
+
+            AddTableColumns(ref script);
+
+            //Adding Primary Key Constraint
+            if (SelectedPKColumnsList.Items.Count == 0 || SelectedPKColumnsList.Items.Count == SelectedColumnsList.Items.Count)
+            {
+                script = script.Remove(script.Length - 1, 1);
+            }
+            else
+            {
+                script += String.Format("\nCONSTRAINT [PK_{0}_{1}] PRIMARY KEY CLUSTERED\n(\n\t", NewTableName.Text, SelectedPKColumnsList.Items[0]);
+                string pkColumns = null;
+                foreach (var pkColumn in SelectedPKColumnsList.Items)
+                {
+                    pkColumns += String.Format("[{0}],", pkColumn);
+                }
+                pkColumns = pkColumns.Remove(pkColumns.Length - 1, 1);
+
+                script += String.Format("{0} ASC\n)", pkColumns);
+            }
+
+            script += "\n) ON [dbo_Filegroup] WITH (DATA_COMPRESSION = PAGE)";
+            using (TextWriter tw = new StreamWriter(path))
+            {
+                tw.WriteLine(script);
+                tw.Close();
+            }
+            return 1;
+        }
+
+        private int CreateNewView()
+        {
+            string path = String.Format("{0}{1}\\View\\vw{2}.sql", StartingPage.dbopath, tableType, NewTableName.Text);
+            StartingPage.projectPath.AddItem("Build", path);
+            StartingPage.projectPath.Save();
+            File.Create(path).Dispose();
+            String script = String.Format("--This code is generated using TOT(Table Onboarding Tool)");
+            script += String.Format("\nCREATE View [dbo].[vw{0}]\nAS\nSELECT", NewTableName.Text);
+            var index = script.Length;
+            foreach (String column in SelectedColumnsList.Items)
+            {
+                script += String.Format("\n\t,[{0}]", column);
+            }
+            //var x = script[index + 2];
+            script = script.Remove(index + 2, 1);
+            /////////////////To do: Add inhouse columns
+            script += String.Format("\nFROM [dbo].[{0}] WITH (NOLOCK)\nGO", NewTableName.Text);
+            using (TextWriter tw = new StreamWriter(path))
+            {
+                tw.WriteLine(script);
+                tw.Close();
+            }
+            return 1;
+        }
+
+        private void CreateTable_Click(object sender, EventArgs e)
+        {
+            if (!DimensionRadioButton.Checked && !FactRadioButton.Checked)
+            {
+                MessageBox.Show("Please specify the type of table that you want to generate(Dimension/Fact).");
+            }
+            else
+            {
+                if (CreateNewTable() == 1 && CreateNewView() == 1)
+                {
+                    MessageBox.Show(String.Format("Tables and Views are created!"));
+                    this.Close();
+                }
+
             }
         }
     }

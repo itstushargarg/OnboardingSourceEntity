@@ -50,6 +50,8 @@
             this.SelectAllColumns = new System.Windows.Forms.CheckBox();
             this.SelectAllSelectedColumns = new System.Windows.Forms.CheckBox();
             this.SelectAllPKColumns = new System.Windows.Forms.CheckBox();
+            this.DimensionRadioButton = new System.Windows.Forms.RadioButton();
+            this.FactRadioButton = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // TableNameLabel
@@ -215,6 +217,7 @@
             this.CreateTable.TabIndex = 17;
             this.CreateTable.Text = "Create Table";
             this.CreateTable.UseVisualStyleBackColor = true;
+            this.CreateTable.Click += new System.EventHandler(this.CreateTable_Click);
             // 
             // SelectAllTables
             // 
@@ -258,11 +261,35 @@
             this.SelectAllPKColumns.UseVisualStyleBackColor = true;
             this.SelectAllPKColumns.CheckedChanged += new System.EventHandler(this.SelectAllPKColumns_CheckedChanged);
             // 
+            // DimensionRadioButton
+            // 
+            this.DimensionRadioButton.AutoSize = true;
+            this.DimensionRadioButton.Location = new System.Drawing.Point(365, 38);
+            this.DimensionRadioButton.Name = "DimensionRadioButton";
+            this.DimensionRadioButton.Size = new System.Drawing.Size(74, 17);
+            this.DimensionRadioButton.TabIndex = 22;
+            this.DimensionRadioButton.TabStop = true;
+            this.DimensionRadioButton.Text = "Dimension";
+            this.DimensionRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // FactRadioButton
+            // 
+            this.FactRadioButton.AutoSize = true;
+            this.FactRadioButton.Location = new System.Drawing.Point(474, 38);
+            this.FactRadioButton.Name = "FactRadioButton";
+            this.FactRadioButton.Size = new System.Drawing.Size(46, 17);
+            this.FactRadioButton.TabIndex = 23;
+            this.FactRadioButton.TabStop = true;
+            this.FactRadioButton.Text = "Fact";
+            this.FactRadioButton.UseVisualStyleBackColor = true;
+            // 
             // CreateFactOrDimension
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(850, 613);
+            this.Controls.Add(this.FactRadioButton);
+            this.Controls.Add(this.DimensionRadioButton);
             this.Controls.Add(this.SelectAllPKColumns);
             this.Controls.Add(this.SelectAllSelectedColumns);
             this.Controls.Add(this.SelectAllColumns);
@@ -316,5 +343,7 @@
         private System.Windows.Forms.CheckBox SelectAllColumns;
         private System.Windows.Forms.CheckBox SelectAllSelectedColumns;
         private System.Windows.Forms.CheckBox SelectAllPKColumns;
+        private System.Windows.Forms.RadioButton DimensionRadioButton;
+        private System.Windows.Forms.RadioButton FactRadioButton;
     }
 }
