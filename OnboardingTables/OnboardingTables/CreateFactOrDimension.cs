@@ -165,9 +165,9 @@ namespace OnboardingTables
                 else
                 {
                     SelectedColumnsList.Items.AddRange(ColumnsList.CheckedItems.Cast<string>().ToArray());
-                    var selectedColumns  = (from col in sourceTableColumns 
-                                        join a in ColumnsList.CheckedItems.Cast<string>().ToArray() on col.ItemArray[3] equals a
-                                        select col).ToList();
+                    var selectedColumns = (from col in sourceTableColumns
+                                           join a in ColumnsList.CheckedItems.Cast<string>().ToArray() on col.ItemArray[3] equals a
+                                           select col).ToList();
                     finalTableColumns.AddRange(selectedColumns);
                 }
             }
@@ -301,6 +301,31 @@ namespace OnboardingTables
             }
         }
 
+        public void AddInhouseColumns(ref string script)
+        {
+            if (FactRadioButton.Checked)
+            {
+                //script += String.Format("\n\t[ICDIUpdatedBy] [VARCHAR](50) NOT NULL CONSTRAINT [DF_{0}_ICDIUpdatedBy] DEFAULT SUSER_SNAME(),", TargetTableName.Text);
+                //script += String.Format("\n\t[ICDIIsLocked] [BIT] NOT NULL CONSTRAINT [DF_{0}_ICDIIsLocked] DEFAULT 0,", TargetTableName.Text);
+                //script += String.Format("\n\t[ICDILockedTillDate] [DATETIME] NULL,");
+                //script += String.Format("\n\t[ICDIETLRunID] [INT] NOT NULL CONSTRAINT [DF_{0}_ICDIETLRunID] DEFAULT 0,", TargetTableName.Text);
+                //script += String.Format("\n\t[SysStartTime] DATETIME2(0) GENERATED ALWAYS AS ROW START  DEFAULT GETUTCDATE() NOT NULL,");
+                //script += String.Format("\n\t[SysEndTime] DATETIME2(0) GENERATED ALWAYS AS ROW END  DEFAULT CONVERT (DATETIME2, '9999-12-31 23:59:59.9999999') NOT NULL,");
+                //script += String.Format("\n\tPERIOD FOR SYSTEM_TIME (SysStartTime, SysEndTime),");
+            }
+            else
+            {
+                script += String.Format("\n\t[ICDICreatedDate] [DATETIME] NOT NULL CONSTRAINT [DF_{0}_ICDICreatedDate] DEFAULT GETUTCDATE(),", NewTableName.Text);
+                script += String.Format("\n\t[ICDICreatedBy] [VARCHAR](50) NOT NULL CONSTRAINT [DF_{0}_ICDICreatedBy] DEFAULT SUSER_SNAME(),", NewTableName.Text);
+                script += String.Format("\n\t[ICDIUpdatedDate] [DATETIME] NOT NULL CONSTRAINT [DF_{0}_ICDIUpdatedDate] DEFAULT GETUTCDATE(),", NewTableName.Text);
+                script += String.Format("\n\t[ICDIUpdatedBy] [VARCHAR](50) NOT NULL CONSTRAINT [DF_{0}_ICDIUpdatedBy] DEFAULT SUSER_SNAME(),", NewTableName.Text);
+                script += String.Format("\n\t[ICDIIsDeleted] [BIT] NOT NULL CONSTRAINT [DF_{0}_ICDIIsDeleted] DEFAULT 0,", NewTableName.Text);
+                script += String.Format("\n\t[ICDIETLRunID] [INT] NOT NULL CONSTRAINT [DF_{0}_ICDIETLRunID] DEFAULT 0,", NewTableName.Text);
+                script += String.Format("\n\t[ICDIIsLocked] [BIT] NOT NULL CONSTRAINT [DF_{0}_ICDIIsLocked] DEFAULT 0,", NewTableName.Text);
+                script += String.Format("\n\t[ICDILockedTillDate] [DATETIME] NULL,");
+            }
+        }
+
         private int CreateNewTable()
         {
             tableType = DimensionRadioButton.Checked ? "Dimension" : "Fact";
@@ -313,6 +338,7 @@ namespace OnboardingTables
             script += String.Format("\nCREATE Table [dbo].[{0}]\n(", NewTableName.Text);
 
             AddTableColumns(ref script);
+            AddInhouseColumns(ref script);
 
             //Adding Primary Key Constraint
             if (SelectedPKColumnsList.Items.Count == 0 || SelectedPKColumnsList.Items.Count == SelectedColumnsList.Items.Count)
@@ -356,7 +382,29 @@ namespace OnboardingTables
             }
             //var x = script[index + 2];
             script = script.Remove(index + 2, 1);
-            /////////////////To do: Add inhouse columns
+            
+            //Add inhouse columns
+            if (FactRadioButton.Checked)
+            {
+                //script += String.Format("\n\t,[ICDIUpdatedBy]");
+                //script += String.Format("\n\t,[ICDIIsLocked]");
+                //script += String.Format("\n\t,[ICDILockedTillDate]");
+                //script += String.Format("\n\t,[ICDIETLRunID]");
+                //script += String.Format("\n\t,[SysStartTime]");
+                //script += String.Format("\n\t,[SysEndTime]");
+            }
+            else
+            {
+                script += String.Format("\n\t,[ICDICreatedDate]");
+                script += String.Format("\n\t,[ICDICreatedBy]");
+                script += String.Format("\n\t,[ICDIUpdatedDate]");
+                script += String.Format("\n\t,[ICDIUpdatedBy]");
+                script += String.Format("\n\t,[ICDIIsDeleted]");
+                script += String.Format("\n\t,[ICDIETLRunID]");
+                script += String.Format("\n\t,[ICDIIsLocked]");
+                script += String.Format("\n\t,[ICDILockedTillDate]");
+            }
+
             script += String.Format("\nFROM [dbo].[{0}] WITH (NOLOCK)\nGO", NewTableName.Text);
             using (TextWriter tw = new StreamWriter(path))
             {
